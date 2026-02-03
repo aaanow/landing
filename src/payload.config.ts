@@ -12,6 +12,9 @@ import { Pages } from './collections/Pages'
 import { FAQs } from './collections/FAQs'
 import { ResourceChapters } from './collections/ResourceChapters'
 import { Resources } from './collections/Resources'
+import { Popups } from './collections/Popups'
+import { Legals } from './collections/Legals'
+import { Scorecards } from './collections/Scorecards'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Posts, Pages, FAQs, ResourceChapters, Resources],
+  collections: [Users, Media, Posts, Pages, FAQs, ResourceChapters, Resources, Popups, Legals, Scorecards],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
