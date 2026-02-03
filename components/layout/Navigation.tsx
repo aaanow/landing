@@ -133,10 +133,10 @@ export function Navigation({ variant = 'light' }: NavigationProps) {
             Client Lifecycle
           </Link>
           <div className="nav__link-copy">
-            <button className="super-btn small" onClick={closeMenu}>
+            <a data-modal-open="get-started" href="#" className="super-btn small w-inline-block" onClick={closeMenu}>
               <span>Get Started</span>
               <ArrowIcon className="icon-16" />
-            </button>
+            </a>
           </div>
         </nav>
       </div>
