@@ -1,7 +1,89 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { getPayloadClient } from '@/src/payload';
 
-export function Footer() {
+interface Popup {
+  id: string;
+  name: string;
+  slug: string;
+  aboutPage?: string;
+  status?: string;
+}
+
+interface Scorecard {
+  id: string;
+  name: string;
+  slug: string;
+  link?: string;
+  status?: string;
+}
+
+interface Resource {
+  id: string;
+  name: string;
+  slug: string;
+  externalLink?: string;
+  blogArticle?: string;
+  type?: string;
+}
+
+interface Legal {
+  id: string;
+  name: string;
+  slug: string;
+  order?: number;
+  status?: string;
+}
+
+export async function Footer() {
+  const payload = await getPayloadClient();
+
+  // Fetch popups for About AAAnow and AiSC sections
+  const popupsResult = await payload.find({
+    collection: 'popups',
+    where: { status: { equals: 'published' } },
+    limit: 100,
+  });
+  const popups = popupsResult.docs as Popup[];
+
+  // Fetch scorecards
+  const scorecardsResult = await payload.find({
+    collection: 'scorecards',
+    where: { status: { equals: 'published' } },
+    limit: 100,
+  });
+  const scorecards = scorecardsResult.docs as Scorecard[];
+
+  // Fetch resources
+  const resourcesResult = await payload.find({
+    collection: 'resources',
+    limit: 100,
+    sort: 'order',
+  });
+  const resources = resourcesResult.docs as Resource[];
+
+  // Fetch legals
+  const legalsResult = await payload.find({
+    collection: 'legals',
+    where: { status: { equals: 'published' } },
+    limit: 100,
+    sort: 'order',
+  });
+  const legals = legalsResult.docs as Legal[];
+
+  // Group popups by aboutPage
+  const aboutPopups = popups.filter(p => p.aboutPage === 'about-us');
+  const aiscPopups = popups.filter(p =>
+    p.aboutPage === 'aisc' ||
+    p.aboutPage === 'aod---ai-for-agency-growth' ||
+    p.aboutPage === 'lifecycle-alignment'
+  );
+
+  // Filter resources for footer (exclude draft types)
+  const footerResources = resources.filter(r =>
+    r.type === 'external-link' || r.type === 'blog-post' || r.externalLink || r.blogArticle
+  ).slice(0, 8);
+
   return (
     <section className="footer">
       <div className="container">
@@ -9,28 +91,65 @@ export function Footer() {
           <div className="footer__group">
             <h5 className="footer-heading">About AAAnow</h5>
             <div className="footer__link-list">
+              <Link href="/about/about-us" className="footer__link">
+                About us
+              </Link>
+              {aboutPopups.map((popup) => (
+                <Link
+                  key={popup.id}
+                  href={`/about/${popup.slug}`}
+                  className="footer__link"
+                >
+                  {popup.name}
+                </Link>
+              ))}
               <Link href="/our-capability" className="footer__link">
                 Our capability
               </Link>
-              <Link href="#" className="footer__link">
+              <a
+                href="https://www.linkedin.com/company/aaanow"
+                className="footer__link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 LinkedIn
-              </Link>
+              </a>
             </div>
           </div>
 
           <div className="footer__group">
             <h5 className="footer-heading">AiSC</h5>
             <div className="footer__link-list">
-              {/* Dynamic content will be added here */}
+              <Link href="/about/aisc" className="footer__link">
+                AiSC Introduction
+              </Link>
+              {aiscPopups.map((popup) => (
+                <Link
+                  key={popup.id}
+                  href={`/about/${popup.slug}`}
+                  className="footer__link"
+                >
+                  {popup.name}
+                </Link>
+              ))}
             </div>
           </div>
 
           <div className="footer__group">
             <h5 className="footer-heading">Public scorecards</h5>
             <div className="footer__link-list">
-              <Link href="/pricing" className="footer__link">
+              <Link href="/scorecards" className="footer__link">
                 Introduction
               </Link>
+              {scorecards.map((scorecard) => (
+                <Link
+                  key={scorecard.id}
+                  href={scorecard.link || `/scorecards/${scorecard.slug}`}
+                  className="footer__link"
+                >
+                  {scorecard.name}
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -40,6 +159,15 @@ export function Footer() {
               <Link href="/reference-material" className="footer__link">
                 All Reference Materials
               </Link>
+              {footerResources.map((resource) => (
+                <Link
+                  key={resource.id}
+                  href={resource.externalLink || resource.blogArticle || `/resources/${resource.slug}`}
+                  className="footer__link"
+                >
+                  {resource.name}
+                </Link>
+              ))}
               <Link href="/reference-material#i-want-to" className="footer__link">
                 I want to...
               </Link>
@@ -49,24 +177,15 @@ export function Footer() {
           <div className="footer__group">
             <h5 className="footer-heading">Legal</h5>
             <div className="footer__link-list">
-              <Link href="/legal/terms-and-conditions" className="footer__link">
-                Terms and Conditions
-              </Link>
-              <Link href="/legal/privacy" className="footer__link">
-                Privacy
-              </Link>
-              <Link href="/legal/accessibility" className="footer__link">
-                Accessibility
-              </Link>
-              <Link href="/legal/security" className="footer__link">
-                Security
-              </Link>
-              <Link href="/legal/disclaimer" className="footer__link">
-                Disclaimer
-              </Link>
-              <Link href="/legal/acceptable-use-policy" className="footer__link">
-                Acceptable Use Policy
-              </Link>
+              {legals.map((legal) => (
+                <Link
+                  key={legal.id}
+                  href={`/legal/${legal.slug}`}
+                  className="footer__link"
+                >
+                  {legal.name}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
