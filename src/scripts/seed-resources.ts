@@ -183,9 +183,9 @@ async function seedResources() {
     limit: 100,
   })
 
-  const chapterMap = new Map<string, number>()
+  const chapterMap = new Map<string, string | number>()
   for (const chapter of chaptersResult.docs) {
-    chapterMap.set(chapter.slug, chapter.id)
+    chapterMap.set(chapter.slug as string, chapter.id)
   }
   console.log(`Found ${chapterMap.size} chapters in database`)
 
