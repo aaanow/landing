@@ -25,8 +25,17 @@ export const Posts: CollectionConfig = {
     },
     {
       name: 'featuredImage',
-      type: 'upload',
-      relationTo: 'media',
+      type: 'text',
+      admin: {
+        description: 'URL to the main image',
+      },
+    },
+    {
+      name: 'thumbnailImage',
+      type: 'text',
+      admin: {
+        description: 'URL to the thumbnail image',
+      },
     },
     {
       name: 'excerpt',
@@ -59,12 +68,66 @@ export const Posts: CollectionConfig = {
       },
     },
     {
-      name: 'author',
-      type: 'relationship',
-      relationTo: 'users',
+      name: 'category',
+      type: 'text',
       admin: {
         position: 'sidebar',
       },
+    },
+    {
+      name: 'tag',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'landing',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: 'Show on landing page',
+      },
+    },
+    {
+      name: 'featured',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'externalLink',
+      type: 'text',
+    },
+    {
+      name: 'author',
+      type: 'text',
+    },
+    {
+      name: 'referenceArticle',
+      type: 'text',
+      admin: {
+        description: 'Slug of related article',
+      },
+    },
+    {
+      name: 'quote',
+      type: 'textarea',
+    },
+    {
+      name: 'quoteImage',
+      type: 'text',
+    },
+    {
+      name: 'quoteName',
+      type: 'text',
+    },
+    {
+      name: 'quoteLogo',
+      type: 'text',
     },
   ],
 }
