@@ -49,7 +49,24 @@ export function Footer() {
           <div className="footer__group">
             <h5 className="footer-heading">Legal</h5>
             <div className="footer__link-list">
-              {/* Dynamic legal links will be added here */}
+              <Link href="/legal/terms-and-conditions" className="footer__link">
+                Terms and Conditions
+              </Link>
+              <Link href="/legal/privacy" className="footer__link">
+                Privacy
+              </Link>
+              <Link href="/legal/accessibility" className="footer__link">
+                Accessibility
+              </Link>
+              <Link href="/legal/security" className="footer__link">
+                Security
+              </Link>
+              <Link href="/legal/disclaimer" className="footer__link">
+                Disclaimer
+              </Link>
+              <Link href="/legal/acceptable-use-policy" className="footer__link">
+                Acceptable Use Policy
+              </Link>
             </div>
           </div>
         </div>
