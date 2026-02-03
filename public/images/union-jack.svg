@@ -1,0 +1,27 @@
+<svg width="6000" height="3000" viewBox="0 0 6000 3000" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_324_1391)">
+<rect width="6000" height="3000" fill="#FEFCEA"/>
+<path d="M0 0L6000 3000L0 0ZM6000 0L0 3000L6000 0Z" fill="#FEFCEA"/>
+<path d="M0 0L6000 3000M6000 0L0 3000" stroke="#FFFEFA" stroke-width="600"/>
+<mask id="mask0_324_1391" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="6000" height="3000">
+<path d="M3000 1500H6000V3000L3000 1500ZM3000 1500V3000H0L3000 1500ZM3000 1500H0V0L3000 1500ZM3000 1500V0H6000L3000 1500Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_324_1391)">
+<path d="M0 0L6000 3000L0 0ZM6000 0L0 3000L6000 0Z" fill="#FEFCEA"/>
+<path d="M0 0L6000 3000M6000 0L0 3000" stroke="#FEFCEA" stroke-width="400"/>
+</g>
+<path d="M3500 0V1000H6000V2000H3500V3000H2500V2000H0V1000H2500V0H3500Z" fill="#FFFEFA"/>
+<path d="M3000 0V3000V0ZM0 1500H6000H0Z" fill="#FEFCEA"/>
+<path d="M3300 0V1200H6000V1800H3300V3000H2700V1800H0V1200H2700V0H3300Z" fill="#FEFCEA"/>
+<rect width="4138" height="3000" fill="url(#paint0_linear_324_1391)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_324_1391" x1="4138" y1="1500" x2="0" y2="1500" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FEFCEA" stop-opacity="0"/>
+<stop offset="1" stop-color="#FEFCEA"/>
+</linearGradient>
+<clipPath id="clip0_324_1391">
+<rect width="6000" height="3000" fill="white"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,0 +1,531 @@
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Tue Feb 03 2026 09:46:27 GMT+0000 (Coordinated Universal Time)  -->
+<html data-wf-page="6981bc63d15449fd5f2c2926" data-wf-site="6981bc63d15449fd5f2c2913" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Partners</title>
+  <meta content="Partners" property="og:title">
+  <meta content="Partners" property="twitter:title">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  <link href="../css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="../css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="../css/aaanow-75f6558df5a54d1c17c2aaab410ab063.webflow.css" rel="stylesheet" type="text/css">
+  <style>html.w-mod-js:not(.w-mod-ix3) :is(.nav__link, .nav__menu, .nav__icon-1, .nav__icon-2) {visibility: hidden !important;}</style>
+  <script src="https://use.typekit.net/rch0hpl.js" type="text/javascript"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="../images/favicon.png" rel="shortcut icon" type="image/x-icon">
+  <link href="../images/webclip.png" rel="apple-touch-icon">
+  <style>
+/* ----------------------------------------
+   Base smoothing
+----------------------------------------- */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* ----------------------------------------
+   Navigation
+----------------------------------------- */
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  transform: translateY(-100%);
+  z-index: 99999;
+  transition: transform 0.3s ease;
+  pointer-events: auto;
+}
+.nav--visible {
+  transform: translateY(0);
+}
+/* Nav container themes */
+.nav__container--light {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(100px);
+  transition: background-color 0.3s, border-color 0.3s;
+  color: #014E5C !important;
+}
+.nav__container--dark {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(100px);
+  transition: background-color 0.3s, border-color 0.3s;
+  color: #d2f9c5 !important;
+}
+/* Logo colour overrides */
+.nav__container--dark .nav__logo-wrapper {
+  color: var(--button) !important;
+}
+.nav__container--light .nav__logo-wrapper {
+  color: var(--primary-600) !important;
+}
+/* Hide nav on scroll */
+#mainNav {
+  transition: opacity 0.3s ease;
+}
+#mainNav.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+/* ----------------------------------------
+   Newsletter popup
+----------------------------------------- */
+#newsletterPopup {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+#newsletterPopup.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+/* ----------------------------------------
+   Table styles
+----------------------------------------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-block: 0.75rem;
+}
+thead {
+  background-color: #F0F1E1;
+}
+th,
+td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #E5E3D3;
+  vertical-align: top;
+  text-align: left;
+}
+td a {
+  font-size: 0.95rem;
+  color: var(--primary-900) !important;
+}
+th {
+  font-weight: 600;
+}
+tbody tr:nth-child(even) {
+  background-color: #F0F1E1;
+}
+/* Responsive table */
+@media (max-width: 700px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+  thead {
+    display: none;
+  }
+  tr {
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+  }
+  td {
+    border: none;
+    padding: 0.5rem 0.75rem;
+  }
+  td::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+}
+/* ----------------------------------------
+   Get Started Overlay
+----------------------------------------- */
+[data-modal-overlay="get-started"] {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+[data-modal-overlay="get-started"][data-modal-active] {
+  opacity: 1;
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(20px);
+  z-index: 9999; 
+}
+[data-modal-dialog="get-started"] {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+ .modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(20px);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+  .modal-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .modal-dialog {
+    position: relative;
+    max-width: 720px;
+    width: 100%;
+    max-height: 90vh;
+    overflow: auto;
+    background: #ffffff;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    transform: translateY(12px);
+    opacity: 0;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  div#w-nav-overlay-0 {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(20px);
+    z-index: 9999; 
+    top: 0;
+    transition: background-color 200ms ease;
+  }
+</style>
+</head>
+<body>
+  <div data-wf--nav-sticky--variant="base" data-animation="default" class="nav w-nav" data-easing2="ease" data-easing="ease" data-collapse="small" role="banner" data-no-scroll="1" data-duration="0" data-doc-height="1">
+    <div class="nav__container w-container">
+      <a href="../index.html" class="nav__logo-wrapper w-nav-brand"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewbox="0 0 171 42" fill="none" class="nav__logo-img">
+          <path d="M98.4449 16.9374C99.5282 16.9374 100.406 17.8076 100.406 18.8808V32.9198C100.406 33.989 99.5282 34.8593 98.4449 34.8593H93.4029C92.3197 34.8593 91.4459 33.9891 91.4459 32.9198V18.8808C91.4459 17.8076 92.3197 16.9374 93.4029 16.9374H98.4449Z" fill="currentColor"></path>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M66.6236 7.12981C69.1021 6.80795 72.9166 6.83937 74.4859 9.00676C78.8314 16.8519 83.7045 24.7133 87.7926 32.6825C88.3921 33.8494 89.1599 34.6291 87.2047 34.7997C86.2426 34.8812 81.6447 34.9119 81.0006 34.6484C80.1395 34.2917 78.7679 30.7205 78.0797 29.8202L77.6812 29.6298L60.6168 29.622C60.3715 29.6067 60.2148 29.6653 60.0299 29.8202C59.3177 30.4369 58.2474 34.0976 57.4186 34.5673C56.823 34.9007 51.6848 34.8967 50.7027 34.8075C49.89 34.7337 49.435 34.5431 49.7086 33.6435C54.2229 26.2134 57.7966 18.0005 62.2828 10.5898C63.3571 8.81365 64.3391 7.43235 66.6285 7.13762L66.6236 7.12981ZM69.6256 14.0761C69.1307 13.4556 68.6801 13.7615 68.2896 14.2734C67.2235 15.6811 64.0973 21.6723 63.4576 23.3749C63.3649 23.6153 63.2439 23.8056 63.3043 24.0849H74.8043V24.0888C74.8565 23.8096 74.7396 23.6192 74.6471 23.3788C73.9711 21.5795 72.1442 18.6361 71.1383 16.8212C70.7603 16.1387 70.0118 14.5649 69.6256 14.0761Z" fill="currentColor"></path>
+          <path d="M148.404 7.15227C155.085 6.66837 162.204 7.40334 168.934 7.08586C169.589 7.12458 169.962 7.53169 170.044 8.13567C170.142 8.84499 170.118 12.8774 169.884 13.3466C169.798 13.5208 169.703 13.6753 169.495 13.7411L149.583 13.7958C147.188 14.0165 146.226 14.7949 146.017 17.1025C145.837 19.081 145.812 23.1618 146.046 25.1015C146.344 27.5636 147.819 27.8612 150.152 28.0859L169.487 28.1171C169.667 28.1676 169.851 28.2993 169.933 28.4579C170.117 28.8191 170.117 33.8167 169.933 34.1845C169.749 34.5522 168.975 34.7993 168.533 34.7646C162.347 34.509 155.912 35.0704 149.754 34.7646C144.838 34.5167 140.281 33.6963 138.914 28.6093C138.009 25.2487 137.981 16.0837 139.029 12.7734C140.347 8.60385 144.228 7.45033 148.412 7.14836L148.404 7.15227Z" fill="currentColor"></path>
+          <path d="M111.883 6.23918C118.766 5.49285 126.686 6.68664 133.679 6.1718C134.605 6.16781 135.028 6.53102 135.135 7.45696C135.222 8.2081 135.227 11.9149 134.99 12.4296C134.907 12.6091 134.815 12.769 134.614 12.8368L114.753 12.872C112.414 12.4135 112.275 16.9064 113.779 17.1904C118.837 17.5096 124.375 16.7761 129.374 17.1991C136.07 17.7661 136.597 23.0458 136.114 28.7089C135.754 32.8995 132.571 34.4484 128.799 34.7079C121.711 35.1947 114.084 34.3167 106.936 34.7079C106.01 34.7119 105.587 34.3484 105.48 33.4228C105.393 32.6645 105.388 28.7682 105.693 28.3212C105.978 27.8983 106.659 27.8465 107.134 27.8066C113.68 27.2519 120.998 28.2301 127.631 27.8232C129.341 27.5997 129.437 23.6849 127.731 23.373C122.483 22.7864 116.408 23.8721 111.258 23.2656C105.642 22.6069 105.08 17.0234 105.488 12.3779C105.824 8.5704 108.234 6.63429 111.879 6.23918H111.883Z" fill="currentColor"></path>
+          <path d="M98.7447 6.98137C99.6602 6.98137 100.406 7.63168 100.406 8.43743V11.4999C100.406 12.3057 99.6602 12.955 98.7447 12.955H86.8297C85.9224 12.955 85.086 12.5215 84.65 11.8271C84.0279 10.8339 83.4134 9.84037 82.8072 8.84368C82.0703 7.71849 82.6406 6.98149 84.0631 6.98137H98.7447Z" fill="currentColor"></path>
+          <path d="M22.8294 0C23.5039 5.13787e-05 24.0506 0.54678 24.0506 1.22119V11.3672C24.0506 12.0416 24.5973 12.5884 25.2718 12.5884H28.0738C28.7483 12.5885 29.295 13.1352 29.295 13.8096V16.6125C29.295 17.2869 29.8419 17.8337 30.5162 17.8337H40.6574C41.3317 17.8338 41.8786 18.3805 41.8786 19.0549V22.9069C41.8786 23.5812 41.3317 24.1281 40.6574 24.1281H30.5162C29.8417 24.1281 29.295 24.6748 29.295 25.3493V28.152C29.295 28.8265 28.7483 29.3732 28.0738 29.3732H25.2716C24.5971 29.3732 24.0504 29.9199 24.0504 30.5944V40.6995C24.0504 41.3737 23.5037 41.9204 22.8292 41.9206H19.0192C18.3448 41.9206 17.7981 41.3737 17.7981 40.6995V30.5944C17.7981 29.9201 17.2513 29.3732 16.5769 29.3732H13.7314C13.057 29.3732 12.5103 28.8265 12.5102 28.152V25.3493C12.5102 24.6748 11.9635 24.1281 11.2891 24.1281H1.22119C0.546774 24.1281 4.11879e-05 23.5814 0 22.9069V19.0549C0 18.3805 0.546749 17.8337 1.22119 17.8337H11.2891C11.9634 17.8337 12.5102 17.2869 12.5102 16.6125V13.8096C12.5102 13.1352 13.057 12.5884 13.7314 12.5884H16.535C17.2094 12.5884 17.7561 12.0416 17.7562 11.3672V1.22119C17.7562 0.546748 18.3029 0 18.9774 0H22.8294ZM11.2891 29.3734C11.9635 29.3734 12.5102 29.9201 12.5102 30.5946V34.4467C12.5102 35.121 11.9634 35.6677 11.2891 35.6679H7.43723C6.76281 35.6679 6.21607 35.121 6.21603 34.4467V30.5946C6.21603 29.9201 6.76279 29.3734 7.43723 29.3734H11.2891ZM34.3681 29.3734C35.0424 29.3734 35.5893 29.9201 35.5893 30.5946V34.4467C35.5893 35.121 35.0424 35.6677 34.3681 35.6679H30.516C29.8417 35.6679 29.2948 35.121 29.2948 34.4467V30.5946C29.2948 29.9201 29.8415 29.3734 30.516 29.3734H34.3681ZM18.6369 17.8335C18.1734 17.8335 17.7976 18.2093 17.7976 18.6727V23.2887C17.7976 23.7521 18.1734 24.1279 18.6369 24.1279H23.2527C23.7164 24.1279 24.092 23.7521 24.092 23.2887V18.6727C24.092 18.2093 23.7164 17.8335 23.2527 17.8335H18.6369ZM35.2174 5.44539C35.8917 5.44543 36.4386 5.99217 36.4386 6.66656V10.5184C36.4386 11.1928 35.8917 11.7395 35.2174 11.7396H31.3652C30.691 11.7396 30.144 11.1928 30.144 10.5184V6.66656C30.144 5.99212 30.6907 5.44539 31.3652 5.44539H35.2174ZM11.2891 5.44477C11.9635 5.44481 12.5102 5.99155 12.5102 6.66595V10.518C12.5102 11.1924 11.9634 11.7391 11.2891 11.7392H7.43723C6.76281 11.7392 6.21607 11.1924 6.21603 10.518V6.66595C6.21603 5.99151 6.76279 5.44477 7.43723 5.44477H11.2891Z" fill="currentColor"></path>
+        </svg></a>
+      <div class="nav__menu-btn w-nav-button">
+        <div class="nav__icon-1"></div>
+        <div class="nav__icon-2"></div>
+      </div>
+      <nav role="navigation" class="nav__menu w-nav-menu">
+        <a href="../articles.html" class="nav__link w-nav-link">Articles</a>
+        <a href="../pricing.html" class="nav__link w-nav-link">Pricing</a>
+        <a href="/about/lifecycle-alignment" class="nav__link w-nav-link">Client Lifecycle</a>
+        <div class="nav__link-copy">
+          <a data-modal-open="get-started" href="#" class="super-btn small w-inline-block">
+            <div>Get Started</div><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewbox="0 0 17 17" fill="none" class="icon-16">
+              <path d="M9.18563 14.6168C9.43803 14.6169 9.64258 14.8216 9.64258 15.074V16.445C9.64258 16.6975 9.43791 16.9022 9.18544 16.9022H7.81456C7.56209 16.9022 7.35742 16.6975 7.35742 16.445V15.0734C7.35742 14.8208 7.56221 14.6161 7.81476 14.6163L9.18563 14.6168ZM11.9287 14.1589C11.9287 14.4114 11.724 14.6161 11.4716 14.6161H10.0997C9.84725 14.6161 9.64258 14.4114 9.64258 14.1589V12.788C9.64258 12.5356 9.84725 12.3309 10.0997 12.3309H11.9287V14.1589ZM16.5 9.58763C16.5 9.8401 16.2953 10.0448 16.0429 10.0448H14.6718C14.4194 10.0448 14.2148 10.2493 14.2146 10.5017L14.2141 11.874C14.214 12.1264 14.0093 12.3309 13.7569 12.3309H11.9287V10.0448H13.7567C14.0092 10.0448 14.2139 9.8401 14.2139 9.58763V7.75961H16.0429C16.2953 7.75961 16.5 7.96428 16.5 8.21676V9.58763ZM11.9287 10.0448H0.957143C0.70467 10.0448 0.5 9.8401 0.5 9.58763V8.21676C0.5 7.96428 0.70467 7.75961 0.957143 7.75961H11.9287V10.0448ZM14.2139 7.75961H11.9287V5.47348H13.7575C14.0101 5.47348 14.2148 5.67827 14.2146 5.93082L14.2139 7.75961ZM11.4718 3.18813C11.7242 3.18824 11.9287 3.39287 11.9287 3.64527V5.47348H10.0997C9.84725 5.47348 9.64258 5.26881 9.64258 5.01634V3.64469C9.64258 3.39214 9.84737 3.18743 10.0999 3.18754L11.4718 3.18813ZM9.64258 2.73118C9.64258 2.98365 9.43791 3.18832 9.18544 3.18832H7.81456C7.56209 3.18832 7.35742 2.98365 7.35742 2.73118V1.35933C7.35742 1.10686 7.56209 0.902191 7.81456 0.902191H9.18544C9.43791 0.902191 9.64258 1.10686 9.64258 1.35933V2.73118Z" fill="currentColor"></path>
+            </svg>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </div>
+  <div class="page__wrapper">
+    <section background="light" class="section background-cream">
+      <div class="w-layout-blockcontainer container width-medium w-container">
+        <div class="banner__wrapper wide">
+          <h1 class="h0 dark">Find a Partner</h1>
+          <div class="div-block-91">
+            <p class="body__xlarge">AiSC Partners are trusted productivity experts and solutions architects.</p>
+            <div>
+              <p>Interested in becoming a AiSC Partner? <a href="#">Learn more</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="blog__wrapper">
+          <div class="title__wrapper left">
+            <h2>Featured</h2>
+          </div>
+          <div id="w-node-_7b033d39-671c-0905-140c-8622e006d9f6-5f2c2926" class="articles__collection-grid-wrapper w-dyn-list">
+            <div role="list" class="articles__collection-grid w-dyn-items">
+              <div data-w-id="7b033d39-671c-0905-140c-8622e006d9f8" role="listitem" class="card__item partner featured w-dyn-item">
+                <div class="card__partner-wrapper-copy"><img src="https://cdn.prod.website-files.com/68025b065ac4c8bc3db80861/6884cfc150d006b9943f166f_sc_map-dot.png" loading="lazy" alt="" class="card__partner-logo w-dyn-bind-empty">
+                  <div class="card__content _2">
+                    <p class="tag w-dyn-bind-empty"></p>
+                    <h4 class="w-dyn-bind-empty"></h4>
+                    <p class="article__date">A small text about this partner</p>
+                  </div>
+                </div>
+                <a href="#" class="card__link w-inline-block"></a>
+              </div>
+            </div>
+            <div class="w-dyn-empty">
+              <div>No items found.</div>
+            </div>
+          </div>
+        </div>
+        <div class="blog__wrapper">
+          <div class="title__wrapper left">
+            <h2>All partners</h2>
+          </div>
+          <div id="w-node-_6e05cacc-ffec-8fe9-4d4c-70446886d121-5f2c2926" class="articles__collection-grid-wrapper w-dyn-list">
+            <div role="list" class="articles__collection-grid w-dyn-items">
+              <div data-w-id="6e05cacc-ffec-8fe9-4d4c-70446886d123" role="listitem" class="card__item partner w-dyn-item">
+                <div class="card__partner-wrapper-copy"><img src="https://cdn.prod.website-files.com/68025b065ac4c8bc3db80861/6884cfc150d006b9943f166f_sc_map-dot.png" loading="lazy" alt="" class="card__partner-logo w-dyn-bind-empty">
+                  <div class="card__content _2">
+                    <p class="tag w-dyn-bind-empty"></p>
+                    <h4 class="w-dyn-bind-empty"></h4>
+                    <p class="article__date">A small text about this partner</p>
+                  </div>
+                </div>
+                <a href="#" class="card__link w-inline-block"></a>
+              </div>
+            </div>
+            <div class="w-dyn-empty">
+              <div>No items found.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div id="newsletterPopup" class="popup-newsletter__wrapper">
+    <a id="newsletterPopupClose" href="#" class="link-block-2 w-inline-block"></a>
+    <p class="body__small">Not ready to sign up today? Let&#x27;s keep in touch</p>
+    <div class="form-block-3 w-form">
+      <form id="wf-form-newsletter" name="wf-form-newsletter" data-name="newsletter" method="get" class="popup-newsletter__form" data-wf-page-id="6981bc63d15449fd5f2c2926" data-wf-element-id="bd914dcb-bae6-b906-746a-f260cdde6666"><input class="signup__form-text-field w-input" maxlength="256" name="Email" data-name="Email" placeholder="Email Address" type="email" id="Email" required=""><input type="submit" data-wait="Please wait..." class="btn form w-button" value="Subscribe to our Newsletter"></form>
+      <div class="w-form-done">
+        <div>Thank you! Your submission has been received!</div>
+      </div>
+      <div class="w-form-fail">
+        <div>Oops! Something went wrong while submitting the form.</div>
+      </div>
+    </div>
+  </div>
+  <section background="dark" class="footer">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="footer__link-container">
+        <div id="w-node-_0b983f2d-680a-4008-0c67-11a4f50d20aa-f50d20a7" class="footer__group">
+          <h5 class="footer-heading">About AAAnow</h5>
+          <div>
+            <div class="w-dyn-list">
+              <div role="list" class="w-dyn-items">
+                <div role="listitem" class="w-dyn-item">
+                  <a href="#" class="footer__link w-dyn-bind-empty"></a>
+                  <a href="#" class="footer__link indent w-dyn-bind-empty"></a>
+                </div>
+              </div>
+              <div class="w-dyn-empty">
+                <div>No items found.</div>
+              </div>
+            </div>
+            <div class="w-dyn-list">
+              <div role="list" class="w-dyn-items">
+                <div role="listitem" class="w-dyn-item">
+                  <div class="w-embed">
+                    <a href="/about/#" class="footer__link indent"></a>
+                  </div>
+                </div>
+              </div>
+              <div class="w-dyn-empty">
+                <div>No items found.</div>
+              </div>
+            </div>
+            <a href="../our-capabilty.html" class="footer__link">Our capability</a>
+            <a href="#" class="footer__link">LinkedIn</a>
+          </div>
+        </div>
+        <div id="w-node-_0b983f2d-680a-4008-0c67-11a4f50d20e6-f50d20a7" class="footer__group">
+          <h5 class="footer-heading">AiSC</h5>
+          <div>
+            <div class="w-dyn-list">
+              <div role="list" class="w-dyn-items">
+                <div role="listitem" class="w-dyn-item">
+                  <a href="#" class="footer__link w-dyn-bind-empty"></a>
+                  <a href="#" class="footer__link indent w-dyn-bind-empty"></a>
+                </div>
+              </div>
+              <div class="w-dyn-empty">
+                <div>No items found.</div>
+              </div>
+            </div>
+            <div class="w-dyn-list">
+              <div role="list" class="w-dyn-items">
+                <div role="listitem" class="w-dyn-item">
+                  <div class="w-embed">
+                    <a href="/about/#" class="footer__link indent"></a>
+                  </div>
+                </div>
+              </div>
+              <div class="w-dyn-empty">
+                <div>No items found.</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="w-dyn-list">
+              <div role="list" class="w-dyn-items">
+                <div role="listitem" class="w-dyn-item">
+                  <a href="#" class="footer__link w-dyn-bind-empty"></a>
+                  <a href="#" class="footer__link indent w-dyn-bind-empty"></a>
+                </div>
+              </div>
+              <div class="w-dyn-empty">
+                <div>No items found.</div>
+              </div>
+            </div>
+            <div class="w-dyn-list">
+              <div role="list" class="w-dyn-items">
+                <div role="listitem" class="w-dyn-item">
+                  <div class="w-embed">
+                    <a href="/about/#" class="footer__link indent"></a>
+                  </div>
+                </div>
+              </div>
+              <div class="w-dyn-empty">
+                <div>No items found.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="w-node-_0b983f2d-680a-4008-0c67-11a4f50d20ce-f50d20a7" class="footer__group">
+          <h5 class="footer-heading">Public scorecards</h5>
+          <div class="footer__link-list">
+            <a href="../pricing.html" class="footer__link">Introduction</a>
+            <div class="w-dyn-list">
+              <div role="list" class="footer__link-list w-dyn-items">
+                <div role="listitem" class="footer__link-wrapper w-dyn-item">
+                  <a href="#" class="footer__link indent w-dyn-bind-empty"></a>
+                </div>
+              </div>
+              <div class="w-dyn-empty">
+                <div>No items found.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="w-node-_0b983f2d-680a-4008-0c67-11a4f50d20b6-f50d20a7" class="footer__group">
+          <h5 class="footer-heading">Resources</h5>
+          <div class="footer__link-list">
+            <a href="../reference-material.html" class="footer__link">All Reference Materials</a>
+            <div class="w-dyn-list">
+              <div role="list" class="footer__link-list w-dyn-items">
+                <div role="listitem" class="footer__link-wrapper w-dyn-item">
+                  <a href="#" class="footer__link indent w-dyn-bind-empty"></a>
+                  <a href="#" class="footer__link indent w-dyn-bind-empty"></a>
+                </div>
+              </div>
+              <div class="w-dyn-empty">
+                <div>No items found.</div>
+              </div>
+            </div>
+          </div>
+          <a href="/reference-material#i-want-to" class="footer__link">I want to...</a>
+        </div>
+        <div class="footer__group">
+          <h5 class="footer-heading">Legal</h5>
+          <div class="footer__link-list">
+            <div class="w-dyn-list">
+              <div role="list" class="w-dyn-items">
+                <div role="listitem" class="w-dyn-item">
+                  <a href="#" class="footer__link w-dyn-bind-empty"></a>
+                </div>
+              </div>
+              <div class="w-dyn-empty">
+                <div>No items found.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spacer-vertical"></div>
+      <div class="footer__bottom">
+        <div id="w-node-cebaaf46-6d7c-f5c1-9530-98c2b447add2-f50d20a7" class="div-block-77">
+          <p class="footer__text long">This website, all of its content and any/all documents offered directly or otherwise, should be considered as introduction, an overview and a starting point only – it should not be used as a single, sole authoritative guide. You should not consider this legal guidance.<br>‍<br>The services provided by AAAnow are based on general best practices and on audits of the available areas of websites at a point in time. Sections of the site that are not open to public access or are not being served (possibly due to site errors or downtime) may not be covered by our reports.<br>‍<br>Where matters of legal compliance are concerned you should always take independent advice from appropriately qualified individuals or firms.</p>
+          <div class="footer__link copyrigtt">© 2026 AAAnow.al Limited Al rights reserved.</div>
+        </div>
+        <div id="w-node-_5b584452-a6e6-c7dd-922e-c3415af7bcf9-f50d20a7" class="div-block-74"><img src="../images/aaanow_logo.svg" loading="lazy" alt="" class="footer__logo-copy">
+          <div class="div-block-82">
+            <a href="https://willneeteson.com" class="footer__link">Website by SOWN</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="footerModal" class="footer__help-modal">
+      <div class="form-block-2 w-form">
+        <div class="div-block-76">
+          <a id="footerModalClose" href="#" class="modal__close-btn w-inline-block"></a>
+        </div>
+        <form id="email-form" name="email-form" data-name="Email Form" method="get" class="form-3" data-wf-page-id="6981bc63d15449fd5f2c2926" data-wf-element-id="eeacd481-dea5-4e19-10b0-62f1be8f3c34">
+          <div>
+            <h2>How can we help you?</h2>
+            <p><strong>‍</strong>DPOs have the compliance responsibility and need their own service to independently mitigate organisation-wide risk. Let us know what you’re interested in and we’ll arrange a time to discuss.</p>
+          </div>
+          <div class="footer__help-modal-checkbox-wrapper"><label class="w-checkbox checkbox-field">
+              <div class="w-checkbox-input w-checkbox-input--inputType-custom form__checkbox"></div><input type="checkbox" id="FREE-privacy-index" name="FREE-privacy-index" data-name="FREE privacy index" style="opacity:0;position:absolute;z-index:-1"><span class="w-form-label" for="FREE-privacy-index"><strong>FREE privacy index<br></strong>I would like my own Privacy Risk INDEX™Build your own private index, e.g. all of the websites in your organisation, or an index of competitors</span>
+            </label><label class="w-checkbox checkbox-field">
+              <div class="w-checkbox-input w-checkbox-input--inputType-custom form__checkbox"></div><input type="checkbox" id="Improve-your-privacy-respect-arrange-a-call-with-me" name="Improve-your-privacy-respect-arrange-a-call-with-me" data-name="Improve your privacy respect: arrange a call with me" style="opacity:0;position:absolute;z-index:-1"><span class="w-form-label" for="Improve-your-privacy-respect-arrange-a-call-with-me"><strong>Improve your privacy respect: arrange a call with me<br>‍</strong>Discuss compliance challenges and how to overcome them. Talk through our ‘Pathway to compliance process’ or discuss our ongoing monitoring service.</span>
+            </label></div><input class="signup__form-text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="Name" type="text" id="name-2" required=""><input class="signup__form-text-field w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="Email" type="email" id="email-2" required=""><textarea required="" placeholder="Please describe the issue you are having in the box below, adding anything you feel appropriate (please don’t just moan about the not liking the results)" maxlength="5000" id="field" name="field" data-name="Field" class="signup__form-text-field w-input"></textarea><input type="submit" data-wait="Please wait..." class="btn form w-button" value="Send">
+        </form>
+        <div class="w-form-done">
+          <div>Thank you! Your submission has been received!</div>
+        </div>
+        <div class="w-form-fail">
+          <div>Oops! Something went wrong while submitting the form.</div>
+        </div>
+      </div>
+    </div>
+    <div data-modal-overlay="get-started" class="getstarted__modal-overview">
+      <div data-modal-dialog="get-started" class="getstarted__modal-dialog">
+        <a data-modal-close="get-started" href="#" class="getstarted__modal-close-btn w-inline-block"><img src="../images/icon-cross.svg" loading="lazy" alt="" class="icon-16"></a>
+        <div class="getstarted__modal-content">
+          <div class="getstarted__form-content w-form">
+            <form id="wf-form-Signup" name="wf-form-Signup" data-name="Signup" method="get" class="signup__form w-node-_630893cc-c897-2466-41c8-3693b8fcf6cf-f50d20a7" data-wf-page-id="6981bc63d15449fd5f2c2926" data-wf-element-id="630893cc-c897-2466-41c8-3693b8fcf6cf">
+              <div class="signup__form-header-wrapper">
+                <h2>Get Started</h2>
+                <p class="body__xlarge">Set up your scorecard. Free and no credit card required</p>
+              </div>
+              <div class="field__wrapper"><input class="signup__form-text-field w-input" maxlength="256" name="Name" data-name="Name" placeholder="Your name (First, Last)" type="text" id="singupName"></div>
+              <div class="field__wrapper"><input class="signup__form-text-field w-input" maxlength="256" name="Email" data-name="Email" placeholder="Your work email" type="email" id="signupEmail" required=""></div>
+              <div class="field__wrapper"><input class="signup__form-text-field w-input" maxlength="256" name="Organisation-Type-2" data-name="Organisation Type 2" placeholder="Organisation type" type="text" id="Organisation-Type-2"></div><input type="submit" data-wait="Please wait..." class="super-btn _0-top-padding w-button" value="Start building my scorecard">
+              <div class="signup__form-legal">
+                <p class="body__small light">Your data is used for purposes of building your own scorecard and communicating with you about it. If you are requesting via one of our qualified partners, details are provided only on the basis of scorecard preparation. Completing your details is acceptance of our <span>privacy policy</span> and <a href="#" class="link-2"><span>terms &amp; conditions</span></a>.</p>
+              </div>
+            </form>
+            <div class="signup__form-success w-form-done">
+              <div class="signup__form-success-content">
+                <div>Thank you! Your submission has been received!</div>
+              </div>
+            </div>
+            <div class="w-form-fail">
+              <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+          </div>
+          <div class="getstarted__modal-img-wrapper"><img sizes="(max-width: 1500px) 100vw, 1500px" srcset="../images/aisc_product-01_1-p-500.avif 500w, ../images/aisc_product-01_1-p-800.avif 800w, ../images/aisc_product-01_1aisc_product-01.avif 1500w" alt="" loading="lazy" src="../images/aisc_product-01_1aisc_product-01.avif" class="signup__form-img"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=6981bc63d15449fd5f2c2913" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="../js/webflow.js" type="text/javascript"></script>
+  <script src="https://cdn.prod.website-files.com/gsap/3.14.2/gsap.min.js" type="text/javascript"></script>
+  <script src="https://unpkg.com/lenis@1.3.13/dist/lenis.min.js"></script>
+  <script src="https://aaanow.vercel.app/webflow/snippets/components/navigation.js"></script>
+  <script src="https://aaanow.vercel.app/webflow/snippets/components/get-started-overlay.js"></script>
+  <script>
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  })
+  lenis.on('scroll', (e) => {
+  })
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
+  requestAnimationFrame(raf)
+</script>
+</body>
+</html>
