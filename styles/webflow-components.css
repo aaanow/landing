@@ -2420,7 +2420,7 @@ figcaption {
   background-color: var(--primary-900);
   outline-offset: 0px;
   border: 1px #000;
-  outline: 0 #00323c;
+  outline: 0 var(--color-primary-900);
 }
 
 .filter__radio-btn.w--redirected-focus, .filter__radio-btn.w--redirected-focus-visible {
@@ -3012,7 +3012,7 @@ figcaption {
 }
 
 .table__cell-pill {
-  color: #00323c;
+  color: var(--color-primary-900);
   background-color: #e0ece0;
   border: 1px solid #cad4ca;
   border-radius: 8px;
