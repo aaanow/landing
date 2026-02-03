@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
-import { getWebflowPageContent } from '@/lib/webflow-content';
+import { getStaticPageContent } from '@/lib/static-content';
 
 export const metadata: Metadata = {
   title: 'Sign Up - AAAnow',
 };
 
 export default function SignupPage() {
-  const pageContent = getWebflowPageContent('signup.html');
+  const pageContent = getStaticPageContent('signup.html');
 
   return <div dangerouslySetInnerHTML={{ __html: pageContent }} />;
 }

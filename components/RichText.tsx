@@ -11,6 +11,13 @@ interface LexicalNode {
   indent?: number;
   version?: number;
   tag?: string;
+  listType?: string;
+  url?: string;
+  fields?: {
+    url?: string;
+    linkType?: string;
+    newTab?: boolean;
+  };
 }
 
 interface LexicalContent {
@@ -22,9 +29,56 @@ interface RichTextProps {
   className?: string;
 }
 
+// Lexical format flags for text formatting
+const IS_BOLD = 1;
+const IS_ITALIC = 2;
+const IS_STRIKETHROUGH = 4;
+const IS_UNDERLINE = 8;
+const IS_CODE = 16;
+const IS_SUBSCRIPT = 32;
+const IS_SUPERSCRIPT = 64;
+
+function renderTextWithFormat(text: string, format: number, index: number): React.ReactNode {
+  let element: React.ReactNode = text;
+
+  if (format & IS_BOLD) {
+    element = <strong key={`bold-${index}`}>{element}</strong>;
+  }
+  if (format & IS_ITALIC) {
+    element = <em key={`italic-${index}`}>{element}</em>;
+  }
+  if (format & IS_UNDERLINE) {
+    element = <u key={`underline-${index}`}>{element}</u>;
+  }
+  if (format & IS_STRIKETHROUGH) {
+    element = <s key={`strike-${index}`}>{element}</s>;
+  }
+  if (format & IS_CODE) {
+    element = <code key={`code-${index}`}>{element}</code>;
+  }
+  if (format & IS_SUBSCRIPT) {
+    element = <sub key={`sub-${index}`}>{element}</sub>;
+  }
+  if (format & IS_SUPERSCRIPT) {
+    element = <sup key={`sup-${index}`}>{element}</sup>;
+  }
+
+  return element;
+}
+
 function renderNode(node: LexicalNode, index: number): React.ReactNode {
   if (node.type === 'text') {
-    return node.text || '';
+    const text = node.text || '';
+    const format = typeof node.format === 'number' ? node.format : 0;
+
+    if (format > 0) {
+      return renderTextWithFormat(text, format, index);
+    }
+    return text;
+  }
+
+  if (node.type === 'linebreak') {
+    return <br key={index} />;
   }
 
   if (node.type === 'paragraph') {
@@ -48,7 +102,8 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
 
   if (node.type === 'list') {
     const children = node.children?.map((child, i) => renderNode(child, i)) || [];
-    const Tag = node.format === 'bullet' ? 'ul' : 'ol';
+    const listType = node.listType || node.format;
+    const Tag = listType === 'bullet' || listType === 'ul' ? 'ul' : 'ol';
     return <Tag key={index}>{children}</Tag>;
   }
 
@@ -57,13 +112,25 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
     return <li key={index}>{children}</li>;
   }
 
-  if (node.type === 'link') {
+  if (node.type === 'link' || node.type === 'autolink') {
     const children = node.children?.map((child, i) => renderNode(child, i)) || [];
+    const url = node.fields?.url || node.url || '#';
+    const newTab = node.fields?.newTab;
+
     return (
-      <a key={index} href="#">
+      <a
+        key={index}
+        href={url}
+        {...(newTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      >
         {children}
       </a>
     );
+  }
+
+  if (node.type === 'quote') {
+    const children = node.children?.map((child, i) => renderNode(child, i)) || [];
+    return <blockquote key={index}>{children}</blockquote>;
   }
 
   if (node.type === 'root') {

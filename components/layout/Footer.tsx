@@ -36,40 +36,46 @@ interface Legal {
 }
 
 export async function Footer() {
-  const payload = await getPayloadClient();
+  let popups: Popup[] = [];
+  let scorecards: Scorecard[] = [];
+  let resources: Resource[] = [];
+  let legals: Legal[] = [];
 
-  // Fetch popups for About AAAnow and AiSC sections
-  const popupsResult = await payload.find({
-    collection: 'popups',
-    where: { status: { equals: 'published' } },
-    limit: 100,
-  });
-  const popups = popupsResult.docs as Popup[];
+  try {
+    const payload = await getPayloadClient();
 
-  // Fetch scorecards
-  const scorecardsResult = await payload.find({
-    collection: 'scorecards',
-    where: { status: { equals: 'published' } },
-    limit: 100,
-  });
-  const scorecards = scorecardsResult.docs as Scorecard[];
+    // Fetch all data in parallel for better performance
+    const [popupsResult, scorecardsResult, resourcesResult, legalsResult] = await Promise.all([
+      payload.find({
+        collection: 'popups',
+        where: { status: { equals: 'published' } },
+        limit: 100,
+      }),
+      payload.find({
+        collection: 'scorecards',
+        where: { status: { equals: 'published' } },
+        limit: 100,
+      }),
+      payload.find({
+        collection: 'resources',
+        limit: 100,
+        sort: 'order',
+      }),
+      payload.find({
+        collection: 'legals',
+        where: { status: { equals: 'published' } },
+        limit: 100,
+        sort: 'order',
+      }),
+    ]);
 
-  // Fetch resources
-  const resourcesResult = await payload.find({
-    collection: 'resources',
-    limit: 100,
-    sort: 'order',
-  });
-  const resources = resourcesResult.docs as Resource[];
-
-  // Fetch legals
-  const legalsResult = await payload.find({
-    collection: 'legals',
-    where: { status: { equals: 'published' } },
-    limit: 100,
-    sort: 'order',
-  });
-  const legals = legalsResult.docs as Legal[];
+    popups = popupsResult.docs as Popup[];
+    scorecards = scorecardsResult.docs as Scorecard[];
+    resources = resourcesResult.docs as Resource[];
+    legals = legalsResult.docs as Legal[];
+  } catch (error) {
+    console.error('Footer: Failed to fetch CMS data:', error);
+  }
 
   // Group popups by aboutPage
   const aboutPopups = popups.filter(p => p.aboutPage === 'about-us');

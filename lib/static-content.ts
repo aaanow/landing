@@ -1,17 +1,17 @@
 import fs from 'fs';
 import path from 'path';
 
-const webflowExportPath = path.join(process.cwd(), 'webflow export');
+const staticExportPath = path.join(process.cwd(), 'webflow export');
 
 /**
- * Extract the page content from a Webflow HTML file
+ * Extract the page content from a static HTML file
  * Returns the content inside .page__wrapper (excluding nav and scripts)
  */
-export function getWebflowPageContent(htmlFileName: string): string {
-  const filePath = path.join(webflowExportPath, htmlFileName);
+export function getStaticPageContent(htmlFileName: string): string {
+  const filePath = path.join(staticExportPath, htmlFileName);
 
   if (!fs.existsSync(filePath)) {
-    console.warn(`Webflow HTML file not found: ${filePath}`);
+    console.warn(`Static HTML file not found: ${filePath}`);
     return '';
   }
 
@@ -65,13 +65,13 @@ export function getWebflowPageContent(htmlFileName: string): string {
 }
 
 /**
- * Get the list of all HTML files in the Webflow export
+ * Get the list of all HTML files in the static export
  */
-export function getWebflowHtmlFiles(): string[] {
-  if (!fs.existsSync(webflowExportPath)) {
+export function getStaticHtmlFiles(): string[] {
+  if (!fs.existsSync(staticExportPath)) {
     return [];
   }
 
-  return fs.readdirSync(webflowExportPath)
+  return fs.readdirSync(staticExportPath)
     .filter(file => file.endsWith('.html'));
 }

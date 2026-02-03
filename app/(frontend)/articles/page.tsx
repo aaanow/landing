@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { getPayloadClient } from '@/src/payload';
+import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,6 +15,7 @@ interface Post {
   featuredImage?: string;
   thumbnailImage?: string;
   excerpt?: string;
+  content?: unknown;
   publishedAt?: string;
   status?: 'draft' | 'published';
   category?: string;
@@ -33,24 +35,26 @@ const formatDate = (dateString: string | undefined) => {
 };
 
 export default async function ArticlesPage() {
-  const payload = await getPayloadClient();
+  let posts: Post[] = [];
 
-  // Fetch all published posts
-  const postsResult = await payload.find({
-    collection: 'posts',
-    where: {
-      status: {
-        equals: 'published',
+  try {
+    const payload = await getPayloadClient();
+
+    const postsResult = await payload.find({
+      collection: 'posts',
+      where: {
+        status: {
+          equals: 'published',
+        },
       },
-    },
-    sort: '-publishedAt',
-    limit: 100,
-  });
+      sort: '-publishedAt',
+      limit: 100,
+    });
 
-  const posts = postsResult.docs as Post[];
-
-  // Get unique categories for filtering
-  const categories = [...new Set(posts.map(p => p.category).filter(Boolean))];
+    posts = postsResult.docs as Post[];
+  } catch (error) {
+    console.error('Articles: Failed to fetch posts:', error);
+  }
 
   return (
     <section className="section background-cream">
@@ -58,111 +62,6 @@ export default async function ArticlesPage() {
         <div className="section-header__wrapper">
           <h1>Articles, News &amp; Stories</h1>
         </div>
-
-        {/* Category color styles */}
-        <style dangerouslySetInnerHTML={{ __html: `
-          /* Category-based colour themes - using CSS variables from globals.css */
-          .card-article__item[data-category="Category 1"] {
-            background-color: var(--color-cat1-bg);
-            color: var(--color-cat1-text);
-          }
-          .card-article__item[data-category="Category 1"] .card-article__img-gradient {
-            background: linear-gradient(180deg, var(--color-cat1-bg) 50%, transparent 100%);
-          }
-          .card-article__item[data-category="Category 1"] .card-article__btn {
-            background-color: var(--color-cat1-text);
-            color: var(--color-cat1-btn);
-          }
-          .card-article__item[data-category="Category 2"] {
-            background-color: var(--color-cat2-bg);
-            color: var(--color-cat2-text);
-          }
-          .card-article__item[data-category="Category 2"] .card-article__img-gradient {
-            background: linear-gradient(180deg, var(--color-cat2-bg) 50%, transparent 100%);
-          }
-          .card-article__item[data-category="Category 2"] .card-article__btn {
-            background-color: var(--color-cat2-text);
-            color: var(--color-cat2-bg);
-          }
-          .card-article__item[data-category="Category 3"] {
-            background-color: var(--color-cat3-bg);
-            color: var(--color-cat3-text);
-          }
-          .card-article__item[data-category="Category 3"] .card-article__img-gradient {
-            background: linear-gradient(180deg, var(--color-cat3-bg) 50%, transparent 100%);
-          }
-          .card-article__item[data-category="Category 3"] .card-article__btn {
-            background-color: var(--color-cat3-text);
-            color: var(--color-cat3-bg);
-          }
-          .card-article__item[data-category="Category 4"] {
-            background-color: var(--color-cat4-bg);
-            color: var(--color-cat4-text);
-          }
-          .card-article__item[data-category="Category 4"] .card-article__img-gradient {
-            background: linear-gradient(180deg, var(--color-cat4-bg) 50%, transparent 100%);
-          }
-          .card-article__item[data-category="Category 4"] .card-article__btn {
-            background-color: var(--color-cat4-text);
-            color: var(--color-cat4-bg);
-          }
-          .card-article__item[data-category="Category 5"] {
-            background-color: var(--color-cat5-bg);
-            color: var(--color-cat5-text);
-          }
-          .card-article__item[data-category="Category 5"] .card-article__img-gradient {
-            background: linear-gradient(180deg, var(--color-cat5-bg) 50%, transparent 100%);
-          }
-          .card-article__item[data-category="Category 5"] .card-article__btn {
-            background-color: var(--color-cat5-text);
-            color: var(--color-cat5-bg);
-          }
-          .card-article__item[data-category="Category 6"] {
-            background-color: var(--color-cat6-bg);
-            color: var(--color-cat6-text);
-          }
-          .card-article__item[data-category="Category 6"] .card-article__img-gradient {
-            background: linear-gradient(180deg, var(--color-cat6-bg) 50%, transparent 100%);
-          }
-          .card-article__item[data-category="Category 6"] .card-article__btn {
-            background-color: var(--color-cat6-text);
-            color: var(--color-cat6-bg);
-          }
-          .card-article__item[data-category="Category 7"] {
-            background-color: var(--color-cat7-bg);
-            color: var(--color-cat7-text);
-          }
-          .card-article__item[data-category="Category 7"] .card-article__img-gradient {
-            background: linear-gradient(180deg, var(--color-cat7-bg) 50%, transparent 100%);
-          }
-          .card-article__item[data-category="Category 7"] .card-article__btn {
-            background-color: var(--color-cat7-text);
-            color: var(--color-cat7-bg);
-          }
-          .card-article__item[data-category="Category 8"] {
-            background-color: var(--color-cat8-bg);
-            color: var(--color-cat8-text);
-          }
-          .card-article__item[data-category="Category 8"] .card-article__img-gradient {
-            background: linear-gradient(180deg, var(--color-cat8-bg) 50%, transparent 100%);
-          }
-          .card-article__item[data-category="Category 8"] .card-article__btn {
-            background-color: var(--color-cat8-text);
-            color: var(--color-cat8-bg);
-          }
-          /* Default styling for unmatched categories (uses Category 1 / primary brand colors) */
-          .card-article__item {
-            background-color: var(--color-primary-900);
-            color: var(--color-cat1-text);
-          }
-          .card-article__item .card-article__img-gradient {
-            background: linear-gradient(180deg, var(--color-primary-900) 50%, transparent 100%);
-          }
-          .card-article__item .card-article__btn {
-            background-color: var(--color-cat1-text);
-            color: var(--color-primary-600);
-          }
-        `}} />
 
         <div className="blog__wrapper">
           <div className="articles__collection-grid-wrapper w-dyn-list">
@@ -196,6 +95,7 @@ export default async function ArticlesPage() {
                       <div className="card-article__content">
                         <div className="div-block-95">
                           <p className="article__date">{formatDate(post.publishedAt)}</p>
+                          <span className="article__reading-time">{formatReadingTime(calculateReadingTime(post.content))}</span>
                         </div>
                         <h3>{post.title}</h3>
                         {post.excerpt && <p className="article__excerpt">{post.excerpt}</p>}

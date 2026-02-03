@@ -1,8 +1,8 @@
 import Script from 'next/script';
-import { getWebflowPageContent } from '@/lib/webflow-content';
+import { getStaticPageContent } from '@/lib/static-content';
 
 export default function Home() {
-  const pageContent = getWebflowPageContent('index.html');
+  const pageContent = getStaticPageContent('index.html');
 
   return (
     <>

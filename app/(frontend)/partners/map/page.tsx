@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
-import { getWebflowPageContent } from '@/lib/webflow-content';
+import { getStaticPageContent } from '@/lib/static-content';
 
 export const metadata: Metadata = {
   title: 'Partners Map - AAAnow',
 };
 
 export default function PartnersMapPage() {
-  const pageContent = getWebflowPageContent('detail_partners.html');
+  const pageContent = getStaticPageContent('detail_partners.html');
 
   return <div dangerouslySetInnerHTML={{ __html: pageContent }} />;
 }

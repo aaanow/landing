@@ -9,7 +9,10 @@
     "lint": "next lint",
     "payload": "payload",
     "generate:types": "payload generate:types",
-    "seed:faqs": "payload run src/scripts/seed-faqs.ts"
+    "seed:faqs": "payload run src/scripts/seed-faqs.ts",
+    "seed:posts": "payload run src/scripts/seed-posts.ts",
+    "seed:resources": "payload run src/scripts/seed-resources.ts",
+    "seed:resource-chapters": "payload run src/scripts/seed-resource-chapters.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.74.0",
@@ -27,12 +30,15 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^9.39.2",
     "@types/node": "^25.2.0",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
     "dotenv": "^17.2.3",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.1.6",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.54.0"
   }
 }

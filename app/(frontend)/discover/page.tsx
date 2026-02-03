@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
-import { getWebflowPageContent } from '@/lib/webflow-content';
+import { getStaticPageContent } from '@/lib/static-content';
 
 export const metadata: Metadata = {
   title: 'Discover - AAAnow',
 };
 
 export default function DiscoverPage() {
-  const pageContent = getWebflowPageContent('discover.html');
+  const pageContent = getStaticPageContent('discover.html');
 
   return <div dangerouslySetInnerHTML={{ __html: pageContent }} />;
 }

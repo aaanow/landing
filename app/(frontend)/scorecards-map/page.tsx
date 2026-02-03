@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
-import { getWebflowPageContent } from '@/lib/webflow-content';
+import { getStaticPageContent } from '@/lib/static-content';
 
 export const metadata: Metadata = {
   title: 'Scorecards Map - AAAnow',
 };
 
 export default function ScorecardsMapPage() {
-  const pageContent = getWebflowPageContent('scorecards-map.html');
+  const pageContent = getStaticPageContent('scorecards-map.html');
 
   return <div dangerouslySetInnerHTML={{ __html: pageContent }} />;
 }

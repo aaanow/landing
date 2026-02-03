@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getWebflowPageContent } from '@/lib/webflow-content';
+import { getStaticPageContent } from '@/lib/static-content';
 
 export const metadata: Metadata = {
   title: 'Documentation - AAAnow',
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function DocumentationPage() {
   // Using detail_resource.html as the base template for documentation
-  const pageContent = getWebflowPageContent('detail_resource.html');
+  const pageContent = getStaticPageContent('detail_resource.html');
 
   return <div dangerouslySetInnerHTML={{ __html: pageContent }} />;
 }
