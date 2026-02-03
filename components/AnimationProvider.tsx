@@ -1,40 +1,41 @@
 'use client';
 
-import { useEffect } from 'react';
+import { createContext, useContext, useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import Lenis from 'lenis';
 
-// Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-function initWebflowTabs() {
-  const tabWrappers = document.querySelectorAll('.w-tabs');
+interface LenisContextValue {
+  stop: () => void;
+  start: () => void;
+}
 
-  tabWrappers.forEach((wrapper) => {
+const LenisContext = createContext<LenisContextValue | null>(null);
+
+export function useLenis() {
+  return useContext(LenisContext);
+}
+
+function initWebflowTabs() {
+  document.querySelectorAll('.w-tabs').forEach(wrapper => {
     const tabLinks = wrapper.querySelectorAll('.w-tab-link');
     const tabPanes = wrapper.querySelectorAll('.w-tab-pane');
 
-    tabLinks.forEach((link) => {
-      link.addEventListener('click', (e) => {
+    tabLinks.forEach(link => {
+      link.addEventListener('click', e => {
         e.preventDefault();
         const tabName = link.getAttribute('data-w-tab');
 
-        // Update tab link states
-        tabLinks.forEach((l) => l.classList.remove('w--current'));
+        tabLinks.forEach(l => l.classList.remove('w--current'));
         link.classList.add('w--current');
 
-        // Update tab pane states
-        tabPanes.forEach((pane) => {
-          if (pane.getAttribute('data-w-tab') === tabName) {
-            pane.classList.add('w--tab-active');
-          } else {
-            pane.classList.remove('w--tab-active');
-          }
+        tabPanes.forEach(pane => {
+          pane.classList.toggle('w--tab-active', pane.getAttribute('data-w-tab') === tabName);
         });
 
-        // Update wrapper's data-current attribute
         wrapper.setAttribute('data-current', tabName || '');
       });
     });
@@ -42,29 +43,78 @@ function initWebflowTabs() {
 }
 
 export default function AnimationProvider({ children }: { children: React.ReactNode }) {
+  const lenisRef = useRef<Lenis | null>(null);
+
+  const stop = useCallback(() => {
+    lenisRef.current?.stop();
+  }, []);
+
+  const start = useCallback(() => {
+    lenisRef.current?.start();
+  }, []);
+
   useEffect(() => {
-    // Initialize Lenis smooth scroll
     const lenis = new Lenis({
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
 
-    // Connect Lenis to GSAP's ticker for smooth animations
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
+    lenisRef.current = lenis;
 
+    const rafCallback = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(rafCallback);
     gsap.ticker.lagSmoothing(0);
 
-    // Initialize Webflow tabs
     initWebflowTabs();
 
-    // Cleanup on unmount
+    // Listen for modal open/close events to control Lenis
+    const handleModalOpen = () => {
+      lenis.stop();
+    };
+
+    const handleModalClose = () => {
+      lenis.start();
+    };
+
+    // Use MutationObserver to detect modal visibility changes
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+          const target = mutation.target as HTMLElement;
+          if (target.classList.contains('getstarted__modal-overview')) {
+            const isVisible = target.style.display !== 'none' && target.style.opacity !== '0';
+            if (isVisible) {
+              handleModalOpen();
+            } else {
+              handleModalClose();
+            }
+          }
+        }
+      });
+    });
+
+    // Observe modal overlay for style changes
+    const modalOverlay = document.querySelector('[data-modal-overlay]');
+    if (modalOverlay) {
+      observer.observe(modalOverlay, { attributes: true, attributeFilter: ['style'] });
+    }
+
+    // Also listen for custom events that external scripts might dispatch
+    document.addEventListener('lenis:stop', handleModalOpen);
+    document.addEventListener('lenis:start', handleModalClose);
+
     return () => {
+      gsap.ticker.remove(rafCallback);
       lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
+      observer.disconnect();
+      document.removeEventListener('lenis:stop', handleModalOpen);
+      document.removeEventListener('lenis:start', handleModalClose);
     };
   }, []);
 
-  return <>{children}</>;
+  return (
+    <LenisContext.Provider value={{ stop, start }}>
+      {children}
+    </LenisContext.Provider>
+  );
 }

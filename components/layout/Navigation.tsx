@@ -4,10 +4,17 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo, ArrowIcon } from '@/components/icons';
+import { useLenis } from '@/components/AnimationProvider';
 
 interface NavigationProps {
   variant?: 'light' | 'dark';
 }
+
+const NAV_LINKS = [
+  { href: '/articles', label: 'Articles' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/about/lifecycle-alignment', label: 'Client Lifecycle' },
+] as const;
 
 export function Navigation({ variant = 'light' }: NavigationProps) {
   const [isVisible, setIsVisible] = useState(true);
@@ -15,83 +22,63 @@ export function Navigation({ variant = 'light' }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const lenis = useLenis();
 
-  const closeMenu = useCallback(() => {
-    setIsMenuOpen(false);
-  }, []);
-
-  const toggleMenu = useCallback(() => {
-    setIsMenuOpen((prev) => !prev);
-  }, []);
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
+  const toggleMenu = useCallback(() => setIsMenuOpen(prev => !prev), []);
 
   // Close menu on route change
   useEffect(() => {
     closeMenu();
   }, [pathname, closeMenu]);
 
-  // Handle scroll - hide nav on scroll down, show on scroll up
+  // Handle scroll behavior and Lenis control
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Close mobile menu when scrolling
       if (isMenuOpen && Math.abs(currentScrollY - lastScrollY) > 10) {
         closeMenu();
       }
 
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-
+      setIsVisible(currentScrollY <= lastScrollY || currentScrollY <= 100);
       setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY, isMenuOpen, closeMenu]);
 
-  // Lock body scroll when menu is open
-  useEffect(() => {
+    // Use Lenis stop/start instead of overflow:hidden to prevent scroll lock issues
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      lenis?.stop();
     } else {
-      document.body.style.overflow = '';
+      lenis?.start();
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isMenuOpen]);
 
-  // Close menu on outside click
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      lenis?.start();
+    };
+  }, [lastScrollY, isMenuOpen, closeMenu, lenis]);
+
+  // Handle click outside and escape key
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+    if (!isMenuOpen) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
         closeMenu();
       }
     };
 
-    if (isMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeMenu();
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isMenuOpen, closeMenu]);
-
-  // Close menu on escape key
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        closeMenu();
-      }
-    };
-
-    if (isMenuOpen) {
-      document.addEventListener('keydown', handleEscape);
-    }
-    return () => {
       document.removeEventListener('keydown', handleEscape);
     };
   }, [isMenuOpen, closeMenu]);
@@ -123,17 +110,18 @@ export function Navigation({ variant = 'light' }: NavigationProps) {
           className={`nav__menu ${isMenuOpen ? 'nav__menu--open' : ''}`}
           aria-hidden={!isMenuOpen}
         >
-          <Link href="/articles" className="nav__link" onClick={closeMenu}>
-            Articles
-          </Link>
-          <Link href="/pricing" className="nav__link" onClick={closeMenu}>
-            Pricing
-          </Link>
-          <Link href="/about/lifecycle-alignment" className="nav__link" onClick={closeMenu}>
-            Client Lifecycle
-          </Link>
+          {NAV_LINKS.map(({ href, label }) => (
+            <Link key={href} href={href} className="nav__link" onClick={closeMenu}>
+              {label}
+            </Link>
+          ))}
           <div className="nav__link-copy">
-            <a data-modal-open="get-started" href="#" className="super-btn small w-inline-block" onClick={closeMenu}>
+            <a
+              data-modal-open="get-started"
+              href="#"
+              className="super-btn small w-inline-block"
+              onClick={closeMenu}
+            >
               <span>Get Started</span>
               <ArrowIcon className="icon-16" />
             </a>

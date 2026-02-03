@@ -2,37 +2,58 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getPayloadClient } from '@/src/payload';
 
-interface Popup {
+interface BaseItem {
   id: string;
   name: string;
   slug: string;
+  status?: string;
+}
+
+interface Popup extends BaseItem {
   aboutPage?: string;
-  status?: string;
 }
 
-interface Scorecard {
-  id: string;
-  name: string;
-  slug: string;
+interface Scorecard extends BaseItem {
   link?: string;
-  status?: string;
 }
 
-interface Resource {
-  id: string;
-  name: string;
-  slug: string;
+interface Resource extends BaseItem {
   externalLink?: string;
   blogArticle?: string;
   type?: string;
 }
 
-interface Legal {
-  id: string;
-  name: string;
-  slug: string;
+interface Legal extends BaseItem {
   order?: number;
-  status?: string;
+}
+
+interface FooterLinkGroupProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+function FooterLinkGroup({ title, children }: FooterLinkGroupProps) {
+  return (
+    <div className="footer__group">
+      <h5 className="footer-heading">{title}</h5>
+      <div className="footer__link-list">{children}</div>
+    </div>
+  );
+}
+
+function FooterLink({ href, children, external }: { href: string; children: React.ReactNode; external?: boolean }) {
+  if (external) {
+    return (
+      <a href={href} className="footer__link" target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className="footer__link">
+      {children}
+    </Link>
+  );
 }
 
 export async function Footer() {
@@ -43,30 +64,11 @@ export async function Footer() {
 
   try {
     const payload = await getPayloadClient();
-
-    // Fetch all data in parallel for better performance
     const [popupsResult, scorecardsResult, resourcesResult, legalsResult] = await Promise.all([
-      payload.find({
-        collection: 'popups',
-        where: { status: { equals: 'published' } },
-        limit: 100,
-      }),
-      payload.find({
-        collection: 'scorecards',
-        where: { status: { equals: 'published' } },
-        limit: 100,
-      }),
-      payload.find({
-        collection: 'resources',
-        limit: 100,
-        sort: 'order',
-      }),
-      payload.find({
-        collection: 'legals',
-        where: { status: { equals: 'published' } },
-        limit: 100,
-        sort: 'order',
-      }),
+      payload.find({ collection: 'popups', where: { status: { equals: 'published' } }, limit: 100 }),
+      payload.find({ collection: 'scorecards', where: { status: { equals: 'published' } }, limit: 100 }),
+      payload.find({ collection: 'resources', limit: 100, sort: 'order' }),
+      payload.find({ collection: 'legals', where: { status: { equals: 'published' } }, limit: 100, sort: 'order' }),
     ]);
 
     popups = popupsResult.docs as Popup[];
@@ -77,123 +79,69 @@ export async function Footer() {
     console.error('Footer: Failed to fetch CMS data:', error);
   }
 
-  // Group popups by aboutPage
   const aboutPopups = popups.filter(p => p.aboutPage === 'about-us');
   const aiscPopups = popups.filter(p =>
-    p.aboutPage === 'aisc' ||
-    p.aboutPage === 'aod---ai-for-agency-growth' ||
-    p.aboutPage === 'lifecycle-alignment'
+    ['aisc', 'aod---ai-for-agency-growth', 'lifecycle-alignment'].includes(p.aboutPage || '')
   );
-
-  // Filter resources for footer (exclude draft types)
-  const footerResources = resources.filter(r =>
-    r.type === 'external-link' || r.type === 'blog-post' || r.externalLink || r.blogArticle
-  ).slice(0, 8);
+  const footerResources = resources
+    .filter(r => r.type === 'external-link' || r.type === 'blog-post' || r.externalLink || r.blogArticle)
+    .slice(0, 8);
 
   return (
     <section className="footer">
       <div className="container">
         <div className="footer__link-container">
-          <div className="footer__group">
-            <h5 className="footer-heading">About AAAnow</h5>
-            <div className="footer__link-list">
-              <Link href="/about/about-us" className="footer__link">
-                About us
-              </Link>
-              {aboutPopups.map((popup) => (
-                <Link
-                  key={popup.id}
-                  href={`/about/${popup.slug}`}
-                  className="footer__link"
-                >
-                  {popup.name}
-                </Link>
-              ))}
-              <Link href="/our-capability" className="footer__link">
-                Our capability
-              </Link>
-              <a
-                href="https://www.linkedin.com/company/aaanow"
-                className="footer__link"
-                target="_blank"
-                rel="noopener noreferrer"
+          <FooterLinkGroup title="About AAAnow">
+            <FooterLink href="/about/about-us">About us</FooterLink>
+            {aboutPopups.map(popup => (
+              <FooterLink key={popup.id} href={`/about/${popup.slug}`}>
+                {popup.name}
+              </FooterLink>
+            ))}
+            <FooterLink href="/our-capability">Our capability</FooterLink>
+            <FooterLink href="https://www.linkedin.com/company/aaanow" external>
+              LinkedIn
+            </FooterLink>
+          </FooterLinkGroup>
+
+          <FooterLinkGroup title="AiSC">
+            <FooterLink href="/about/aisc">AiSC Introduction</FooterLink>
+            {aiscPopups.map(popup => (
+              <FooterLink key={popup.id} href={`/about/${popup.slug}`}>
+                {popup.name}
+              </FooterLink>
+            ))}
+          </FooterLinkGroup>
+
+          <FooterLinkGroup title="Public scorecards">
+            <FooterLink href="/scorecards">Introduction</FooterLink>
+            {scorecards.map(scorecard => (
+              <FooterLink key={scorecard.id} href={scorecard.link || `/scorecards/${scorecard.slug}`}>
+                {scorecard.name}
+              </FooterLink>
+            ))}
+          </FooterLinkGroup>
+
+          <FooterLinkGroup title="Resources">
+            <FooterLink href="/reference-material">All Reference Materials</FooterLink>
+            {footerResources.map(resource => (
+              <FooterLink
+                key={resource.id}
+                href={resource.externalLink || resource.blogArticle || `/resources/${resource.slug}`}
               >
-                LinkedIn
-              </a>
-            </div>
-          </div>
+                {resource.name}
+              </FooterLink>
+            ))}
+            <FooterLink href="/reference-material#i-want-to">I want to...</FooterLink>
+          </FooterLinkGroup>
 
-          <div className="footer__group">
-            <h5 className="footer-heading">AiSC</h5>
-            <div className="footer__link-list">
-              <Link href="/about/aisc" className="footer__link">
-                AiSC Introduction
-              </Link>
-              {aiscPopups.map((popup) => (
-                <Link
-                  key={popup.id}
-                  href={`/about/${popup.slug}`}
-                  className="footer__link"
-                >
-                  {popup.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="footer__group">
-            <h5 className="footer-heading">Public scorecards</h5>
-            <div className="footer__link-list">
-              <Link href="/scorecards" className="footer__link">
-                Introduction
-              </Link>
-              {scorecards.map((scorecard) => (
-                <Link
-                  key={scorecard.id}
-                  href={scorecard.link || `/scorecards/${scorecard.slug}`}
-                  className="footer__link"
-                >
-                  {scorecard.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="footer__group">
-            <h5 className="footer-heading">Resources</h5>
-            <div className="footer__link-list">
-              <Link href="/reference-material" className="footer__link">
-                All Reference Materials
-              </Link>
-              {footerResources.map((resource) => (
-                <Link
-                  key={resource.id}
-                  href={resource.externalLink || resource.blogArticle || `/resources/${resource.slug}`}
-                  className="footer__link"
-                >
-                  {resource.name}
-                </Link>
-              ))}
-              <Link href="/reference-material#i-want-to" className="footer__link">
-                I want to...
-              </Link>
-            </div>
-          </div>
-
-          <div className="footer__group">
-            <h5 className="footer-heading">Legal</h5>
-            <div className="footer__link-list">
-              {legals.map((legal) => (
-                <Link
-                  key={legal.id}
-                  href={`/legal/${legal.slug}`}
-                  className="footer__link"
-                >
-                  {legal.name}
-                </Link>
-              ))}
-            </div>
-          </div>
+          <FooterLinkGroup title="Legal">
+            {legals.map(legal => (
+              <FooterLink key={legal.id} href={`/legal/${legal.slug}`}>
+                {legal.name}
+              </FooterLink>
+            ))}
+          </FooterLinkGroup>
         </div>
 
         <div className="spacer-vertical" />
@@ -205,14 +153,12 @@ export async function Footer() {
               otherwise, should be considered as introduction, an overview and a starting
               point only – it should not be used as a single, sole authoritative guide. You
               should not consider this legal guidance.
-              <br />
-              <br />
+              <br /><br />
               The services provided by AAAnow are based on general best practices and on
               audits of the available areas of websites at a point in time. Sections of the
               site that are not open to public access or are not being served (possibly due
               to site errors or downtime) may not be covered by our reports.
-              <br />
-              <br />
+              <br /><br />
               Where matters of legal compliance are concerned you should always take
               independent advice from appropriately qualified individuals or firms.
             </p>
@@ -229,14 +175,9 @@ export async function Footer() {
               className="footer__logo-copy"
             />
             <div className="div-block-82">
-              <a
-                href="https://willneeteson.com"
-                className="footer__link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <FooterLink href="https://willneeteson.com" external>
                 Website by SOWN
-              </a>
+              </FooterLink>
             </div>
           </div>
         </div>
