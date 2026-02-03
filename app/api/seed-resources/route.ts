@@ -221,7 +221,23 @@ export async function GET() {
       })
 
       if (existing.docs.length > 0) {
-        results.push(`Skipped resource: ${row.Name}`)
+        // Update existing resource with chapter if it's missing
+        const existingResource = existing.docs[0]
+        const chapterSlugForUpdate = row.Chapter?.toLowerCase()
+        const chapterIdForUpdate = chapterSlugForUpdate ? chapterMap[chapterSlugForUpdate] : null
+
+        if (chapterIdForUpdate && !existingResource.chapter) {
+          await payload.update({
+            collection: 'resources',
+            id: existingResource.id as string,
+            data: {
+              chapter: chapterIdForUpdate,
+            },
+          })
+          results.push(`Updated resource with chapter: ${row.Name}`)
+        } else {
+          results.push(`Skipped resource: ${row.Name}`)
+        }
         continue
       }
 

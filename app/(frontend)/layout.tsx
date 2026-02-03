@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import '@/styles/globals.css';
 import '@/styles/normalize.css';
 import '@/styles/webflow.css';
 import '@/styles/webflow-components.css';
+import '@/app/globals.css';
+import { Footer } from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: 'Scorecard by AAAnow',
@@ -26,6 +27,40 @@ export const metadata: Metadata = {
     apple: '/images/webclip.png',
   },
 };
+
+const getStartedModalHtml = `
+<div data-modal-overlay="get-started" class="getstarted__modal-overview">
+  <div data-modal-dialog="get-started" class="getstarted__modal-dialog">
+    <a data-modal-close="get-started" href="#" class="getstarted__modal-close-btn w-inline-block"><img src="/images/icon-cross.svg" loading="lazy" alt="" class="icon-16"></a>
+    <div class="getstarted__modal-content">
+      <div class="getstarted__form-content w-form">
+        <form id="wf-form-Signup" name="wf-form-Signup" data-name="Signup" method="get" class="signup__form">
+          <div class="signup__form-header-wrapper">
+            <h2>Get Started</h2>
+            <p class="body__xlarge">Set up your scorecard. Free and no credit card required</p>
+          </div>
+          <div class="field__wrapper"><input class="signup__form-text-field w-input" maxlength="256" name="Name" data-name="Name" placeholder="Your name (First, Last)" type="text" id="singupName"></div>
+          <div class="field__wrapper"><input class="signup__form-text-field w-input" maxlength="256" name="Email" data-name="Email" placeholder="Your work email" type="email" id="signupEmail" required=""></div>
+          <div class="field__wrapper"><input class="signup__form-text-field w-input" maxlength="256" name="Organisation-Type-2" data-name="Organisation Type 2" placeholder="Organisation type" type="text" id="Organisation-Type-2"></div>
+          <input type="submit" data-wait="Please wait..." class="super-btn _0-top-padding w-button" value="Start building my scorecard">
+          <div class="signup__form-legal">
+            <p class="body__small light">Your data is used for purposes of building your own scorecard and communicating with you about it. If you are requesting via one of our qualified partners, details are provided only on the basis of scorecard preparation. Completing your details is acceptance of our <span>privacy policy</span> and <a href="#" class="link-2"><span>terms &amp; conditions</span></a>.</p>
+          </div>
+        </form>
+        <div class="signup__form-success w-form-done">
+          <div class="signup__form-success-content">
+            <div>Thank you! Your submission has been received!</div>
+          </div>
+        </div>
+        <div class="w-form-fail">
+          <div>Oops! Something went wrong while submitting the form.</div>
+        </div>
+      </div>
+      <div class="getstarted__modal-img-wrapper"><img sizes="(max-width: 1500px) 100vw, 1500px" srcset="/images/aisc_product-01_1-p-500.avif 500w, /images/aisc_product-01_1-p-800.avif 800w, /images/aisc_product-01_1aisc_product-01.avif 1500w" alt="" loading="lazy" src="/images/aisc_product-01_1aisc_product-01.avif" class="signup__form-img"></div>
+    </div>
+  </div>
+</div>
+`;
 
 const navigationHtml = `
 <div data-wf--nav-sticky--variant="light" data-animation="default" class="nav w-nav" data-easing2="ease" data-easing="ease" data-collapse="small" role="banner" data-no-scroll="1" data-duration="0" data-doc-height="1">
@@ -77,9 +112,11 @@ export default function RootLayout({
       </head>
       <body>
         <div dangerouslySetInnerHTML={{ __html: navigationHtml }} />
-        <div className="page__wrapper">
+        <div className="page-wrapper">
           {children}
         </div>
+        <Footer />
+        <div dangerouslySetInnerHTML={{ __html: getStartedModalHtml }} />
 
         {/* External Scripts - jQuery must load first */}
         <Script

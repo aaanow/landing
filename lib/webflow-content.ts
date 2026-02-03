@@ -58,6 +58,9 @@ export function getWebflowPageContent(htmlFileName: string): string {
     return `href="/${p1}"`;
   });
 
+  // Remove footer section (it's rendered by the layout)
+  content = content.replace(/<section[^>]*class="[^"]*footer[^"]*"[^>]*>[\s\S]*?<\/section>/gi, '');
+
   return content;
 }
 
