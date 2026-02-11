@@ -3,16 +3,17 @@ import type { NavigationGlobal } from '@/types/cms';
 import { NavigationClient } from './Navigation';
 
 export async function Navigation() {
-  let nav: NavigationGlobal = {};
+  let links: NavigationGlobal['links'];
+  let ctaLabel: NavigationGlobal['ctaLabel'];
 
   try {
     const payload = await getPayloadClient();
-    nav = await payload.findGlobal({ slug: 'navigation' }) as NavigationGlobal;
+    const nav = await payload.findGlobal({ slug: 'navigation' }) as NavigationGlobal | null;
+    links = nav?.links;
+    ctaLabel = nav?.ctaLabel;
   } catch (error) {
     console.error('Navigation: Failed to fetch navigation global:', error);
   }
-
-  const { links, ctaLabel } = nav;
 
   return <NavigationClient links={links} ctaLabel={ctaLabel} />;
 }

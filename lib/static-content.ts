@@ -53,19 +53,13 @@ export function getStaticPageContent(htmlFileName: string): string {
 
   // Fix href links - convert .html to / routes
   content = content.replace(/href="index\.html"/g, 'href="/"');
-  content = content.replace(/href="([^"]+)\.html"/g, (match, p1) => {
+  content = content.replace(/href="([^"]+)\.html"/g, (_match, p1) => {
     // Handle nested paths
     return `href="/${p1}"`;
   });
 
   // Remove footer section (it's rendered by the layout)
   content = content.replace(/<section[^>]*class="[^"]*footer[^"]*"[^>]*>[\s\S]*?<\/section>/gi, '');
-
-  // Replace testimonials section with a placeholder (rendered as a React component)
-  content = content.replace(
-    /<section[^>]*>[\s\S]*?Where we deliver confidence[\s\S]*?Who&#x27;s talking about us[\s\S]*?<\/section>/i,
-    '<!-- TESTIMONIALS_SECTION -->',
-  );
 
   return content;
 }

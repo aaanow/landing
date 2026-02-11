@@ -639,8 +639,9 @@ figcaption {
 }
 
 .nav__menu {
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
+  gap: 4px;
   height: 100%;
   padding-left: 8px;
   padding-right: 8px;
@@ -900,9 +901,12 @@ figcaption {
   background-color: #fff3;
   border: 1px solid #ffffff1a;
   border-radius: 16px;
-  flex-flow: column;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
   width: 95%;
-  max-width: 660px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   position: relative;

@@ -19,6 +19,8 @@ import { Scorecards } from './collections/Scorecards'
 import { Footer } from './globals/Footer'
 import { Navigation as NavigationGlobal } from './globals/Navigation'
 import { Testimonials } from './globals/Testimonials'
+import { LogoMarquee } from './globals/LogoMarquee'
+import { Hero } from './globals/Hero'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -31,7 +33,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Posts, Pages, FAQs, ResourceChapters, Resources, Popups, Legals, Scorecards],
-  globals: [Footer, NavigationGlobal, Testimonials],
+  globals: [Footer, NavigationGlobal, Testimonials, LogoMarquee, Hero],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

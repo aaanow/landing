@@ -1,8 +1,8 @@
-import Script from 'next/script';
 import { getStaticPageContent } from '@/lib/static-content';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
+import { LogoMarquee } from '@/components/LogoMarqueeServer';
+import { HeroSection } from '@/components/HeroSection';
 
-const BAR_GRAPH_SCRIPT_URL = 'https://aaanow.vercel.app/webflow/animations/bar-graph/bar-graph-animation-embed.js';
 const TESTIMONIALS_MARKER = '<!-- TESTIMONIALS_SECTION -->';
 
 export default function Home() {
@@ -11,13 +11,11 @@ export default function Home() {
 
   return (
     <>
+      <HeroSection />
       <div dangerouslySetInnerHTML={{ __html: parts[0] }} />
+      {parts.length > 1 && <LogoMarquee />}
       {parts.length > 1 && <TestimonialsSection />}
       {parts.length > 1 && <div dangerouslySetInnerHTML={{ __html: parts[1] }} />}
-      <Script src={BAR_GRAPH_SCRIPT_URL} strategy="afterInteractive" />
-      <Script id="bar-graph-init" strategy="afterInteractive">
-        {`if(window.BarGraphAnimation)window.BarGraphAnimation.mount('#bar-graph')`}
-      </Script>
     </>
   );
 }

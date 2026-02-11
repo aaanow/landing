@@ -168,6 +168,34 @@ export interface TestimonialsGlobal {
   clientLogos?: ClientLogo[];
 }
 
+// Logo Marquee global
+export interface MarqueeLogo {
+  image: string;
+  alt?: string;
+  link?: string;
+  id?: string;
+}
+
+export interface LogoMarqueeGlobal {
+  heading?: string;
+  logos?: MarqueeLogo[];
+  speed?: number;
+  direction?: 'forward' | 'backward';
+}
+
+// Hero global
+export interface HeroGlobal {
+  pillText?: string;
+  pillLink?: string;
+  title?: string;
+  subtitle?: string;
+  primaryButtonText?: string;
+  primaryButtonAction?: 'modal' | 'link';
+  primaryButtonLink?: string;
+  secondaryButtonText?: string;
+  secondaryButtonLink?: string;
+}
+
 // Page props for dynamic routes (Next.js 15 pattern)
 export interface DynamicPageProps {
   params: Promise<{ slug: string }>;
