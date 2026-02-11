@@ -917,7 +917,6 @@
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-button);
-  max-width: 48rem;
   margin: 0 auto 3.5rem;
 }
 

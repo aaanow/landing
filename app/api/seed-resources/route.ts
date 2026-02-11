@@ -1,68 +1,13 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { NextResponse } from 'next/server'
+import { checkSeedAuth } from '@/lib/seed-auth'
+import { parseCSV } from '@/lib/csv'
 import fs from 'fs'
 import path from 'path'
 
-interface ChapterRow {
-  name: string
-  slug: string
-  order: number | null
-}
-
-interface ResourceRow {
-  name: string
-  slug: string
-  chapterSlug: string
-  snippet: string
-  order: number | null
-  richText: string
-  quote: string
-  tag: string
-  pdf: string
-  icon: string
-  blogArticle: string
-  externalLink: string
-  type: string
-  location: string
-}
-
-function parseCSV(content: string, columns: string[]): Record<string, string>[] {
-  const lines = content.split('\n')
-  const rows: Record<string, string>[] = []
-
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim()
-    if (!line) continue
-
-    const fields: string[] = []
-    let current = ''
-    let inQuotes = false
-
-    for (let j = 0; j < line.length; j++) {
-      const char = line[j]
-      if (char === '"') {
-        inQuotes = !inQuotes
-      } else if (char === ',' && !inQuotes) {
-        fields.push(current)
-        current = ''
-      } else {
-        current += char
-      }
-    }
-    fields.push(current)
-
-    const row: Record<string, string> = {}
-    columns.forEach((col, idx) => {
-      row[col] = fields[idx] || ''
-    })
-    rows.push(row)
-  }
-
-  return rows
-}
-
-function htmlToLexical(html: string) {
+/** Resources use a paragraph-only split (different from the block-level split in lib/lexical) */
+function htmlToLexicalParagraphs(html: string) {
   if (!html || html.trim() === '') {
     return {
       root: {
@@ -89,7 +34,7 @@ function htmlToLexical(html: string) {
   const paragraphs = html
     .split(/<\/?p[^>]*>/)
     .map((p) => p.trim())
-    .filter((p) => p && p !== '‍')
+    .filter((p) => p && p !== '\u200D')
 
   const children = paragraphs.map((text) => ({
     type: 'paragraph',
@@ -125,7 +70,10 @@ function htmlToLexical(html: string) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const authError = checkSeedAuth(request)
+  if (authError) return authError
+
   try {
     const payload = await getPayload({ config })
     const results: string[] = []
@@ -259,7 +207,7 @@ export async function GET() {
           chapter: chapterId,
           snippet: row.Snippet || null,
           order: row.Order ? parseInt(row.Order, 10) : null,
-          richText: row['Rich Text'] ? htmlToLexical(row['Rich Text']) : null,
+          richText: row['Rich Text'] ? htmlToLexicalParagraphs(row['Rich Text']) : null,
           quote: row.Quote || null,
           tag: row.Tag || null,
           pdf: row.PDF || null,

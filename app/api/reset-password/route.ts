@@ -1,18 +1,21 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { NextResponse } from 'next/server'
+import { checkSeedAuth } from '@/lib/seed-auth'
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
-  const email = searchParams.get('email')
-  const password = searchParams.get('password')
+export async function POST(request: Request) {
+  const authError = checkSeedAuth(request)
+  if (authError) return authError
 
-  if (!email || !password) {
+  const body = await request.json().catch(() => null)
+  if (!body?.email || !body?.password) {
     return NextResponse.json(
-      { error: 'Provide ?email=...&password=... query params' },
+      { error: 'Provide { "email": "...", "password": "..." } in request body' },
       { status: 400 },
     )
   }
+
+  const { email, password } = body
 
   try {
     const payload = await getPayload({ config })
@@ -34,6 +37,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ success: true, message: `Password updated for ${email}` })
   } catch (error) {
-    return NextResponse.json({ success: false, error: String(error) }, { status: 500 })
+    console.error('Reset password error:', error)
+    return NextResponse.json({ success: false, error: 'Password reset failed' }, { status: 500 })
   }
 }

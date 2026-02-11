@@ -53,17 +53,6 @@ export const HowItWorks: GlobalConfig = {
           label: 'Action Description',
         },
         {
-          name: 'researchLinkLabel',
-          type: 'text',
-          label: 'Research Link Label',
-          admin: { description: 'Optional research link text' },
-        },
-        {
-          name: 'researchLinkDescription',
-          type: 'textarea',
-          label: 'Research Link Description',
-        },
-        {
           name: 'steps',
           type: 'array',
           label: 'Steps',
@@ -90,24 +79,6 @@ export const HowItWorks: GlobalConfig = {
           type: 'upload',
           relationTo: 'media',
           label: 'Image',
-        },
-        {
-          name: 'videoLinks',
-          type: 'array',
-          label: 'Video Links',
-          fields: [
-            { name: 'label', type: 'text', label: 'Label', required: true },
-            { name: 'url', type: 'text', label: 'URL', required: true },
-          ],
-        },
-        {
-          name: 'resourceLinks',
-          type: 'array',
-          label: 'Resource Links',
-          fields: [
-            { name: 'label', type: 'text', label: 'Label', required: true },
-            { name: 'url', type: 'text', label: 'URL', required: true },
-          ],
         },
       ],
     },

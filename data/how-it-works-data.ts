@@ -4,16 +4,6 @@ export interface Step {
   description: string
 }
 
-export interface VideoLink {
-  label: string
-  url: string
-}
-
-export interface ResourceLink {
-  label: string
-  url: string
-}
-
 export interface HowItWorksTab {
   id: string
   number: string
@@ -21,19 +11,13 @@ export interface HowItWorksTab {
   outcomeLabel: string
   actionTitle: string
   actionDescription: string
-  researchLink?: {
-    label: string
-    description: string
-  }
   steps: Step[]
   outcomeTitle: string
   outcomeDescription: string
   image: { src: string; srcSet: string; sizes: string }
-  videoLinks: VideoLink[]
-  resourceLinks: ResourceLink[]
 }
 
-export const TABS = ['day', 'week', 'month', 'quarter'] as const
+export const TABS = ['day', 'week', 'month'] as const
 export type TabId = (typeof TABS)[number]
 
 export const HOW_IT_WORKS_HEADING = ""
@@ -47,11 +31,6 @@ export const HOW_IT_WORKS_TABS: HowItWorksTab[] = [
     actionTitle: 'Evidence billable time',
     actionDescription:
       'Profile present (& lapsed) clients. Value / Risk fundamentals costed for each; email, engage and sell work.',
-    researchLink: {
-      label: 'The research behind our numbers.',
-      description:
-        'How behavioural science, AI modelling evidence can be used to removes noise, and increases profit.',
-    },
     steps: [
       {
         label: '1',
@@ -80,14 +59,6 @@ export const HOW_IT_WORKS_TABS: HowItWorksTab[] = [
       srcSet: '/images/1_1-p-500.avif 500w, /images/1_11.avif 783w',
       sizes: '(max-width: 767px) 100vw, (max-width: 991px) 728px, 783px',
     },
-    videoLinks: [
-      { label: 'Client confidence, Agency revenue', url: 'https://youtu.be/TMWlp4o-ezk' },
-      { label: 'Introduction \u2013 why AiSC, what value?', url: 'https://youtu.be/vKpIORM39f0' },
-    ],
-    resourceLinks: [
-      { label: 'AiSC \u2013 what, why, how much', url: 'https://aaanow.aflip.in/AiSC_Application.html' },
-      { label: 'See how it works', url: '#' },
-    ],
   },
   {
     id: 'week',
@@ -126,17 +97,6 @@ export const HOW_IT_WORKS_TABS: HowItWorksTab[] = [
         '/images/2_1-p-500.avif 500w, /images/2_1-p-800.avif 800w, /images/2_1-p-1080.avif 1080w, /images/2_1-p-1600.avif 1600w, /images/2_12.avif 1744w',
       sizes: '(max-width: 767px) 100vw, (max-width: 991px) 728px, 783px',
     },
-    videoLinks: [
-      { label: 'Client confidence, Agency revenue', url: 'https://youtu.be/TMWlp4o-ezk' },
-      { label: 'Differentiate \u2013 have number 11.', url: 'https://youtu.be/y0PhgZxybnA' },
-    ],
-    resourceLinks: [
-      {
-        label: 'Losing a pitch \u2013 with AiSC there are 40,000 reasons to.',
-        url: 'https://aaanow.webflow.io/post/how-losing-the-pitch-is-worth-more-30-days-40-000',
-      },
-      { label: 'AiSC \u2013 what, why, how much', url: 'https://aaanow.aflip.in/AiSC_Application.html' },
-    ],
   },
   {
     id: 'month',
@@ -174,56 +134,5 @@ export const HOW_IT_WORKS_TABS: HowItWorksTab[] = [
       srcSet: '/images/3_1-p-500.avif 500w, /images/3_1-p-800.avif 800w, /images/3_13.avif 980w',
       sizes: '(max-width: 767px) 100vw, (max-width: 991px) 728px, 783px',
     },
-    videoLinks: [
-      { label: 'Client confidence, Agency revenue', url: 'https://youtu.be/TMWlp4o-ezk' },
-      { label: "Stop Funding \u2018competition\u2019", url: 'https://youtu.be/LiWdhqfseHE' },
-    ],
-    resourceLinks: [
-      { label: 'AiSC \u2013 what, why, how much', url: 'https://aaanow.aflip.in/AiSC_Application.html' },
-    ],
-  },
-  {
-    id: 'quarter',
-    number: '04',
-    timeLabel: 'in a Quarter',
-    outcomeLabel: 'Your growth engine',
-    actionTitle: 'Own your target sector',
-    actionDescription:
-      'Evergreen PR and event content, sector want to understand position - you set the digital standard others report against.',
-    steps: [
-      {
-        label: 'a',
-        title: 'Sector constituents loaded',
-        description: 'Securely add websites via XLS file, takes you 7mins.',
-      },
-      {
-        label: 'b',
-        title: 'Influencer reach out',
-        description:
-          'Partner with memberbody, associations (direct value to them) sector media to collaborate on results distribution.',
-      },
-      {
-        label: 'c',
-        title: 'Against target account (new or to expand)',
-        description:
-          'Repeating 90Day cycle, monthly announcement / update - continuous sector engagement and discussion.',
-      },
-    ],
-    outcomeTitle: 'Your growth engine',
-    outcomeDescription:
-      'How AiSC drives agency growth by adding pitch differentiation, strengthening retainers, revealing billable work, protecting value after launch and giving account teams continuous clarity across the full client lifecycle.',
-    image: {
-      src: '/images/4.avif',
-      srcSet:
-        '/images/302bf39f9c030bcf57ceed97da9095d7_4-p-500.avif 500w, /images/302bf39f9c030bcf57ceed97da9095d7_4-p-800.avif 800w, /images/4.avif 924w',
-      sizes: '(max-width: 767px) 100vw, (max-width: 991px) 728px, 783px',
-    },
-    videoLinks: [
-      { label: 'Client confidence, Agency revenue', url: 'https://youtu.be/TMWlp4o-ezk' },
-      { label: 'AiSC \u2013 Agency growth engine', url: 'https://youtu.be/zL-Cne8VJQc' },
-    ],
-    resourceLinks: [
-      { label: 'AiSC \u2013 what, why, how much', url: 'https://aaanow.aflip.in/AiSC_Application.html' },
-    ],
   },
 ]

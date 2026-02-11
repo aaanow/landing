@@ -31,7 +31,7 @@ export default function Home() {
       {betweenStatsAndHIW && <div dangerouslySetInnerHTML={{ __html: betweenStatsAndHIW }} />}
       <HowItWorksSectionServer />
       {middleContent && <div dangerouslySetInnerHTML={{ __html: middleContent }} />}
-      {afterTestimonials != null && <TestimonialsSection />}
+      {afterTestimonials !== undefined && <TestimonialsSection />}
       {afterTestimonials && <div dangerouslySetInnerHTML={{ __html: afterTestimonials }} />}
       <CTASection />
     </>

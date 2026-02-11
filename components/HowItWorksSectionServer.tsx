@@ -8,7 +8,7 @@ import type { HowItWorksTab } from '@/data/how-it-works-data'
 function mapCmsToTabs(data: HowItWorksGlobal): HowItWorksTab[] {
   if (!data.tabs || data.tabs.length === 0) return HOW_IT_WORKS_TABS
 
-  const defaultIds = ['day', 'week', 'month', 'quarter']
+  const defaultIds = ['day', 'week', 'month']
 
   return data.tabs.map((tab, i) => {
     const imageUrl = getMediaUrl(tab.image)
@@ -20,10 +20,6 @@ function mapCmsToTabs(data: HowItWorksGlobal): HowItWorksTab[] {
       outcomeLabel: tab.outcomeLabel,
       actionTitle: tab.actionTitle,
       actionDescription: tab.actionDescription || '',
-      researchLink:
-        tab.researchLinkLabel
-          ? { label: tab.researchLinkLabel, description: tab.researchLinkDescription || '' }
-          : undefined,
       steps: (tab.steps || []).map((s) => ({
         label: s.label,
         title: s.title,
@@ -36,14 +32,6 @@ function mapCmsToTabs(data: HowItWorksGlobal): HowItWorksTab[] {
         srcSet: imageUrl || '',
         sizes: '(max-width: 767px) 100vw, (max-width: 991px) 728px, 783px',
       },
-      videoLinks: (tab.videoLinks || []).map((vl) => ({
-        label: vl.label,
-        url: vl.url,
-      })),
-      resourceLinks: (tab.resourceLinks || []).map((rl) => ({
-        label: rl.label,
-        url: rl.url,
-      })),
     }
   })
 }

@@ -1,8 +1,12 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { NextResponse } from 'next/server'
+import { checkSeedAuth } from '@/lib/seed-auth'
 
-export async function GET() {
+export async function GET(request: Request) {
+  const authError = checkSeedAuth(request)
+  if (authError) return authError
+
   try {
     const payload = await getPayload({ config })
 
