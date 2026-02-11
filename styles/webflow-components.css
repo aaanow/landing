@@ -125,7 +125,7 @@
 }
 
 body {
-  background-color: var(--accent-200);
+  background-color: #F9F9F3;
   color: var(--primary-900);
   font-family: var(--font-family-body);
   font-size: var(--font-size-xl);

@@ -8,7 +8,7 @@
   --color-accent-100: #f2f4f4;
   --color-accent-200: #fffcea;
   --color-accent-600: #f9f2c5;
-  --color-accent-900: #ff6d2e;
+  --color-accent-900: #00323c;
 
   --color-primary-100: #015a6a0d;
   --color-primary-200: #e5eaeb;
@@ -119,6 +119,8 @@
   cursor: pointer;
   text-decoration: none;
   border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.5rem;
   transition: all 0.2s ease;
   font-family: inherit;
   font-size: inherit;
@@ -138,8 +140,6 @@
   color: var(--color-neutral-0);
   font-family: var(--font-family-heading);
   font-size: var(--font-size-body-large);
-  border-radius: var(--radius-md);
-  padding: 0.75rem 2rem;
   box-shadow: inset 0 0 4px 2px #fff3, 0 0 20px #e1ff0166;
 }
 
@@ -151,27 +151,23 @@
 .button--solid {
   background: var(--color-primary-900);
   color: var(--color-neutral-0);
-  border-radius: var(--radius-full);
   font-family: var(--font-family-body);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
-  padding: 0.7rem 1.5rem;
 }
 
 .button--solid:hover:not(:disabled) {
   background: var(--color-primary-600);
 }
 
-/* Secondary – white with subtle border, pill shape */
+/* Secondary – white with subtle border */
 .button--secondary {
   background: var(--color-neutral-0);
   color: var(--color-primary-900);
   border-color: var(--color-border);
-  border-radius: var(--radius-full);
   font-family: var(--font-family-body);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
-  padding: 0.7rem 1.5rem;
 }
 
 .button--secondary:hover:not(:disabled) {
@@ -183,8 +179,6 @@
   background: var(--color-neutral-0);
   border-color: var(--color-primary-600);
   color: var(--color-primary-600);
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
   font-size: var(--font-size-base);
   white-space: nowrap;
 }
@@ -214,11 +208,6 @@
   padding: 0.5rem 1rem;
 }
 
-.button--primary.button--sm {
-  font-size: var(--font-size-lg);
-  padding: 0.5rem 1rem;
-}
-
 /* Spacing when inside a subheading wrapper */
 .subheading__wrapper > .button {
   margin-top: 2rem;
@@ -226,7 +215,6 @@
 
 @media (max-width: 900px) {
   .button--outline {
-    padding: 0.4rem 0.6rem;
     font-size: var(--font-size-sm);
   }
 }
@@ -912,6 +900,8 @@
 }
 
 .stats-icon {
+  display: flex;
+  justify-content: center;
   margin-bottom: 1.5rem;
 }
 
@@ -1137,7 +1127,7 @@
 
 .nhero__content {
   text-align: center;
-  max-width: 48rem;
+  max-width: 64rem;
   margin-inline: auto;
   display: flex;
   flex-direction: column;
@@ -1150,6 +1140,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  max-width: 64rem;
 }
 
 .nhero__pill {
@@ -1159,7 +1150,7 @@
   padding: 0.4rem 1rem;
   border-radius: var(--radius-full);
   border: 1px solid var(--color-border);
-  background: var(--color-neutral-0);
+  background: transparent;
   color: var(--color-primary-900);
   font-size: var(--font-size-sm);
   font-family: var(--font-family-body);
@@ -1177,7 +1168,7 @@
 
 .nhero__title {
   font-family: var(--font-family-heading);
-  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-size: clamp(2.75rem, 6vw, 4.75rem);
   font-weight: var(--font-weight-normal);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
@@ -1202,10 +1193,24 @@
 }
 
 .nhero__scorecard-wrapper {
+  position: relative;
   width: 100%;
-  margin-top: 3rem;
-  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  margin-top: 4rem;
+  background: var(--color-neutral-0);
+  border-radius: var(--radius-lg);
+}
+
+.nhero__scorecard-wrapper::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to bottom, transparent, #F9F9F3);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  pointer-events: none;
+  z-index: 2;
 }
 
 @media (max-width: 767px) {

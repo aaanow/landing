@@ -200,29 +200,23 @@ function HowItWorksDesktop() {
       if (i === activeIndex) {
         gsap.to(el, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', pointerEvents: 'auto' })
       } else {
-        gsap.to(el, {
-          opacity: 0,
-          y: i < activeIndex ? -30 : 30,
-          duration: 0.3,
-          ease: 'power2.in',
-          pointerEvents: 'none',
-        })
+        gsap.set(el, { opacity: 0, y: i < activeIndex ? -30 : 30, pointerEvents: 'none' })
       }
     })
 
     visualPanelRefs.current.forEach((el, i) => {
       if (!el) return
       if (i === activeIndex) {
-        gsap.to(el, { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out', pointerEvents: 'auto' })
+        gsap.to(el, { opacity: 1, duration: 0.5, ease: 'power2.out', pointerEvents: 'auto' })
       } else {
-        gsap.to(el, { opacity: 0, scale: 0.97, duration: 0.3, ease: 'power2.in', pointerEvents: 'none' })
+        gsap.set(el, { opacity: 0, pointerEvents: 'none' })
       }
     })
 
     // Progress fill
     if (progressFillRef.current) {
       gsap.to(progressFillRef.current, {
-        scaleY: (activeIndex + 1) / STEP_COUNT,
+        scaleX: (activeIndex + 1) / STEP_COUNT,
         duration: 0.4,
         ease: 'power2.out',
       })
@@ -247,11 +241,11 @@ function HowItWorksDesktop() {
                   ref={(el) => { progressDotRefs.current[i] = el }}
                   className="hiw__progress-dot"
                   data-active={i <= activeIndex}
+                  data-current={i === activeIndex}
                 >
-                  <span className="hiw__progress-dot-circle" />
+                  <span className="hiw__progress-dot-circle">{t.number}</span>
                   <div className="hiw__progress-dot-text">
-                    <span className="hiw__progress-dot-num">{t.number}</span>
-                    <span className="hiw__progress-dot-label">{t.timeLabel}</span>
+                    <span className="hiw__progress-dot-label">{t.outcomeLabel}</span>
                   </div>
                 </div>
               ))}
@@ -267,12 +261,6 @@ function HowItWorksDesktop() {
                   style={{ opacity: i === 0 ? 1 : 0, transform: i === 0 ? 'translateY(0)' : 'translateY(30px)' }}
                   aria-hidden={i !== activeIndex}
                 >
-                  <div className="hiw__text-meta">
-                    <span className="hiw__text-number">{t.number}</span>
-                    <span className="hiw__text-time">{t.timeLabel}</span>
-                    <span className="hiw__text-outcome-label">{t.outcomeLabel}</span>
-                  </div>
-
                   <h3 className="hiw__text-title">{t.actionTitle}</h3>
                   <p className="hiw__text-desc">{t.actionDescription}</p>
 
@@ -296,18 +284,43 @@ function HowItWorksDesktop() {
                       </div>
                     ))}
                   </div>
+
+                  <div className="hiw__text-links">
+                    {t.videoLinks.map((vl) => (
+                      <a
+                        key={vl.url + vl.label}
+                        href={vl.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hiw__text-link"
+                      >
+                        {vl.label} {ARROW_ICON}
+                      </a>
+                    ))}
+                    {t.resourceLinks.map((rl) => (
+                      <a
+                        key={rl.url + rl.label}
+                        href={rl.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hiw__text-link"
+                      >
+                        {rl.label} {ARROW_ICON}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
 
-            {/* Right: visual panels */}
+            {/* Right: image only */}
             <div className="hiw__visual-stack">
               {HOW_IT_WORKS_TABS.map((t, i) => (
                 <div
                   key={t.id}
                   ref={(el) => { visualPanelRefs.current[i] = el }}
                   className="hiw__visual-panel"
-                  style={{ opacity: i === 0 ? 1 : 0, transform: i === 0 ? 'scale(1)' : 'scale(0.97)' }}
+                  style={{ opacity: i === 0 ? 1 : 0 }}
                   aria-hidden={i !== activeIndex}
                 >
                   <div className="hiw__visual-image-wrap">
@@ -319,38 +332,6 @@ function HowItWorksDesktop() {
                       loading="eager"
                       className="hiw__visual-image"
                     />
-                  </div>
-
-                  <div className="hiw__visual-links">
-                    {t.videoLinks.map((vl) => (
-                      <a
-                        key={vl.url + vl.label}
-                        href={vl.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hiw__visual-link"
-                      >
-                        {vl.label} {ARROW_ICON}
-                      </a>
-                    ))}
-                  </div>
-
-                  <div className="hiw__visual-outcome">
-                    <h4 className="hiw__visual-outcome-title">{t.outcomeTitle}</h4>
-                    <p className="hiw__visual-outcome-desc">{t.outcomeDescription}</p>
-                    <div className="hiw__visual-resource-links">
-                      {t.resourceLinks.map((rl) => (
-                        <a
-                          key={rl.url + rl.label}
-                          href={rl.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hiw__visual-resource-link"
-                        >
-                          {rl.label} {ARROW_ICON}
-                        </a>
-                      ))}
-                    </div>
                   </div>
                 </div>
               ))}

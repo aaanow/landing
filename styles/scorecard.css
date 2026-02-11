@@ -4,26 +4,28 @@
    ================================================================= */
 
 .scorecard-tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
   border: 1px solid var(--color-border);
   border-bottom: none;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  overflow: hidden;
-  background: var(--color-bg-subtle);
+  background: #F9F9F3;
 }
 
 .scorecard-tab {
   position: relative;
-  padding: 0.85rem 1.5rem;
+  flex: 1;
+  padding: 0.6rem 1rem;
   text-align: center;
   font-family: var(--font-family-body);
   font-size: var(--font-size-base);
   color: var(--color-primary-400);
   cursor: pointer;
-  transition: color 0.3s, background 0.3s;
-  background: none;
-  border: none;
+  transition: color 0.3s, background 0.3s, border-color 0.3s;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
   overflow: hidden;
 }
 
@@ -35,12 +37,14 @@
 .scorecard-tab:hover:not(.scorecard-tab--active) {
   color: var(--color-primary-900);
   background: rgba(255, 255, 255, 0.5);
+  border-color: var(--color-border);
 }
 
 .scorecard-tab--active {
   background: var(--color-neutral-0);
   color: var(--color-primary-900);
   font-weight: var(--font-weight-medium);
+  border-color: var(--color-border);
 }
 
 /* Timer bar */
@@ -67,6 +71,7 @@
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   transition: opacity 0.25s ease, transform 0.25s ease;
   overflow: hidden;
+  height: 600px;
 }
 
 .scorecard-panel--enter {

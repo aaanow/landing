@@ -36,7 +36,7 @@ export interface HowItWorksTab {
 export const TABS = ['day', 'week', 'month', 'quarter'] as const
 export type TabId = (typeof TABS)[number]
 
-export const HOW_IT_WORKS_HEADING = "AiSC \u2013 \u2018one change\u2019 how long for results?"
+export const HOW_IT_WORKS_HEADING = ""
 
 export const HOW_IT_WORKS_TABS: HowItWorksTab[] = [
   {
