@@ -1,0 +1,356 @@
+/* =================================================================
+   SCORECARD COMPONENT
+   Tabs, panels, table, badges, bars, and responsive overrides
+   ================================================================= */
+
+.scorecard-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border: 1px solid var(--color-border);
+  border-bottom: none;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  overflow: hidden;
+  background: var(--color-bg-subtle);
+}
+
+.scorecard-tab {
+  position: relative;
+  padding: 0.85rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  color: var(--color-primary-400);
+  cursor: pointer;
+  transition: color 0.3s, background 0.3s;
+  background: none;
+  border: none;
+  overflow: hidden;
+}
+
+.scorecard-tab__label {
+  position: relative;
+  z-index: 1;
+}
+
+.scorecard-tab:hover:not(.scorecard-tab--active) {
+  color: var(--color-primary-900);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.scorecard-tab--active {
+  background: var(--color-neutral-0);
+  color: var(--color-primary-900);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Timer bar */
+.scorecard-tab__timer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--color-primary-900);
+  animation: scorecard-timer linear forwards;
+  width: 0%;
+}
+
+@keyframes scorecard-timer {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* Panel transitions */
+.scorecard-panel {
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  overflow: hidden;
+}
+
+.scorecard-panel--enter {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scorecard-panel--exit {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+/* Meta row */
+.scorecard-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  background: rgba(240, 241, 225, 0.4);
+}
+
+.scorecard-meta__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.scorecard-meta__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-primary-400);
+  font-family: var(--font-family-body);
+}
+
+.scorecard-meta__value {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-900);
+  font-family: var(--font-family-body);
+}
+
+.scorecard-meta__link {
+  font-weight: var(--font-weight-normal);
+  color: var(--color-primary-400);
+}
+
+.scorecard-meta__link--active {
+  color: var(--color-primary-900);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Table */
+.scorecard-table-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.scorecard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.scorecard-table thead {
+  background: transparent;
+}
+
+.scorecard-table th,
+.scorecard-table td {
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.scorecard-th {
+  padding: 0.65rem 0.5rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-900);
+  text-align: left;
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+}
+
+.scorecard-th--org {
+  padding-left: 1.5rem;
+  min-width: 160px;
+}
+
+.scorecard-th--value {
+  font-weight: var(--font-weight-bold);
+}
+
+.scorecard-th--narrow {
+  width: 28px;
+  text-align: center;
+  font-size: 0.65rem;
+}
+
+.scorecard-th--icons {
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+}
+
+.scorecard-th--sort .scorecard-sort {
+  opacity: 0.35;
+  font-size: 0.65rem;
+}
+
+.scorecard-td {
+  padding: 0.5rem;
+  color: var(--color-primary-900);
+  vertical-align: middle;
+}
+
+.scorecard-td--org {
+  padding-left: 1.5rem;
+  white-space: nowrap;
+  font-size: var(--font-size-sm);
+}
+
+.scorecard-td--ref {
+  color: var(--color-primary-400);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+}
+
+.scorecard-td--center {
+  text-align: center;
+  color: var(--color-primary-400);
+}
+
+.scorecard-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--color-primary-400);
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  opacity: 0.4;
+}
+
+/* Grade badges */
+.scorecard-grade {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  color: white;
+}
+
+.scorecard-grade--lg {
+  width: 32px;
+  height: 32px;
+  font-size: var(--font-size-base);
+}
+
+.scorecard-grade--a { background: #2d6a4f; }
+.scorecard-grade--b { background: #b5a642; }
+.scorecard-grade--c { background: #d4772c; }
+.scorecard-grade--d { background: #c0392b; }
+
+/* History bars */
+.scorecard-bar {
+  display: flex;
+  height: 14px;
+  border-radius: 3px;
+  overflow: hidden;
+  min-width: 80px;
+  gap: 1px;
+}
+
+.scorecard-bar__seg {
+  display: block;
+  height: 100%;
+}
+
+.scorecard-bar__seg--grey   { background: #d5d6c8; }
+.scorecard-bar__seg--green  { background: #2d6a4f; }
+.scorecard-bar__seg--blue   { background: #3b82c4; }
+.scorecard-bar__seg--red    { background: #c0392b; }
+.scorecard-bar__seg--orange { background: #d4772c; }
+
+/* Fade-out at bottom */
+.scorecard-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--color-neutral-0));
+  pointer-events: none;
+}
+
+.scorecard-tr--fade td {
+  opacity: 0.4;
+}
+
+/* Status badges (Accounts tab) */
+.scorecard-status {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.scorecard-status--active     { background: #e6f4ea; color: #2d6a4f; }
+.scorecard-status--onboarding { background: #e8f0fe; color: #3b82c4; }
+
+/* Health indicators (Accounts tab) */
+.scorecard-health {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.scorecard-health::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.scorecard-health--good    { color: #2d6a4f; }
+.scorecard-health--good::before    { background: #2d6a4f; }
+.scorecard-health--at-risk { color: #c0392b; }
+.scorecard-health--at-risk::before { background: #c0392b; }
+.scorecard-health--monitor { color: #d4772c; }
+.scorecard-health--monitor::before { background: #d4772c; }
+.scorecard-health--new     { color: #3b82c4; }
+.scorecard-health--new::before     { background: #3b82c4; }
+
+/* Priority badges (Plan tab) */
+.scorecard-priority {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.scorecard-priority--high   { background: #fde8e8; color: #c0392b; }
+.scorecard-priority--medium { background: #fef3e2; color: #d4772c; }
+.scorecard-priority--low    { background: #e6f4ea; color: #2d6a4f; }
+
+/* Progress bars (Plan tab) */
+.scorecard-progress {
+  height: 8px;
+  min-width: 60px;
+  background: #e8e9dc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.scorecard-progress__fill {
+  height: 100%;
+  background: #2d6a4f;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .scorecard-meta {
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .scorecard-table-wrap {
+    overflow-x: auto;
+  }
+
+  .scorecard-th--org {
+    min-width: 120px;
+  }
+}

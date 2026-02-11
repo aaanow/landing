@@ -1,5 +1,6 @@
 import { getPayloadClient } from '@/src/payload'
 import type { LogoMarqueeGlobal } from '@/types/cms'
+import { getMediaUrl } from '@/types/cms'
 import { LogoMarqueeClient } from './LogoMarqueeClient'
 
 export async function LogoMarquee() {
@@ -14,14 +15,29 @@ export async function LogoMarquee() {
 
   const { heading, logos = [], speed, direction } = data
 
-  if (logos.length === 0) {
+  // Extract URLs from media objects and resolve alt text
+  const resolvedLogos = logos
+    .map((logo) => {
+      const url = getMediaUrl(logo.image)
+      if (!url) return null
+      const mediaAlt = typeof logo.image === 'object' ? logo.image.alt : undefined
+      return {
+        id: logo.id,
+        image: url,
+        alt: logo.alt || mediaAlt || '',
+        link: logo.link,
+      }
+    })
+    .filter(Boolean) as { id?: string; image: string; alt: string; link?: string }[]
+
+  if (resolvedLogos.length === 0) {
     return null
   }
 
   return (
     <LogoMarqueeClient
       heading={heading}
-      logos={logos}
+      logos={resolvedLogos}
       speed={speed}
       direction={direction}
     />

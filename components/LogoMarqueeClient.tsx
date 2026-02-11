@@ -2,11 +2,17 @@
 
 import useEmblaCarousel from 'embla-carousel-react'
 import AutoScroll from 'embla-carousel-auto-scroll'
-import type { MarqueeLogo } from '@/types/cms'
+
+interface ResolvedLogo {
+  id?: string
+  image: string
+  alt: string
+  link?: string
+}
 
 interface LogoMarqueeClientProps {
   heading?: string
-  logos: MarqueeLogo[]
+  logos: ResolvedLogo[]
   speed?: number
   direction?: 'forward' | 'backward'
 }

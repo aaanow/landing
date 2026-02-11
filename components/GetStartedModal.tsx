@@ -3,6 +3,7 @@
 import { useState, FormEvent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Button } from './Button';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -96,13 +97,13 @@ export function GetStartedModal() {
                   />
                 </div>
 
-                <button
+                <Button
+                  variant="primary"
                   type="submit"
-                  className="super-btn margin-top-none w-button"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? 'Please wait...' : 'Start building my scorecard'}
-                </button>
+                </Button>
 
                 <div className="signup__form-legal">
                   <p className="body__small light">

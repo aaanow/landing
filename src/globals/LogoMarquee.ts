@@ -24,11 +24,9 @@ export const LogoMarquee: GlobalConfig = {
       fields: [
         {
           name: 'image',
-          type: 'text',
+          type: 'upload',
+          relationTo: 'media',
           required: true,
-          admin: {
-            description: 'URL/path to logo image (e.g. /images/logos/company.svg)',
-          },
         },
         {
           name: 'alt',

@@ -29,17 +29,13 @@ export const Testimonials: GlobalConfig = {
         },
         {
           name: 'logo',
-          type: 'text',
-          admin: {
-            description: 'URL/path to company logo image',
-          },
+          type: 'upload',
+          relationTo: 'media',
         },
         {
           name: 'image',
-          type: 'text',
-          admin: {
-            description: 'URL/path to testimonial image (e.g. headshot)',
-          },
+          type: 'upload',
+          relationTo: 'media',
         },
         {
           name: 'linkLabel',
@@ -68,11 +64,9 @@ export const Testimonials: GlobalConfig = {
       fields: [
         {
           name: 'image',
-          type: 'text',
+          type: 'upload',
+          relationTo: 'media',
           required: true,
-          admin: {
-            description: 'URL/path to client logo image',
-          },
         },
         {
           name: 'alt',

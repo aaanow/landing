@@ -4,6 +4,8 @@ import '@/styles/normalize.css';
 import '@/styles/webflow.css';
 import '@/styles/webflow-components.css';
 import '@/app/globals.css';
+import '@/styles/scorecard.css';
+import '@/styles/how-it-works.css';
 import { Footer, Navigation } from '@/components/layout';
 import { AnimationProvider } from '@/components/AnimationProvider';
 import { GetStartedModal } from '@/components/GetStartedModal';

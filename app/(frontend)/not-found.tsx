@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Button } from '@/components/Button';
 
 export default function NotFound() {
   return (
@@ -10,9 +10,9 @@ export default function NotFound() {
             <p className="body__xlarge">The page you&apos;re looking for doesn&apos;t exist or has been moved.</p>
           </div>
           <div className="card-grid animate">
-            <Link href="/" className="super-btn w-inline-block">
-              <div>Return Home</div>
-            </Link>
+            <Button variant="primary" href="/">
+              Return Home
+            </Button>
           </div>
         </div>
       </div>

@@ -61,6 +61,21 @@ export function getStaticPageContent(htmlFileName: string): string {
   // Remove footer section (it's rendered by the layout)
   content = content.replace(/<section[^>]*class="[^"]*footer[^"]*"[^>]*>[\s\S]*?<\/section>/gi, '');
 
+  // Remove CTA section (it's rendered by the CTASection component)
+  content = content.replace(/<section[^>]*class="[^"]*section sticky last[^"]*"[^>]*>[\s\S]*?<\/section>/gi, '');
+
+  // Strip how-it-works section content between markers (replaced by HowItWorksSection React component)
+  // Keep the start marker so page.tsx can split on it to position the React component
+  const hiwStart = '<!-- HOW_IT_WORKS_SECTION -->';
+  const hiwEnd = '<!-- HOW_IT_WORKS_END -->';
+  const hiwStartIdx = content.indexOf(hiwStart);
+  const hiwEndIdx = content.indexOf(hiwEnd);
+  if (hiwStartIdx !== -1 && hiwEndIdx !== -1) {
+    content =
+      content.substring(0, hiwStartIdx + hiwStart.length) +
+      content.substring(hiwEndIdx + hiwEnd.length);
+  }
+
   return content;
 }
 

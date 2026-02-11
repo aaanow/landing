@@ -1,5 +1,7 @@
 import { getPayloadClient } from '@/src/payload';
 import type { TestimonialsGlobal } from '@/types/cms';
+import { getMediaUrl } from '@/types/cms';
+import { Button } from './Button';
 
 function SectionIcon() {
   return (
@@ -60,36 +62,44 @@ export async function TestimonialsSection() {
           {caseStudies.length > 0 ? (
             <div className="testimonial__collection-list-wrapper animate w-dyn-list">
               <div role="list" className="testimonial__collection-list w-dyn-items">
-                {caseStudies.map((study) => (
-                  <div key={study.id} role="listitem" className="testimonial__item w-dyn-item">
-                    <div className="grid card">
-                      <div className="testimonial__content-wrapper">
-                        <div className="testimonial___quote-wrapper">
-                          <QuoteIcon />
-                          <blockquote className="testimonial__quote">{study.quote}</blockquote>
+                {caseStudies.map((study) => {
+                  const logoUrl = getMediaUrl(study.logo);
+                  const imageUrl = getMediaUrl(study.image);
+                  const imageAlt = typeof study.image === 'object' ? study.image.alt : '';
+                  return (
+                    <div key={study.id} role="listitem" className="testimonial__item w-dyn-item">
+                      <div className="grid card">
+                        <div className="testimonial__content-wrapper">
+                          <div className="testimonial___quote-wrapper">
+                            <QuoteIcon />
+                            <blockquote className="testimonial__quote">{study.quote}</blockquote>
+                          </div>
+                          <div className="testimonial__content-footer">
+                            {logoUrl && (
+                              <div className="testimonial__logo-wrapper">
+                                <img src={logoUrl} loading="lazy" alt="" className="testimonial__logo" />
+                              </div>
+                            )}
+                            {study.linkHref && (
+                              <Button
+                                variant="ghost"
+                                href={study.linkHref}
+                                icon={<ArrowRightIcon />}
+                              >
+                                {study.linkLabel || 'Open casestudy'}
+                              </Button>
+                            )}
+                          </div>
                         </div>
-                        <div className="testimonial__content-footer">
-                          {study.logo && (
-                            <div className="testimonial__logo-wrapper">
-                              <img src={study.logo} loading="lazy" alt="" className="testimonial__logo" />
-                            </div>
-                          )}
-                          {study.linkHref && (
-                            <a href={study.linkHref} className="btn btn__link w-inline-block">
-                              <div>{study.linkLabel || 'Open casestudy'}</div>
-                              <ArrowRightIcon />
-                            </a>
-                          )}
-                        </div>
+                        {imageUrl && (
+                          <div className="testimonial__img-wrapper">
+                            <img src={imageUrl} loading="lazy" alt={imageAlt} className="testimonial__img" />
+                          </div>
+                        )}
                       </div>
-                      {study.image && (
-                        <div className="testimonial__img-wrapper">
-                          <img src={study.image} loading="lazy" alt="" className="testimonial__img" />
-                        </div>
-                      )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ) : (
@@ -105,17 +115,23 @@ export async function TestimonialsSection() {
             {clientLogos.length > 0 ? (
               <div className="logo__list-wrapper w-dyn-list">
                 <div role="list" className="logo__list w-dyn-items">
-                  {clientLogos.map((logo) => (
-                    <div key={logo.id} role="listitem" className="log__item w-dyn-item">
-                      {logo.link ? (
-                        <a href={logo.link} target="_blank" rel="noopener noreferrer">
-                          <img alt={logo.alt || ''} loading="lazy" src={logo.image} className="client__img-copy" />
-                        </a>
-                      ) : (
-                        <img alt={logo.alt || ''} loading="lazy" src={logo.image} className="client__img-copy" />
-                      )}
-                    </div>
-                  ))}
+                  {clientLogos.map((logo) => {
+                    const logoUrl = getMediaUrl(logo.image);
+                    if (!logoUrl) return null;
+                    const mediaAlt = typeof logo.image === 'object' ? logo.image.alt : '';
+                    const alt = logo.alt || mediaAlt || '';
+                    return (
+                      <div key={logo.id} role="listitem" className="log__item w-dyn-item">
+                        {logo.link ? (
+                          <a href={logo.link} target="_blank" rel="noopener noreferrer">
+                            <img alt={alt} loading="lazy" src={logoUrl} className="client__img-copy" />
+                          </a>
+                        ) : (
+                          <img alt={alt} loading="lazy" src={logoUrl} className="client__img-copy" />
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ) : (

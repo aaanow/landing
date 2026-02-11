@@ -2,6 +2,25 @@
  * CMS Types - Centralized type definitions for Payload CMS collections
  */
 
+// Media (Vercel Blob-backed upload)
+export interface Media {
+  id: string;
+  url: string;
+  alt: string;
+  filename?: string;
+  mimeType?: string;
+  filesize?: number;
+  width?: number;
+  height?: number;
+}
+
+/** Extract URL from a populated media field (object) or unpopulated (string ID). */
+export function getMediaUrl(media: Media | string | undefined | null): string | undefined {
+  if (!media) return undefined;
+  if (typeof media === 'string') return undefined; // unpopulated ID — no URL available
+  return media.url;
+}
+
 // Base interface for all CMS items
 export interface BaseItem {
   id: string;
@@ -146,15 +165,15 @@ export interface FooterGlobal {
 // Testimonials & Logos global
 export interface CaseStudy {
   quote: string;
-  logo?: string;
-  image?: string;
+  logo?: Media | string;
+  image?: Media | string;
   linkLabel?: string;
   linkHref?: string;
   id?: string;
 }
 
 export interface ClientLogo {
-  image: string;
+  image: Media | string;
   alt?: string;
   link?: string;
   id?: string;
@@ -170,7 +189,7 @@ export interface TestimonialsGlobal {
 
 // Logo Marquee global
 export interface MarqueeLogo {
-  image: string;
+  image: Media | string;
   alt?: string;
   link?: string;
   id?: string;
@@ -194,6 +213,15 @@ export interface HeroGlobal {
   primaryButtonLink?: string;
   secondaryButtonText?: string;
   secondaryButtonLink?: string;
+}
+
+// CTA global
+export interface CTAGlobal {
+  heading?: string;
+  body?: string;
+  buttonText?: string;
+  buttonAction?: 'modal' | 'link';
+  buttonLink?: string;
 }
 
 // Page props for dynamic routes (Next.js 15 pattern)

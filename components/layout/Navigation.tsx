@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo, ArrowIcon } from '@/components/icons';
+import { Button } from '@/components/Button';
 import { useLenis } from '@/components/AnimationProvider';
 import type { NavLink } from '@/types/cms';
 
@@ -119,15 +120,16 @@ export function NavigationClient({ variant = 'light', links, ctaLabel = 'Get Sta
             </Link>
           ))}
           <div className="nav__cta">
-            <a
-              data-modal-open="get-started"
+            <Button
+              variant="primary"
+              size="sm"
               href="#"
-              className="super-btn small w-inline-block"
+              data-modal-open="get-started"
               onClick={closeMenu}
+              icon={<ArrowIcon className="icon-16" />}
             >
-              <span>{ctaLabel}</span>
-              <ArrowIcon className="icon-16" />
-            </a>
+              {ctaLabel}
+            </Button>
           </div>
         </nav>
       </div>

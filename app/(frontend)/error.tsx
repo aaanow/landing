@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@/components/Button';
+
 interface ErrorProps {
   error: Error & { digest?: string };
   reset: () => void;
@@ -15,9 +17,9 @@ export default function Error({ reset }: ErrorProps) {
             <p className="body__xlarge">We apologize for the inconvenience. Please try again.</p>
           </div>
           <div className="card-grid animate">
-            <button onClick={reset} className="super-btn w-button">
+            <Button variant="primary" onClick={reset}>
               Try again
-            </button>
+            </Button>
           </div>
         </div>
       </div>

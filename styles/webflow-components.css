@@ -249,7 +249,7 @@ figcaption {
 }
 
 .section.dark {
-  background-color: var(--primary-600);
+  background: linear-gradient(180deg, #004452 0%, #002B33 100%);
   color: var(--color-button);
   border-top: 1px solid #0000001a;
   border-bottom: 1px solid #0000001a;
@@ -291,7 +291,7 @@ figcaption {
 }
 
 .section.xdark {
-  background-color: var(--primary-600);
+  background: linear-gradient(180deg, #004452 0%, #002B33 100%);
   color: var(--neutral-0);
   border-top: 2px solid #0003;
   border-bottom: 2px solid #0003;
@@ -685,7 +685,7 @@ figcaption {
 .footer {
   grid-column-gap: 32px;
   grid-row-gap: 32px;
-  background-color: var(--primary-900);
+  background: linear-gradient(180deg, #004452 0%, #002B33 100%);
   color: var(--color-neutral-0);
   border-top-left-radius: 4rem;
   border-top-right-radius: 4rem;
@@ -906,7 +906,7 @@ figcaption {
   justify-content: space-between;
   align-items: center;
   width: 95%;
-  max-width: 1200px;
+  max-width: 41.25rem;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -2715,7 +2715,7 @@ figcaption {
 }
 
 .swiper-slide__content-wrapper {
-  background-color: var(--primary-900);
+  background: linear-gradient(180deg, #004452 0%, #002B33 100%);
   text-align: center;
   border-radius: 24px;
   flex-flow: column;
@@ -2801,7 +2801,7 @@ figcaption {
 
 .card-article__item {
   aspect-ratio: 1;
-  background-color: var(--primary-900);
+  background: linear-gradient(180deg, #004452 0%, #002B33 100%);
   color: var(--button);
   border-radius: 1rem 8rem 1rem 1rem;
   justify-content: center;
@@ -2974,14 +2974,14 @@ figcaption {
 }
 
 .section__content-wrapper.card._2 {
-  background-color: var(--primary-600);
+  background: linear-gradient(180deg, #004452 0%, #002B33 100%);
   color: var(--button);
   padding-top: 60px;
   padding-bottom: 60px;
 }
 
 .section__content-wrapper.dark-green {
-  background-color: var(--primary-900);
+  background: linear-gradient(180deg, #004452 0%, #002B33 100%);
   color: var(--button);
 }
 
