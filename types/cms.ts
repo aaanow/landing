@@ -266,6 +266,20 @@ export interface CTAGlobal {
   buttonLink?: string;
 }
 
+// Research Stats global
+export interface ResearchStat {
+  value: string;
+  description: string;
+  id?: string;
+}
+
+export interface ResearchStatsGlobal {
+  heading?: string;
+  stats?: ResearchStat[];
+  ctaText?: string;
+  ctaLink?: string;
+}
+
 // Page props for dynamic routes (Next.js 15 pattern)
 export interface DynamicPageProps {
   params: Promise<{ slug: string }>;

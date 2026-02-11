@@ -64,6 +64,18 @@ export function getStaticPageContent(htmlFileName: string): string {
   // Remove CTA section (it's rendered by the CTASection component)
   content = content.replace(/<section[^>]*class="[^"]*section sticky last[^"]*"[^>]*>[\s\S]*?<\/section>/gi, '');
 
+  // Strip stats section content between markers (replaced by StatsSection React component)
+  // Keep the start marker so page.tsx can split on it to position the React component
+  const statsStart = '<!-- STATS_SECTION -->';
+  const statsEnd = '<!-- STATS_END -->';
+  const statsStartIdx = content.indexOf(statsStart);
+  const statsEndIdx = content.indexOf(statsEnd);
+  if (statsStartIdx !== -1 && statsEndIdx !== -1) {
+    content =
+      content.substring(0, statsStartIdx + statsStart.length) +
+      content.substring(statsEndIdx + statsEnd.length);
+  }
+
   // Strip how-it-works section content between markers (replaced by HowItWorksSection React component)
   // Keep the start marker so page.tsx can split on it to position the React component
   const hiwStart = '<!-- HOW_IT_WORKS_SECTION -->';

@@ -23,6 +23,7 @@ import { LogoMarquee } from './globals/LogoMarquee'
 import { Hero } from './globals/Hero'
 import { CTA } from './globals/CTA'
 import { HowItWorks } from './globals/HowItWorks'
+import { ResearchStats } from './globals/ResearchStats'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -35,7 +36,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Posts, Pages, FAQs, ResourceChapters, Resources, Popups, Legals, Scorecards],
-  globals: [Footer, NavigationGlobal, Testimonials, LogoMarquee, Hero, CTA, HowItWorks],
+  globals: [Footer, NavigationGlobal, Testimonials, LogoMarquee, Hero, CTA, HowItWorks, ResearchStats],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
