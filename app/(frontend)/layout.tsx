@@ -5,25 +5,22 @@ import '@/styles/webflow.css';
 import '@/styles/webflow-components.css';
 import '@/app/globals.css';
 import { Footer, Navigation } from '@/components/layout';
-import AnimationProvider from '@/components/AnimationProvider';
-import GetStartedModal from '@/components/GetStartedModal';
-
-const SITE_TITLE = 'Scorecard by AAAnow';
-const SITE_DESCRIPTION = 'The first solution to productise client retention and revenue growth for agencies. Use 3.7 trillion data points, and 25 years results to map Website Value and Risk - create actionable intelligence your commercial teams can use daily.';
-const OG_TITLE = 'Scorecard — Fundamentals of online - confirmed';
+import { AnimationProvider } from '@/components/AnimationProvider';
+import { GetStartedModal } from '@/components/GetStartedModal';
+import { SITE_CONFIG, EXTERNAL_URLS } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: SITE_TITLE,
-  description: SITE_DESCRIPTION,
+  title: SITE_CONFIG.title,
+  description: SITE_CONFIG.description,
   openGraph: {
-    title: OG_TITLE,
-    description: SITE_DESCRIPTION,
+    title: SITE_CONFIG.ogTitle,
+    description: SITE_CONFIG.description,
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: OG_TITLE,
-    description: SITE_DESCRIPTION,
+    title: SITE_CONFIG.ogTitle,
+    description: SITE_CONFIG.description,
   },
   icons: {
     icon: '/images/favicon.png',
@@ -31,15 +28,12 @@ export const metadata: Metadata = {
   },
 };
 
-const TYPEKIT_ID = 'rch0hpl';
-const WEBFLOW_BASE_URL = 'https://aaanow.vercel.app/webflow/snippets/components';
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="stylesheet" href={`https://use.typekit.net/${TYPEKIT_ID}.css`} />
-        <Script src={`https://use.typekit.net/${TYPEKIT_ID}.js`} strategy="beforeInteractive" />
+        <link rel="stylesheet" href={`https://use.typekit.net/${EXTERNAL_URLS.typekitId}.css`} />
+        <Script src={`https://use.typekit.net/${EXTERNAL_URLS.typekitId}.js`} strategy="beforeInteractive" />
         <Script id="typekit-load" strategy="beforeInteractive">
           {`try{Typekit.load()}catch(e){}`}
         </Script>
@@ -50,13 +44,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <AnimationProvider>
           <Navigation />
-          <div className="page-wrapper">{children}</div>
+          <div className="page__wrapper">{children}</div>
           <Footer />
           <GetStartedModal />
         </AnimationProvider>
 
-        <Script src={`${WEBFLOW_BASE_URL}/navigation.js`} strategy="lazyOnload" />
-        <Script src={`${WEBFLOW_BASE_URL}/get-started-overlay.js`} strategy="lazyOnload" />
+        <Script src={`${EXTERNAL_URLS.webflowBase}/navigation.js`} strategy="lazyOnload" />
+        <Script src={`${EXTERNAL_URLS.webflowBase}/get-started-overlay.js`} strategy="lazyOnload" />
       </body>
     </html>
   );

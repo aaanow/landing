@@ -2,31 +2,12 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
+import type { Page, DynamicPageProps } from '@/types/cms';
 
-export const dynamic = 'force-dynamic';
+// Revalidate every hour for standard content
+export const revalidate = 3600;
 
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
-
-interface Page {
-  id: string;
-  title: string;
-  slug: string;
-  subheading?: string;
-  content?: unknown;
-  quote?: string;
-  quoteAuthor?: string;
-  sidebarImage?: string;
-  sidebarQuote?: string;
-  meta?: {
-    title?: string;
-    description?: string;
-  };
-  status?: string;
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: DynamicPageProps): Promise<Metadata> {
   const { slug } = await params;
 
   try {
@@ -67,7 +48,7 @@ export async function generateStaticParams() {
   }
 }
 
-export default async function AudiencesPage({ params }: PageProps) {
+export default async function AudiencesPage({ params }: DynamicPageProps) {
   const { slug } = await params;
 
   let page: Page | undefined;
@@ -99,7 +80,7 @@ export default async function AudiencesPage({ params }: PageProps) {
               <p className="page-subheading">{page.subheading}</p>
             )}
           </div>
-          <div className="div-block-115 animate">
+          <div className="card-grid animate">
             <div className="page-content rich-text">
               {page.content ? (
                 <RichText content={page.content} />

@@ -42,7 +42,7 @@ function initWebflowTabs() {
   });
 }
 
-export default function AnimationProvider({ children }: { children: React.ReactNode }) {
+export function AnimationProvider({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
 
   const stop = useCallback(() => {

@@ -2,27 +2,12 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
+import type { Popup, DynamicPageProps } from '@/types/cms';
 
-export const dynamic = 'force-dynamic';
+// Revalidate every hour for standard content
+export const revalidate = 3600;
 
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
-
-interface Popup {
-  id: string;
-  name: string;
-  slug: string;
-  icon?: string;
-  image?: string;
-  shortDescription?: string;
-  content?: unknown;
-  link?: string;
-  aboutPage?: string;
-  status?: string;
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: DynamicPageProps): Promise<Metadata> {
   const { slug } = await params;
 
   try {
@@ -63,7 +48,7 @@ export async function generateStaticParams() {
   }
 }
 
-export default async function AboutPage({ params }: PageProps) {
+export default async function AboutPage({ params }: DynamicPageProps) {
   const { slug } = await params;
 
   let popup: Popup | undefined;
@@ -103,7 +88,7 @@ export default async function AboutPage({ params }: PageProps) {
               <img src={popup.image} alt={popup.name} className="about-image" />
             </div>
           )}
-          <div className="div-block-115 animate">
+          <div className="card-grid animate">
             <div className="about-content rich-text">
               {popup.content ? (
                 <RichText content={popup.content} />

@@ -70,7 +70,7 @@ export default function PricingPage() {
             </div>
 
             {/* Tab Toggle */}
-            <div className="div-block-115 animate">
+            <div className="card-grid animate">
               <div className="pricing-tabs">
                 <button
                   className={`pricing-tab ${activeTab === 'subscription' ? 'pricing-tab--active' : ''}`}

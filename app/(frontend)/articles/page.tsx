@@ -1,37 +1,14 @@
 import { Metadata } from 'next';
 import { getPayloadClient } from '@/src/payload';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
+import { formatDate } from '@/lib/format';
+import type { Post } from '@/types/cms';
 
-export const dynamic = 'force-dynamic';
+// Revalidate every 5 minutes for frequently updated content
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: 'Articles - AAAnow',
-};
-
-interface Post {
-  id: string;
-  title: string;
-  slug: string;
-  featuredImage?: string;
-  thumbnailImage?: string;
-  excerpt?: string;
-  content?: unknown;
-  publishedAt?: string;
-  status?: 'draft' | 'published';
-  category?: string;
-  tag?: string;
-  externalLink?: string;
-}
-
-// Format date for display
-const formatDate = (dateString: string | undefined) => {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
 };
 
 export default async function ArticlesPage() {
@@ -66,7 +43,7 @@ export default async function ArticlesPage() {
         <div className="blog__wrapper">
           <div className="articles__collection-grid-wrapper w-dyn-list">
             {posts.length > 0 ? (
-              <div role="list" className="articles__collection-grid-copy w-dyn-items">
+              <div role="list" className="articles__collection-grid w-dyn-items">
                 {posts.map((post) => {
                   const postLink = post.externalLink || `/posts/${post.slug}`;
                   const backgroundImage = post.featuredImage || post.thumbnailImage || '/images/aisc_blog_bg-01.svg';
@@ -93,7 +70,7 @@ export default async function ArticlesPage() {
                         className="card-article__img"
                       />
                       <div className="card-article__content">
-                        <div className="div-block-95">
+                        <div className="article__meta-row">
                           <p className="article__date">{formatDate(post.publishedAt)}</p>
                           <span className="article__reading-time">{formatReadingTime(calculateReadingTime(post.content))}</span>
                         </div>

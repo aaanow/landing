@@ -3,28 +3,13 @@ import { notFound } from 'next/navigation';
 import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
+import { formatDate } from '@/lib/format';
+import type { Post, DynamicPageProps } from '@/types/cms';
 
-export const dynamic = 'force-dynamic';
+// Revalidate every hour for standard content
+export const revalidate = 3600;
 
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
-
-interface Post {
-  id: string;
-  title: string;
-  slug: string;
-  featuredImage?: string;
-  thumbnailImage?: string;
-  excerpt?: string;
-  content?: unknown;
-  publishedAt?: string;
-  status?: string;
-  category?: string;
-  author?: string;
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: DynamicPageProps): Promise<Metadata> {
   const { slug } = await params;
 
   try {
@@ -65,17 +50,7 @@ export async function generateStaticParams() {
   }
 }
 
-const formatDate = (dateString: string | undefined) => {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-};
-
-export default async function PostPage({ params }: PageProps) {
+export default async function PostPage({ params }: DynamicPageProps) {
   const { slug } = await params;
 
   let post: Post | undefined;
@@ -120,7 +95,7 @@ export default async function PostPage({ params }: PageProps) {
             <h1>{post.title}</h1>
             {post.excerpt && <p className="post-excerpt">{post.excerpt}</p>}
           </div>
-          <div className="div-block-115 animate">
+          <div className="card-grid animate">
             <div className="post-content rich-text">
               {post.content ? (
                 <RichText content={post.content} />

@@ -2,23 +2,12 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
+import type { LegalPage, DynamicPageProps } from '@/types/cms';
 
-export const dynamic = 'force-dynamic';
+// Revalidate every hour for standard content
+export const revalidate = 3600;
 
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
-
-interface LegalPage {
-  id: string;
-  name: string;
-  slug: string;
-  content?: unknown;
-  order?: number;
-  status?: string;
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: DynamicPageProps): Promise<Metadata> {
   const { slug } = await params;
   const payload = await getPayloadClient();
 
@@ -48,7 +37,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function LegalPage({ params }: PageProps) {
+export default async function LegalPageView({ params }: DynamicPageProps) {
   const { slug } = await params;
   const payload = await getPayloadClient();
 
@@ -71,7 +60,7 @@ export default async function LegalPage({ params }: PageProps) {
           <div className="section-header__wrapper">
             <h1>{legal.name}</h1>
           </div>
-          <div className="div-block-115 animate">
+          <div className="card-grid animate">
             <div className="legal-content rich-text">
               {legal.content ? (
                 <RichText content={legal.content} />

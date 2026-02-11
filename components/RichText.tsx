@@ -1,27 +1,10 @@
 'use client';
 
 import React, { createElement } from 'react';
-
-interface LexicalNode {
-  type: string;
-  text?: string;
-  children?: LexicalNode[];
-  format?: string | number;
-  tag?: string;
-  listType?: string;
-  url?: string;
-  fields?: {
-    url?: string;
-    newTab?: boolean;
-  };
-}
-
-interface LexicalContent {
-  root: LexicalNode;
-}
+import type { LexicalNode, LexicalContent } from '@/types/cms';
 
 interface RichTextProps {
-  content: unknown;
+  content: LexicalContent | null | undefined;
   className?: string;
 }
 
@@ -102,10 +85,7 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
 }
 
 export function RichText({ content, className }: RichTextProps) {
-  if (!content) return null;
+  if (!content?.root) return null;
 
-  const lexicalContent = content as LexicalContent;
-  if (!lexicalContent.root) return null;
-
-  return <div className={className}>{renderNode(lexicalContent.root, 0)}</div>;
+  return <div className={className}>{renderNode(content.root, 0)}</div>;
 }

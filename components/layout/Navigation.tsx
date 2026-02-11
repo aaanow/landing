@@ -5,18 +5,21 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo, ArrowIcon } from '@/components/icons';
 import { useLenis } from '@/components/AnimationProvider';
+import type { NavLink } from '@/types/cms';
 
-interface NavigationProps {
-  variant?: 'light' | 'dark';
-}
-
-const NAV_LINKS = [
+const DEFAULT_LINKS: NavLink[] = [
   { href: '/articles', label: 'Articles' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/about/lifecycle-alignment', label: 'Client Lifecycle' },
-] as const;
+];
 
-export function Navigation({ variant = 'light' }: NavigationProps) {
+interface NavigationClientProps {
+  variant?: 'light' | 'dark';
+  links?: NavLink[];
+  ctaLabel?: string;
+}
+
+export function NavigationClient({ variant = 'light', links, ctaLabel = 'Get Started' }: NavigationClientProps) {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -110,19 +113,19 @@ export function Navigation({ variant = 'light' }: NavigationProps) {
           className={`nav__menu ${isMenuOpen ? 'nav__menu--open' : ''}`}
           aria-hidden={!isMenuOpen}
         >
-          {NAV_LINKS.map(({ href, label }) => (
+          {(links && links.length > 0 ? links : DEFAULT_LINKS).map(({ href, label }) => (
             <Link key={href} href={href} className="nav__link" onClick={closeMenu}>
               {label}
             </Link>
           ))}
-          <div className="nav__link-copy">
+          <div className="nav__cta">
             <a
               data-modal-open="get-started"
               href="#"
               className="super-btn small w-inline-block"
               onClick={closeMenu}
             >
-              <span>Get Started</span>
+              <span>{ctaLabel}</span>
               <ArrowIcon className="icon-16" />
             </a>
           </div>

@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
-export default function GetStartedModal() {
+export function GetStartedModal() {
   const [status, setStatus] = useState<FormStatus>('idle');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -98,7 +98,7 @@ export default function GetStartedModal() {
 
                 <button
                   type="submit"
-                  className="super-btn _0-top-padding w-button"
+                  className="super-btn margin-top-none w-button"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? 'Please wait...' : 'Start building my scorecard'}

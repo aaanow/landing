@@ -1,36 +1,13 @@
 import { Metadata } from 'next';
 import { getPayloadClient } from '@/src/payload';
+import type { Resource, ResourceChapter } from '@/types/cms';
 
-export const dynamic = 'force-dynamic';
+// Revalidate every hour for standard content
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Reference Material - AAAnow',
 };
-
-// Types for our collections
-interface ResourceChapter {
-  id: string;
-  name: string;
-  slug: string;
-  order?: number;
-}
-
-interface Resource {
-  id: string;
-  name: string;
-  slug: string;
-  chapter?: ResourceChapter | string;
-  snippet?: string;
-  order?: number;
-  quote?: string;
-  tag?: string;
-  pdf?: string;
-  icon?: string;
-  blogArticle?: string;
-  externalLink?: string;
-  type?: 'blog-post' | 'external-link' | 'resource';
-  location?: string;
-}
 
 // Icon component for section headers
 const SectionIcon = () => (
@@ -99,14 +76,6 @@ export default async function ReferenceMaterialPage() {
   const resources = resourcesResult.docs as Resource[];
   const chapters = chaptersResult.docs as ResourceChapter[];
 
-  // Debug logging
-  console.log('Chapters:', chapters.map(c => ({ id: c.id, name: c.name, slug: c.slug })));
-  console.log('Resources with chapters:', resources.map(r => ({
-    name: r.name,
-    chapter: r.chapter,
-    chapterType: typeof r.chapter
-  })));
-
   // Group resources by chapter
   const resourcesByChapter = new Map<string | null, Resource[]>();
 
@@ -142,7 +111,7 @@ export default async function ReferenceMaterialPage() {
                 <p className="body__xlarge">Discover how agencies leverage AiSC across their entire client lifecycle.</p>
               </div>
             </div>
-            <div className="div-block-115 animate">
+            <div className="card-grid animate">
               <div className="resource-table">
                 <div className="resource-table-header">
                   <span>Resource Name</span>
@@ -190,7 +159,7 @@ export default async function ReferenceMaterialPage() {
                     <p className="body__xlarge">Agencies use AiSC to support measurable outcomes across Marketing, Sales, and Client Services. AiSC identifies where value and risk are present today, highlights revenue opportunities in current and lapsed clients, and provides continuous oversight that strengthens retention and creates new billable work.</p>
                   </div>
                 </div>
-                <div className="div-block-115 animate">
+                <div className="card-grid animate">
                   <div className="resource-table">
                     <div className="resource-table-header">
                       <span>Resource Name</span>
