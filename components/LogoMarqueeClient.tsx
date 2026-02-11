@@ -1,8 +1,3 @@
-'use client'
-
-import useEmblaCarousel from 'embla-carousel-react'
-import AutoScroll from 'embla-carousel-auto-scroll'
-
 interface ResolvedLogo {
   id?: string
   image: string
@@ -20,61 +15,53 @@ interface LogoMarqueeClientProps {
 export function LogoMarqueeClient({
   heading,
   logos,
-  speed = 1,
+  speed = 30,
   direction = 'forward',
 }: LogoMarqueeClientProps) {
-  const [emblaRef] = useEmblaCarousel(
-    {
-      loop: true,
-      dragFree: true,
-      containScroll: false,
-      align: 'start',
-    },
-    [
-      AutoScroll({
-        speed,
-        direction,
-        stopOnInteraction: false,
-        stopOnMouseEnter: true,
-        playOnInit: true,
-      }),
-    ],
-  )
+  const animationDirection = direction === 'backward' ? 'reverse' : 'normal'
+  // Repeat logos enough times so one half fills the viewport on wide screens
+  const repeats = Math.max(2, Math.ceil(12 / logos.length))
+  const set = Array.from({ length: repeats }, () => logos).flat()
+  const duration = `${Math.max(10, set.length * 3)}s`
 
-  // Triple logos for seamless infinite loop on wide viewports
-  const duplicatedLogos = [...logos, ...logos, ...logos]
+  const renderLogo = (logo: ResolvedLogo, index: number, prefix: string) => (
+    <div className="logo-marquee__slide" key={`${prefix}-${index}`}>
+      {logo.link ? (
+        <a
+          href={logo.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="logo-marquee__link"
+        >
+          <img
+            src={logo.image}
+            alt={logo.alt || ''}
+            className="logo-marquee__img"
+          />
+        </a>
+      ) : (
+        <img
+          src={logo.image}
+          alt={logo.alt || ''}
+          className="logo-marquee__img"
+        />
+      )}
+    </div>
+  )
 
   return (
     <div className="logo-marquee">
       {heading && <h3 className="logo-marquee__heading">{heading}</h3>}
-      <div className="logo-marquee__viewport" ref={emblaRef}>
-        <div className="logo-marquee__container">
-          {duplicatedLogos.map((logo, index) => (
-            <div className="logo-marquee__slide" key={`${logo.id}-${index}`}>
-              {logo.link ? (
-                <a
-                  href={logo.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="logo-marquee__link"
-                >
-                  <img
-                    src={logo.image}
-                    alt={logo.alt || ''}
-                    loading="lazy"
-                    className="logo-marquee__img"
-                  />
-                </a>
-              ) : (
-                <img
-                  src={logo.image}
-                  alt={logo.alt || ''}
-                  loading="lazy"
-                  className="logo-marquee__img"
-                />
-              )}
-            </div>
-          ))}
+      <div className="logo-marquee__viewport">
+        <div
+          className="logo-marquee__container"
+          style={{
+            animationDuration: duration,
+            animationDirection: animationDirection,
+          }}
+        >
+          {set.map((logo, i) => renderLogo(logo, i, 'a'))}
+          {set.map((logo, i) => renderLogo(logo, i, 'b'))}
         </div>
       </div>
     </div>

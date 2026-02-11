@@ -912,7 +912,8 @@ figcaption {
   position: relative;
 }
 
-.nav__container:where(.w-variant-a38e21c6-ff07-61c6-d833-6497d8485c30) {
+.nav__container:where(.w-variant-a38e21c6-ff07-61c6-d833-6497d8485c30),
+.nav__container--light {
   color: var(--primary-900);
   border-color: #0000001a;
 }

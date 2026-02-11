@@ -15,10 +15,12 @@ export function HeroSection() {
     <section className="nhero__section">
       <div className="nhero">
         <div className="nhero__content">
-          <a href={HERO.pillLink} className="nhero__pill">
-            {HERO.pillText} <span className="nhero__pill-arrow">&rsaquo;</span>
-          </a>
-          <h1 className="nhero__title">{HERO.title}</h1>
+          <div className="nhero__top">
+            <a href={HERO.pillLink} className="nhero__pill">
+              {HERO.pillText} <span className="nhero__pill-arrow">&rsaquo;</span>
+            </a>
+            <h1 className="nhero__title">{HERO.title}</h1>
+          </div>
           <p className="nhero__subtitle">{HERO.subtitle}</p>
           <div className="nhero__buttons">
             <Button variant="solid" href="#" data-modal-open="get-started">

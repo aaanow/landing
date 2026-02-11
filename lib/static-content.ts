@@ -76,6 +76,18 @@ export function getStaticPageContent(htmlFileName: string): string {
       content.substring(hiwEndIdx + hiwEnd.length);
   }
 
+  // Strip testimonials section content between markers (replaced by TestimonialsSection React component)
+  // Keep the start marker so page.tsx can split on it to position the React component
+  const testStart = '<!-- TESTIMONIALS_SECTION -->';
+  const testEnd = '<!-- TESTIMONIALS_END -->';
+  const testStartIdx = content.indexOf(testStart);
+  const testEndIdx = content.indexOf(testEnd);
+  if (testStartIdx !== -1 && testEndIdx !== -1) {
+    content =
+      content.substring(0, testStartIdx + testStart.length) +
+      content.substring(testEndIdx + testEnd.length);
+  }
+
   return content;
 }
 

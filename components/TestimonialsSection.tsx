@@ -65,11 +65,11 @@ export async function TestimonialsSection() {
                 {caseStudies.map((study) => {
                   const logoUrl = getMediaUrl(study.logo);
                   const imageUrl = getMediaUrl(study.image);
-                  const imageAlt = typeof study.image === 'object' ? study.image.alt : '';
+                  const imageAlt = study.image && typeof study.image === 'object' ? study.image.alt : '';
                   return (
                     <div key={study.id} role="listitem" className="testimonial__item w-dyn-item">
                       <div className="grid card">
-                        <div className="testimonial__content-wrapper">
+                        <div className="testimonial__content-wrapper" style={{ gridArea: '1 / 1 / 2 / 17', alignSelf: 'end' }}>
                           <div className="testimonial___quote-wrapper">
                             <QuoteIcon />
                             <blockquote className="testimonial__quote">{study.quote}</blockquote>
@@ -92,7 +92,7 @@ export async function TestimonialsSection() {
                           </div>
                         </div>
                         {imageUrl && (
-                          <div className="testimonial__img-wrapper">
+                          <div className="testimonial__img-wrapper" style={{ gridArea: '1 / 18 / 2 / 25' }}>
                             <img src={imageUrl} loading="lazy" alt={imageAlt} className="testimonial__img" />
                           </div>
                         )}

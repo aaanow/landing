@@ -69,7 +69,7 @@ export async function Footer() {
         <div className="spacer-vertical" />
 
         <div className="footer__bottom">
-          <div className="footer__disclaimer">
+          <div className="footer__disclaimer" style={{ gridArea: 'span 1 / span 3 / span 1 / span 3' }}>
             {disclaimerText && (
               <p className="footer__text long">
                 {disclaimerText}
@@ -81,7 +81,7 @@ export async function Footer() {
               </div>
             )}
           </div>
-          <div className="footer__branding">
+          <div className="footer__branding" style={{ gridArea: 'span 1 / span 1 / span 1 / span 1' }}>
             {logo && (
               <Image
                 src={logo}

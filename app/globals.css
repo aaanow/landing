@@ -1033,13 +1033,24 @@
 /* =================================================================
    LOGO MARQUEE
    ================================================================= */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 .logo-marquee {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  padding: 2rem 0;
-  overflow: hidden;
+  padding: 0 0 5rem;
+  width: var(--_sizing---content-width);
+  max-width: var(--_sizing---content-max-width);
+  margin-inline: auto;
 }
 
 .logo-marquee__heading {
@@ -1053,12 +1064,16 @@
 .logo-marquee__viewport {
   overflow: hidden;
   width: 100%;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 .logo-marquee__container {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 4rem;
+  width: max-content;
+  animation: marquee-scroll linear infinite;
 }
 
 .logo-marquee__slide {
@@ -1081,17 +1096,13 @@
   max-height: 60px;
   display: block;
   object-fit: contain;
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
-}
-
-.logo-marquee__img:hover {
-  opacity: 1;
+  pointer-events: none;
+  filter: brightness(0) saturate(100%) invert(18%) sepia(97%) saturate(1500%) hue-rotate(167deg) brightness(92%) contrast(101%);
 }
 
 @media (max-width: 767px) {
   .logo-marquee {
-    padding: 1.5rem 0;
+    padding: 0 0 3rem;
   }
 
   .logo-marquee__container {
@@ -1112,7 +1123,7 @@
    ================================================================= */
 .nhero__section {
   background: linear-gradient(#e1ede0, #e1ede000);
-  padding: 8rem 1.5rem 4rem;
+  padding: 8rem 1.5rem 1rem;
 }
 
 .nhero {
@@ -1132,6 +1143,13 @@
   flex-direction: column;
   align-items: center;
   gap: 1.25rem;
+}
+
+.nhero__top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .nhero__pill {

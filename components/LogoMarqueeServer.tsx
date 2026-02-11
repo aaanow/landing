@@ -13,7 +13,7 @@ export async function LogoMarquee() {
     console.error('LogoMarquee: Failed to fetch global:', error)
   }
 
-  const { heading, logos = [], speed, direction } = data
+  const { logos = [], speed, direction } = data
 
   // Extract URLs from media objects and resolve alt text
   const resolvedLogos = logos
@@ -36,7 +36,6 @@ export async function LogoMarquee() {
 
   return (
     <LogoMarqueeClient
-      heading={heading}
       logos={resolvedLogos}
       speed={speed}
       direction={direction}
