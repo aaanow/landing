@@ -46,7 +46,7 @@ export async function TestimonialsSection() {
   } = data;
 
   return (
-    <section background="dark" className="section sticky">
+    <section data-background="dark" className="section sticky">
       <div className="w-layout-blockcontainer container top-bottom-padding landing w-container">
         <div className="section__content-wrapper dark-green">
           <div className="section-header__wrapper">
