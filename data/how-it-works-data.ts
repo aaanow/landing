@@ -15,7 +15,7 @@ export interface ResourceLink {
 }
 
 export interface HowItWorksTab {
-  id: TabId
+  id: string
   number: string
   timeLabel: string
   outcomeLabel: string

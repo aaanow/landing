@@ -3,7 +3,7 @@ import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { LogoMarquee } from '@/components/LogoMarqueeServer';
 import { HeroSection } from '@/components/HeroSection';
 import { CTASection } from '@/components/CTASection';
-import { HowItWorksSection } from '@/components/HowItWorksSection';
+import { HowItWorksSectionServer } from '@/components/HowItWorksSectionServer';
 
 const HOW_IT_WORKS_MARKER = '<!-- HOW_IT_WORKS_SECTION -->';
 const TESTIMONIALS_MARKER = '<!-- TESTIMONIALS_SECTION -->';
@@ -22,7 +22,7 @@ export default function Home() {
       <HeroSection />
       <LogoMarquee />
       <div dangerouslySetInnerHTML={{ __html: beforeHIW }} />
-      <HowItWorksSection />
+      <HowItWorksSectionServer />
       {middleContent && <div dangerouslySetInnerHTML={{ __html: middleContent }} />}
       {afterTestimonials != null && <TestimonialsSection />}
       {afterTestimonials && <div dangerouslySetInnerHTML={{ __html: afterTestimonials }} />}

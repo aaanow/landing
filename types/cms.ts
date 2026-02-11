@@ -215,6 +215,48 @@ export interface HeroGlobal {
   secondaryButtonLink?: string;
 }
 
+// How It Works global
+export interface HowItWorksStep {
+  label: string
+  title: string
+  description?: string
+  id?: string
+}
+
+export interface HowItWorksVideoLink {
+  label: string
+  url: string
+  id?: string
+}
+
+export interface HowItWorksResourceLink {
+  label: string
+  url: string
+  id?: string
+}
+
+export interface HowItWorksTab {
+  number: string
+  timeLabel: string
+  outcomeLabel: string
+  actionTitle: string
+  actionDescription?: string
+  researchLinkLabel?: string
+  researchLinkDescription?: string
+  steps?: HowItWorksStep[]
+  outcomeTitle?: string
+  outcomeDescription?: string
+  image?: Media | string
+  videoLinks?: HowItWorksVideoLink[]
+  resourceLinks?: HowItWorksResourceLink[]
+  id?: string
+}
+
+export interface HowItWorksGlobal {
+  heading?: string
+  tabs?: HowItWorksTab[]
+}
+
 // CTA global
 export interface CTAGlobal {
   heading?: string;

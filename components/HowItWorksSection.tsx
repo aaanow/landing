@@ -3,13 +3,12 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import {
-  HOW_IT_WORKS_TABS,
-  HOW_IT_WORKS_HEADING,
-  type TabId,
-} from '@/data/how-it-works-data'
+import type { HowItWorksTab } from '@/data/how-it-works-data'
 
-const STEP_COUNT = HOW_IT_WORKS_TABS.length
+interface HowItWorksSectionProps {
+  heading: string
+  tabs: HowItWorksTab[]
+}
 
 const ARROW_ICON = (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 17 17" fill="none">
@@ -40,12 +39,12 @@ function useMediaQuery(query: string): boolean {
 /* ------------------------------------------------------------------ */
 /*  Mobile: Original click-based tabs                                  */
 /* ------------------------------------------------------------------ */
-function HowItWorksMobile() {
-  const [activeTab, setActiveTab] = useState<TabId>('day')
+function HowItWorksMobile({ tabs }: { tabs: HowItWorksTab[] }) {
+  const [activeTab, setActiveTab] = useState(tabs[0]?.id || 'day')
   const [transitioning, setTransitioning] = useState(false)
 
   const goToTab = useCallback(
-    (tabId: TabId) => {
+    (tabId: string) => {
       if (tabId === activeTab || transitioning) return
       setTransitioning(true)
       setTimeout(() => {
@@ -56,18 +55,18 @@ function HowItWorksMobile() {
     [activeTab, transitioning],
   )
 
-  const tab = HOW_IT_WORKS_TABS.find((t) => t.id === activeTab)!
+  const tab = tabs.find((t) => t.id === activeTab)!
 
   return (
     <div className="hiw__layout">
       <div className="hiw__tabs" role="tablist" aria-orientation="vertical">
-        {HOW_IT_WORKS_TABS.map((t) => (
+        {tabs.map((t) => (
           <button
             key={t.id}
             role="tab"
             aria-selected={activeTab === t.id}
             className={`hiw__tab${activeTab === t.id ? ' hiw__tab--active' : ''}`}
-            onClick={() => goToTab(t.id as TabId)}
+            onClick={() => goToTab(t.id)}
           >
             <span className="hiw__tab-indicator" />
             <div className="hiw__tab-text">
@@ -161,7 +160,7 @@ function HowItWorksMobile() {
 /* ------------------------------------------------------------------ */
 /*  Desktop: Scroll-driven sticky layout                               */
 /* ------------------------------------------------------------------ */
-function HowItWorksDesktop() {
+function HowItWorksDesktop({ tabs }: { tabs: HowItWorksTab[] }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const activeIndexRef = useRef(0)
   const scrollTrackRef = useRef<HTMLDivElement>(null)
@@ -171,8 +170,11 @@ function HowItWorksDesktop() {
   const progressFillRef = useRef<HTMLDivElement>(null)
   const progressDotRefs = useRef<(HTMLDivElement | null)[]>([])
 
+  const stepCount = tabs.length
+
   // ScrollTrigger setup
   useEffect(() => {
+    const count = tabs.length
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: scrollTrackRef.current,
@@ -182,7 +184,7 @@ function HowItWorksDesktop() {
         scrub: 0.5,
         onUpdate: (self) => {
           const p = self.progress
-          const idx = p >= 1 ? STEP_COUNT - 1 : Math.floor(p * STEP_COUNT)
+          const idx = p >= 1 ? count - 1 : Math.floor(p * count)
           if (idx !== activeIndexRef.current) {
             activeIndexRef.current = idx
             setActiveIndex(idx)
@@ -191,7 +193,7 @@ function HowItWorksDesktop() {
       })
     })
     return () => ctx.revert()
-  }, [])
+  }, [tabs.length])
 
   // Animate panels on activeIndex change
   useEffect(() => {
@@ -216,14 +218,14 @@ function HowItWorksDesktop() {
     // Progress fill
     if (progressFillRef.current) {
       gsap.to(progressFillRef.current, {
-        scaleX: (activeIndex + 1) / STEP_COUNT,
+        scaleX: (activeIndex + 1) / stepCount,
         duration: 0.4,
         ease: 'power2.out',
       })
     }
   }, [activeIndex])
 
-  const tab = HOW_IT_WORKS_TABS[activeIndex]
+  const tab = tabs[activeIndex]
 
   return (
     <div ref={scrollTrackRef} className="hiw__scroll-track">
@@ -235,7 +237,7 @@ function HowItWorksDesktop() {
               <div className="hiw__progress-track">
                 <div ref={progressFillRef} className="hiw__progress-fill" />
               </div>
-              {HOW_IT_WORKS_TABS.map((t, i) => (
+              {tabs.map((t, i) => (
                 <div
                   key={t.id}
                   ref={(el) => { progressDotRefs.current[i] = el }}
@@ -253,7 +255,7 @@ function HowItWorksDesktop() {
 
             {/* Left: text panels */}
             <div className="hiw__text-stack">
-              {HOW_IT_WORKS_TABS.map((t, i) => (
+              {tabs.map((t, i) => (
                 <div
                   key={t.id}
                   ref={(el) => { textPanelRefs.current[i] = el }}
@@ -315,7 +317,7 @@ function HowItWorksDesktop() {
 
             {/* Right: image only */}
             <div className="hiw__visual-stack">
-              {HOW_IT_WORKS_TABS.map((t, i) => (
+              {tabs.map((t, i) => (
                 <div
                   key={t.id}
                   ref={(el) => { visualPanelRefs.current[i] = el }}
@@ -346,16 +348,16 @@ function HowItWorksDesktop() {
 /* ------------------------------------------------------------------ */
 /*  Main export                                                        */
 /* ------------------------------------------------------------------ */
-export function HowItWorksSection() {
+export function HowItWorksSection({ heading, tabs }: HowItWorksSectionProps) {
   const isMobile = useMediaQuery('(max-width: 767px)')
 
   return (
     <section id="how-it-works" className="hiw__section">
       <div className="hiw__container">
         <div className="hiw__header">
-          <h2 className="hiw__heading">{HOW_IT_WORKS_HEADING}</h2>
+          <h2 className="hiw__heading">{heading}</h2>
         </div>
-        {isMobile ? <HowItWorksMobile /> : <HowItWorksDesktop />}
+        {isMobile ? <HowItWorksMobile tabs={tabs} /> : <HowItWorksDesktop tabs={tabs} />}
       </div>
     </section>
   )
