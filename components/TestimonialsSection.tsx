@@ -49,7 +49,7 @@ export async function TestimonialsSection() {
 
   return (
     <section data-background="dark" className="section sticky">
-      <div className="w-layout-blockcontainer container top-bottom-padding landing w-container">
+      <div className="container top-bottom-padding landing">
         <div className="section__content-wrapper dark-green">
           <div className="section-header__wrapper">
             <SectionIcon />
@@ -60,14 +60,14 @@ export async function TestimonialsSection() {
           </div>
 
           {caseStudies.length > 0 ? (
-            <div className="testimonial__collection-list-wrapper animate w-dyn-list">
-              <div role="list" className="testimonial__collection-list w-dyn-items">
+            <div className="testimonial__collection-list-wrapper animate collection-list">
+              <div role="list" className="testimonial__collection-list collection-items">
                 {caseStudies.map((study) => {
                   const logoUrl = getMediaUrl(study.logo);
                   const imageUrl = getMediaUrl(study.image);
                   const imageAlt = study.image && typeof study.image === 'object' ? study.image.alt : '';
                   return (
-                    <div key={study.id} role="listitem" className="testimonial__item w-dyn-item">
+                    <div key={study.id} role="listitem" className="testimonial__item collection-item">
                       <div className="grid card">
                         <div className="testimonial__content-wrapper" style={{ gridArea: '1 / 1 / 2 / 17', alignSelf: 'end' }}>
                           <div className="testimonial___quote-wrapper">
@@ -103,8 +103,8 @@ export async function TestimonialsSection() {
               </div>
             </div>
           ) : (
-            <div className="testimonial__collection-list-wrapper animate w-dyn-list">
-              <div className="w-dyn-empty">
+            <div className="testimonial__collection-list-wrapper animate collection-list">
+              <div className="collection-empty">
                 <div>No items found.</div>
               </div>
             </div>
@@ -113,15 +113,15 @@ export async function TestimonialsSection() {
           <div className="div-block-147">
             <h3>{clientLogosHeading}</h3>
             {clientLogos.length > 0 ? (
-              <div className="logo__list-wrapper w-dyn-list">
-                <div role="list" className="logo__list w-dyn-items">
+              <div className="logo__list-wrapper collection-list">
+                <div role="list" className="logo__list collection-items">
                   {clientLogos.map((logo) => {
                     const logoUrl = getMediaUrl(logo.image);
                     if (!logoUrl) return null;
                     const mediaAlt = typeof logo.image === 'object' ? logo.image.alt : '';
                     const alt = logo.alt || mediaAlt || '';
                     return (
-                      <div key={logo.id} role="listitem" className="log__item w-dyn-item">
+                      <div key={logo.id} role="listitem" className="log__item collection-item">
                         {logo.link ? (
                           <a href={logo.link} target="_blank" rel="noopener noreferrer">
                             <img alt={alt} loading="lazy" src={logoUrl} className="client__img-copy" />
@@ -135,8 +135,8 @@ export async function TestimonialsSection() {
                 </div>
               </div>
             ) : (
-              <div className="logo__list-wrapper w-dyn-list">
-                <div className="w-dyn-empty">
+              <div className="logo__list-wrapper collection-list">
+                <div className="collection-empty">
                   <div>No items found.</div>
                 </div>
               </div>

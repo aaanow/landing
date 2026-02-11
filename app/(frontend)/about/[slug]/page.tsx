@@ -72,7 +72,7 @@ export default async function AboutPage({ params }: DynamicPageProps) {
 
   return (
     <section className="section sticky">
-      <div className="w-layout-blockcontainer container top-padding w-container">
+      <div className="container top-padding">
         <div className="section__content-wrapper">
           <div className="section-header__wrapper">
             {popup.icon && (

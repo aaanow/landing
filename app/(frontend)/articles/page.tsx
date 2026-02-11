@@ -9,6 +9,7 @@ export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: 'Articles - AAAnow',
+  description: 'Read the latest articles, news, and stories about agency growth, client retention, and how AiSC is transforming the industry.',
 };
 
 export default async function ArticlesPage() {
@@ -35,15 +36,15 @@ export default async function ArticlesPage() {
 
   return (
     <section className="section background-cream">
-      <div className="w-layout-blockcontainer container top-bottom-padding w-container">
+      <div className="container top-bottom-padding">
         <div className="section-header__wrapper">
           <h1>Articles, News &amp; Stories</h1>
         </div>
 
         <div className="blog__wrapper">
-          <div className="articles__collection-grid-wrapper w-dyn-list">
+          <div className="articles__collection-grid-wrapper collection-list">
             {posts.length > 0 ? (
-              <div role="list" className="articles__collection-grid w-dyn-items">
+              <div role="list" className="articles__collection-grid collection-items">
                 {posts.map((post) => {
                   const postLink = post.externalLink || `/posts/${post.slug}`;
                   const backgroundImage = post.featuredImage || post.thumbnailImage || '/images/aisc_blog_bg-01.svg';
@@ -54,7 +55,7 @@ export default async function ArticlesPage() {
                       data-category={post.category || ''}
                       data-tag={post.tag || ''}
                       role="listitem"
-                      className="card-article__item w-dyn-item"
+                      className="card-article__item collection-item"
                     >
                       <img
                         loading="lazy"
@@ -84,13 +85,13 @@ export default async function ArticlesPage() {
                           </svg>
                         </div>
                       </div>
-                      <a href={postLink} className="card__link w-inline-block"></a>
+                      <a href={postLink} className="card__link inline-block"></a>
                     </div>
                   );
                 })}
               </div>
             ) : (
-              <div className="w-dyn-empty">
+              <div className="collection-empty">
                 <div>No articles found.</div>
               </div>
             )}

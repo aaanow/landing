@@ -3,7 +3,7 @@ import { Button } from '@/components/Button';
 export default function NotFound() {
   return (
     <section className="section sticky">
-      <div className="w-layout-blockcontainer container top-padding w-container">
+      <div className="container top-padding">
         <div className="section__content-wrapper">
           <div className="section-header__wrapper">
             <h1>Page Not Found</h1>

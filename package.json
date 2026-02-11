@@ -15,6 +15,7 @@
     "seed:resource-chapters": "payload run src/scripts/seed-resource-chapters.ts"
   },
   "dependencies": {
+    "@calcom/embed-react": "^1.5.3",
     "@payloadcms/db-postgres": "^3.74.0",
     "@payloadcms/next": "^3.74.0",
     "@payloadcms/richtext-lexical": "^3.74.0",

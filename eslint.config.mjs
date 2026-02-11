@@ -9,7 +9,7 @@ export default tseslint.config(
       "node_modules/**",
       ".next/**",
       "out/**",
-      "webflow export/**",
+      "static-pages/**",
       "exported cms/**",
     ],
   },

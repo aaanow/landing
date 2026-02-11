@@ -3,6 +3,7 @@ import { getStaticPageContent } from '@/lib/static-content';
 
 export const metadata: Metadata = {
   title: 'Documentation - AAAnow',
+  description: 'Access documentation and technical resources for the AAAnow AiSC platform.',
 };
 
 export default function DocumentationPage() {

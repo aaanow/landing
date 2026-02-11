@@ -25,7 +25,7 @@ export async function StatsSection() {
 
   return (
     <section id="stats" className="section sticky">
-      <div className="w-layout-blockcontainer container top-bottom-padding landing w-container">
+      <div className="container top-bottom-padding landing">
         <div className="stats-card">
           <div className="stats-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 10" width="48" height="40" fill="none">

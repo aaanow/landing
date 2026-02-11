@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import '@/styles/normalize.css';
-import '@/styles/webflow.css';
-import '@/styles/webflow-components.css';
+import '@/styles/base.css';
+import '@/styles/components.css';
 import '@/app/globals.css';
 import '@/styles/scorecard.css';
 import '@/styles/how-it-works.css';
 import { Footer, Navigation } from '@/components/layout';
 import { AnimationProvider } from '@/components/AnimationProvider';
 import { GetStartedModal } from '@/components/GetStartedModal';
+import { CalFloatingButton } from '@/components/CalFloatingButton';
 import { SITE_CONFIG, EXTERNAL_URLS } from '@/lib/constants';
 
 export const metadata: Metadata = {
@@ -39,9 +39,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Script id="typekit-load" strategy="beforeInteractive">
           {`try{Typekit.load()}catch(e){}`}
         </Script>
-        <Script id="css-feature-detection" strategy="beforeInteractive">
-          {`!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document)`}
-        </Script>
       </head>
       <body>
         <AnimationProvider>
@@ -49,10 +46,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="page__wrapper">{children}</div>
           <Footer />
           <GetStartedModal />
+          <CalFloatingButton />
         </AnimationProvider>
-
-        <Script src={`${EXTERNAL_URLS.webflowBase}/navigation.js`} strategy="lazyOnload" />
-        <Script src={`${EXTERNAL_URLS.webflowBase}/get-started-overlay.js`} strategy="lazyOnload" />
       </body>
     </html>
   );

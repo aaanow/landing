@@ -30,7 +30,7 @@ export async function CTASection() {
 
   return (
     <section className="section sticky last">
-      <div className="w-layout-blockcontainer container top-bottom-padding landing w-container">
+      <div className="container top-bottom-padding landing">
         <div className="section__content-wrapper light-green">
           <div className="section-header__wrapper">
             <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 64 64" fill="none" className="icon__64">
@@ -55,22 +55,22 @@ export async function CTASection() {
               </Button>
             </div>
           </div>
-          <div className="contact__form-wrapper w-form">
-            <form id="wf-form-Contact-Form" name="wf-form-Contact-Form" data-name="Contact Form" method="get" className="contact__form">
+          <div className="contact__form-wrapper form-block">
+            <form id="form-Contact-Form" name="form-Contact-Form" data-name="Contact Form" method="get" className="contact__form">
               <div className="field__wrapper row">
-                <input className="field row w-input" maxLength={256} name="Name" data-name="Name" placeholder="" type="text" id="Name" />
+                <input className="field row form-input" maxLength={256} name="Name" data-name="Name" placeholder="" type="text" id="Name" />
                 <label htmlFor="Name" className="field__label row">Name</label>
               </div>
               <div className="field__wrapper row">
-                <input className="field row w-input" maxLength={256} name="Email" data-name="Email" placeholder="" type="email" id="Email" required />
+                <input className="field row form-input" maxLength={256} name="Email" data-name="Email" placeholder="" type="email" id="Email" required />
                 <label htmlFor="Email" className="field__label row">Email Address</label>
               </div>
-              <input type="submit" data-wait="Please wait..." className="contact__form-btn w-button" value="Get Started" />
+              <input type="submit" data-wait="Please wait..." className="contact__form-btn form-submit" value="Get Started" />
             </form>
-            <div className="w-form-done">
+            <div className="form-success">
               <div>Thank you! Your submission has been received!</div>
             </div>
-            <div className="w-form-fail">
+            <div className="form-error">
               <div>Oops! Something went wrong while submitting the form.</div>
             </div>
           </div>

@@ -11,7 +11,6 @@ export const SITE_CONFIG = {
 
 export const EXTERNAL_URLS = {
   typekitId: 'rch0hpl',
-  webflowBase: 'https://aaanow.vercel.app/webflow/snippets/components',
   linkedin: 'https://www.linkedin.com/company/aaanow',
 } as const;
 

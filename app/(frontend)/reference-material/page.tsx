@@ -9,6 +9,7 @@ export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Reference Material - AAAnow',
+  description: 'Browse reference materials, resources, and guides to help you get the most out of AAAnow and AiSC.',
 };
 
 // Icon component for section headers
@@ -104,7 +105,7 @@ export default async function ReferenceMaterialPage() {
     <>
       {/* Main Resources Section */}
       <section className="section sticky">
-        <div className="w-layout-blockcontainer container top-padding w-container">
+        <div className="container top-padding">
           <div className="section__content-wrapper">
             <div className="section-header__wrapper">
               <SectionIcon />
@@ -129,11 +130,11 @@ export default async function ReferenceMaterialPage() {
                       </span>
                       <span className="resource-type">{formatResourceType(resource)}</span>
                       <span className="resource-snippet">{resource.snippet || '—'}</span>
-                      <a href={getResourceLink(resource)} className="card__link w-inline-block"></a>
+                      <a href={getResourceLink(resource)} className="card__link inline-block"></a>
                     </div>
                   ))
                 ) : (
-                  <div className="w-dyn-empty">
+                  <div className="collection-empty">
                     <div>No resources found.</div>
                   </div>
                 )}
@@ -152,7 +153,7 @@ export default async function ReferenceMaterialPage() {
 
         return (
           <section id="i-want-to" className="section sticky">
-            <div className="w-layout-blockcontainer container top-bottom-padding landing w-container">
+            <div className="container top-bottom-padding landing">
               <div className="section__content-wrapper">
                 <div className="section-header__wrapper">
                   <SectionIcon />
@@ -176,7 +177,7 @@ export default async function ReferenceMaterialPage() {
                         </span>
                         <span className="resource-type">{formatResourceType(resource)}</span>
                         <span className="resource-snippet">{resource.snippet || '—'}</span>
-                        <a href={getResourceLink(resource)} className="card__link w-inline-block"></a>
+                        <a href={getResourceLink(resource)} className="card__link inline-block"></a>
                       </div>
                     ))}
                   </div>
@@ -189,7 +190,7 @@ export default async function ReferenceMaterialPage() {
 
       {/* CTA Section */}
       <section className="section sticky last">
-        <div className="w-layout-blockcontainer container top-bottom-padding landing w-container">
+        <div className="container top-bottom-padding landing">
           <div className="section__content-wrapper light-green">
             <div className="section-header__wrapper">
               <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 64 64" fill="none" className="icon__64">

@@ -1,13 +1,15 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, useCallback, FormEvent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './Button';
+import { useModal } from './ModalContext';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 export function GetStartedModal() {
+  const { close } = useModal();
   const [status, setStatus] = useState<FormStatus>('idle');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -33,26 +35,30 @@ export function GetStartedModal() {
     }
   };
 
+  const handleOverlayClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) close();
+  }, [close]);
+
   const isSubmitting = status === 'submitting';
 
   return (
-    <div data-modal-overlay="get-started" className="getstarted__modal-overview" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <div data-modal-dialog="get-started" className="getstarted__modal-dialog">
-        <a
-          data-modal-close="get-started"
-          href="#"
-          className="getstarted__modal-close-btn w-inline-block"
+    <div data-modal-overlay="get-started" className="getstarted__modal-overview" role="dialog" aria-modal="true" aria-labelledby="modal-title" onClick={handleOverlayClick}>
+      <div className="getstarted__modal-dialog">
+        <button
+          type="button"
+          className="getstarted__modal-close-btn inline-block"
           aria-label="Close modal"
+          onClick={close}
         >
           <Image src="/images/icon-cross.svg" alt="" width={16} height={16} className="icon-16" />
-        </a>
+        </button>
 
         <div className="getstarted__modal-content">
-          <div className="getstarted__form-content w-form">
+          <div className="getstarted__form-content form-block">
             {status !== 'success' && (
               <form
-                id="wf-form-Signup"
-                name="wf-form-Signup"
+                id="form-Signup"
+                name="form-Signup"
                 className="signup__form"
                 onSubmit={handleSubmit}
               >
@@ -63,7 +69,7 @@ export function GetStartedModal() {
 
                 <div className="field__wrapper">
                   <input
-                    className="signup__form-text-field w-input"
+                    className="signup__form-text-field form-input"
                     maxLength={256}
                     name="Name"
                     placeholder="Your name (First, Last)"
@@ -75,7 +81,7 @@ export function GetStartedModal() {
 
                 <div className="field__wrapper">
                   <input
-                    className="signup__form-text-field w-input"
+                    className="signup__form-text-field form-input"
                     maxLength={256}
                     name="Email"
                     placeholder="Your work email"
@@ -88,7 +94,7 @@ export function GetStartedModal() {
 
                 <div className="field__wrapper">
                   <input
-                    className="signup__form-text-field w-input"
+                    className="signup__form-text-field form-input"
                     maxLength={256}
                     name="Organisation-Type"
                     placeholder="Organisation type"
@@ -118,7 +124,7 @@ export function GetStartedModal() {
             )}
 
             {status === 'success' && (
-              <div className="signup__form-success w-form-done">
+              <div className="signup__form-success form-success">
                 <div className="signup__form-success-content">
                   <div>Thank you! Your submission has been received!</div>
                 </div>
@@ -126,7 +132,7 @@ export function GetStartedModal() {
             )}
 
             {status === 'error' && (
-              <div className="w-form-fail">
+              <div className="form-error">
                 <div>Oops! Something went wrong while submitting the form.</div>
               </div>
             )}
