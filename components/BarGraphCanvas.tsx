@@ -102,7 +102,7 @@ function useBarGraphAnimation(canvasRef: React.RefObject<HTMLCanvasElement | nul
     if (!canvas) return
     const host = canvas.parentElement
     if (!host) return
-    const ctx = canvas.getContext('2d', { alpha: true })
+    const ctx = canvas.getContext('2d', { alpha: true })!
     if (!ctx) return
 
     let geom = computeGeometry(canvas)
