@@ -46,13 +46,23 @@ export async function CTASection() {
                   </span>
                 ))}
               </p>
-              <Button
-                {...buttonProps}
-                variant="primary"
-                icon={<ArrowIcon className="icon-16 green" />}
-              >
-                {buttonText}
-              </Button>
+              <div className="nhero__buttons">
+                <Button
+                  {...buttonProps}
+                  variant="primary"
+                  icon={<ArrowIcon className="icon-16 green" />}
+                >
+                  {buttonText}
+                </Button>
+                <Button
+                  variant="secondary"
+                  data-cal-namespace="aisc-prove"
+                  data-cal-link="aaanow-ljs/aisc-prove"
+                  data-cal-config='{"layout":"month_view"}'
+                >
+                  Get in Touch
+                </Button>
+              </div>
             </div>
           </div>
           <div className="contact__form-wrapper form-block">

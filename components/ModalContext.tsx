@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 interface ModalContextValue {
   isOpen: boolean;
@@ -18,7 +18,6 @@ export function useModal() {
 
 export function ModalProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const overlayRef = useRef<HTMLElement | null>(null);
 
   const open = useCallback(() => setIsOpen(true), []);
   const close = useCallback(() => setIsOpen(false), []);
@@ -49,13 +48,14 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, close]);
 
-  // Toggle overlay visibility
+  // Body scroll lock
   useEffect(() => {
-    const overlay = overlayRef.current ?? document.querySelector('[data-modal-overlay]') as HTMLElement | null;
-    if (overlay) {
-      overlayRef.current = overlay;
-      overlay.style.display = isOpen ? 'flex' : 'none';
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
+    return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
   return (

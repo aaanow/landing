@@ -2,6 +2,7 @@
  * Components barrel export
  */
 export { AnimationProvider, useLenis } from './AnimationProvider';
+export { GetStartedForm } from './GetStartedForm';
 export { GetStartedModal } from './GetStartedModal';
 export { RichText } from './RichText';
 export { LogoMarquee } from './LogoMarqueeServer';

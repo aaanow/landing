@@ -42,9 +42,9 @@ export default async function ArticlesPage() {
         </div>
 
         <div className="blog__wrapper">
-          <div className="articles__collection-grid-wrapper collection-list">
+          <div className="articles__collection-grid-wrapper">
             {posts.length > 0 ? (
-              <div role="list" className="articles__collection-grid collection-items">
+              <div role="list" className="articles__collection-grid">
                 {posts.map((post) => {
                   const postLink = post.externalLink || `/posts/${post.slug}`;
                   const backgroundImage = post.featuredImage || post.thumbnailImage || '/images/aisc_blog_bg-01.svg';
@@ -55,7 +55,7 @@ export default async function ArticlesPage() {
                       data-category={post.category || ''}
                       data-tag={post.tag || ''}
                       role="listitem"
-                      className="card-article__item collection-item"
+                      className="card-article__item"
                     >
                       <img
                         loading="lazy"

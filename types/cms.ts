@@ -203,16 +203,25 @@ export interface LogoMarqueeGlobal {
 }
 
 // Hero global
+export interface HeroTag {
+  label: string;
+  id?: string;
+}
+
+export interface HeroSlide {
+  image: Media | string;
+  alt?: string;
+  id?: string;
+}
+
 export interface HeroGlobal {
   pillText?: string;
   pillLink?: string;
   title?: string;
   subtitle?: string;
-  primaryButtonText?: string;
-  primaryButtonAction?: 'modal' | 'link';
-  primaryButtonLink?: string;
-  secondaryButtonText?: string;
-  secondaryButtonLink?: string;
+  tags?: HeroTag[];
+  slides?: HeroSlide[];
+  autoplayDuration?: number;
 }
 
 // How It Works global

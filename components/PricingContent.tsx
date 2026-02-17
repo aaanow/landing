@@ -70,7 +70,7 @@ export function PricingContent() {
             </div>
 
             {/* Tab Toggle */}
-            <div className="card-grid animate">
+            <div className="pricing-wrapper">
               <div className="pricing-tabs" role="tablist" aria-label="Pricing options">
                 <button
                   role="tab"

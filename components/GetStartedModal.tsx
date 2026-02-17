@@ -1,155 +1,75 @@
 'use client';
 
-import { useState, useCallback, FormEvent } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from './Button';
 import { useModal } from './ModalContext';
-
-type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
+import { GetStartedForm } from './GetStartedForm';
 
 export function GetStartedModal() {
-  const { close } = useModal();
-  const [status, setStatus] = useState<FormStatus>('idle');
+  const { isOpen, close } = useModal();
+  const [mounted, setMounted] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setStatus('submitting');
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-    const formData = new FormData(e.currentTarget);
-
-    try {
-      const response = await fetch('/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.get('Name'),
-          email: formData.get('Email'),
-          organisationType: formData.get('Organisation-Type'),
-        }),
-      });
-
-      setStatus(response.ok ? 'success' : 'error');
-    } catch {
-      setStatus('error');
+  useEffect(() => {
+    if (isOpen && dialogRef.current) {
+      dialogRef.current.focus();
     }
-  };
+  }, [isOpen]);
 
-  const handleOverlayClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) close();
-  }, [close]);
+  const handleOverlayClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (e.target === e.currentTarget) close();
+    },
+    [close],
+  );
 
-  const isSubmitting = status === 'submitting';
+  if (!mounted || !isOpen) return null;
 
-  return (
-    <div data-modal-overlay="get-started" className="getstarted__modal-overview" role="dialog" aria-modal="true" aria-labelledby="modal-title" onClick={handleOverlayClick}>
-      <div className="getstarted__modal-dialog">
+  return createPortal(
+    <div
+      className="modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      onClick={handleOverlayClick}
+    >
+      <div
+        className="modal-dialog"
+        ref={dialogRef}
+        tabIndex={-1}
+      >
         <button
           type="button"
-          className="getstarted__modal-close-btn inline-block"
+          className="modal-close"
           aria-label="Close modal"
           onClick={close}
         >
           <Image src="/images/icon-cross.svg" alt="" width={16} height={16} className="icon-16" />
         </button>
 
-        <div className="getstarted__modal-content">
-          <div className="getstarted__form-content form-block">
-            {status !== 'success' && (
-              <form
-                id="form-Signup"
-                name="form-Signup"
-                className="signup__form"
-                onSubmit={handleSubmit}
-              >
-                <div className="signup__form-header-wrapper">
-                  <h2 id="modal-title">Get Started</h2>
-                  <p className="body__xlarge">Set up your scorecard. Free and no credit card required</p>
-                </div>
-
-                <div className="field__wrapper">
-                  <input
-                    className="signup__form-text-field form-input"
-                    maxLength={256}
-                    name="Name"
-                    placeholder="Your name (First, Last)"
-                    type="text"
-                    id="signupName"
-                    autoComplete="name"
-                  />
-                </div>
-
-                <div className="field__wrapper">
-                  <input
-                    className="signup__form-text-field form-input"
-                    maxLength={256}
-                    name="Email"
-                    placeholder="Your work email"
-                    type="email"
-                    id="signupEmail"
-                    required
-                    autoComplete="email"
-                  />
-                </div>
-
-                <div className="field__wrapper">
-                  <input
-                    className="signup__form-text-field form-input"
-                    maxLength={256}
-                    name="Organisation-Type"
-                    placeholder="Organisation type"
-                    type="text"
-                    id="organisationType"
-                  />
-                </div>
-
-                <Button
-                  variant="primary"
-                  type="submit"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Please wait...' : 'Start building my scorecard'}
-                </Button>
-
-                <div className="signup__form-legal">
-                  <p className="body__small light">
-                    Your data is used for purposes of building your own scorecard and communicating with
-                    you about it. If you are requesting via one of our qualified partners, details are
-                    provided only on the basis of scorecard preparation. Completing your details is
-                    acceptance of our <Link href="/legal/privacy-policy">privacy policy</Link> and{' '}
-                    <Link href="/legal/terms-and-conditions">terms &amp; conditions</Link>.
-                  </p>
-                </div>
-              </form>
-            )}
-
-            {status === 'success' && (
-              <div className="signup__form-success form-success">
-                <div className="signup__form-success-content">
-                  <div>Thank you! Your submission has been received!</div>
-                </div>
-              </div>
-            )}
-
-            {status === 'error' && (
-              <div className="form-error">
-                <div>Oops! Something went wrong while submitting the form.</div>
-              </div>
-            )}
+        <div className="modal-content">
+          <div className="modal-content__form">
+            <GetStartedForm />
           </div>
 
-          <div className="getstarted__modal-img-wrapper">
+          <div className="modal-content__preview">
             <Image
               src="/images/aisc_product-01_1aisc_product-01.avif"
               alt="AiSC Product Preview"
               width={750}
               height={500}
-              className="signup__form-img"
+              className="modal-content__preview-img"
               priority
             />
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

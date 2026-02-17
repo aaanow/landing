@@ -25,14 +25,14 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <LogoMarquee />
       {beforeStats && <div dangerouslySetInnerHTML={{ __html: beforeStats }} />}
-      <StatsSection />
       {betweenStatsAndHIW && <div dangerouslySetInnerHTML={{ __html: betweenStatsAndHIW }} />}
       <HowItWorksSectionServer />
       {middleContent && <div dangerouslySetInnerHTML={{ __html: middleContent }} />}
       {afterTestimonials !== undefined && <TestimonialsSection />}
       {afterTestimonials && <div dangerouslySetInnerHTML={{ __html: afterTestimonials }} />}
+      <LogoMarquee />
+      <StatsSection />
       <CTASection />
     </>
   );

@@ -1,7 +1,8 @@
 import { getPayloadClient } from '@/src/payload'
 import type { HeroGlobal } from '@/types/cms'
-import { ScorecardTabs } from './ScorecardTabs'
-import { Button } from './Button'
+
+import { HeroCarousel } from './HeroCarousel'
+import { HeroStats } from './HeroStats'
 
 export async function HeroSection() {
   let data: HeroGlobal = {}
@@ -16,19 +17,15 @@ export async function HeroSection() {
   const {
     pillText = 'Latest news item',
     pillLink = '#',
-    title = 'Discover opportunities across your client accounts.',
+    title = 'Uncover What Your Clients Need and the Revenue You\'re Missing',
     subtitle = 'List your clients, analyse their sites, and generate actionable, costed plans you can use to win, retain, and expand accounts.',
-    primaryButtonText = 'Get started',
-    primaryButtonAction = 'modal',
-    primaryButtonLink,
-    secondaryButtonText = 'Talk to sales',
-    secondaryButtonLink,
+    tags = [
+      { label: 'ROI in 19 Days' },
+      { label: '£217M Opportunities Tracked' },
+    ],
+    slides = [],
+    autoplayDuration = 5000,
   } = data
-
-  const primaryButtonProps =
-    primaryButtonAction === 'modal'
-      ? { 'data-modal-open': 'get-started', href: '#' }
-      : { href: primaryButtonLink || '#' }
 
   return (
     <section className="nhero__section">
@@ -41,17 +38,17 @@ export async function HeroSection() {
             <h1 className="nhero__title">{title}</h1>
           </div>
           <p className="nhero__subtitle">{subtitle}</p>
-          <div className="nhero__buttons">
-            <Button variant="solid" {...primaryButtonProps}>
-              {primaryButtonText}
-            </Button>
-            <Button variant="secondary" href={secondaryButtonLink || '#'}>
-              {secondaryButtonText}
-            </Button>
-          </div>
+          {tags.length > 0 && (
+            <div className="nhero__tags">
+              {tags.map((tag, i) => (
+                <span key={tag.id ?? i} className="nhero__tag">{tag.label}</span>
+              ))}
+            </div>
+          )}
         </div>
-        <ScorecardTabs />
+        <HeroCarousel slides={slides} autoplayDuration={autoplayDuration} />
       </div>
+      <HeroStats />
     </section>
   )
 }

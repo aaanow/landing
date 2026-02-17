@@ -7,10 +7,6 @@ export function CalFloatingButton() {
   useEffect(() => {
     (async function () {
       const cal = await getCalApi({ namespace: 'aisc-prove' });
-      cal('floatingButton', {
-        calLink: 'aaanow-ljs/aisc-prove',
-        config: { layout: 'month_view', useSlotsViewOnSmallScreen: 'true' },
-      });
       cal('ui', {
         cssVarsPerTheme: {
           light: { 'cal-brand': '#ffffff' },
