@@ -5,6 +5,8 @@ import { HeroSection } from '@/components/HeroSection';
 import { CTASection } from '@/components/CTASection';
 import { HowItWorksSectionServer } from '@/components/HowItWorksSectionServer';
 import { StatsSection } from '@/components/StatsSection';
+import { TimelineTabsSection } from '@/components/TimelineTabsSection';
+import { AdvantagesSection } from '@/components/AdvantagesSection';
 
 const STATS_MARKER = '<!-- STATS_SECTION -->';
 const HOW_IT_WORKS_MARKER = '<!-- HOW_IT_WORKS_SECTION -->';
@@ -27,6 +29,8 @@ export default function Home() {
       <HeroSection />
       {beforeStats && <div dangerouslySetInnerHTML={{ __html: beforeStats }} />}
       {betweenStatsAndHIW && <div dangerouslySetInnerHTML={{ __html: betweenStatsAndHIW }} />}
+      <TimelineTabsSection />
+      <AdvantagesSection />
       <HowItWorksSectionServer />
       {middleContent && <div dangerouslySetInnerHTML={{ __html: middleContent }} />}
       {afterTestimonials !== undefined && <TestimonialsSection />}
