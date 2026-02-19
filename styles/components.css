@@ -4281,14 +4281,40 @@ figcaption {
     padding-bottom: 0;
   }
 
+  .tab__nav-slider {
+    display: none;
+  }
+
   .tab__nav-wrapper {
     width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    gap: 0.25rem;
+    overflow: visible;
   }
 
   .tab__nav-item {
-    padding-left: .75rem;
-    padding-right: .75rem;
+    flex: 0 0 2rem;
+    min-width: 0;
+    padding: 0.5rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0;
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: flex 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                font-size 0.25s ease,
+                background-color 0.35s ease,
+                color 0.3s ease;
+  }
+
+  .tab__nav-item.is-active {
+    flex: 1 1 auto;
+    padding: 0.5rem 0.75rem;
     font-size: var(--font-size-lg);
+    background-color: var(--button);
+    border-color: #e5ebe0;
+    color: var(--primary-900);
   }
 
   .tab__pane-content {
