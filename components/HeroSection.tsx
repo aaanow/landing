@@ -43,7 +43,7 @@ export async function HeroSection() {
             </span>
             <h1 className="hero-animate hero-animate-delay-2 font-heading !text-[clamp(3rem,6.5vw,5rem)] !font-normal !leading-none tracking-tight text-primary-900 m-0 max-md:!text-[2rem]">{title}</h1>
           </div>
-          <p className="hero-animate hero-animate-delay-3 font-body !text-2xl !leading-snug !font-[350] !text-[rgba(0,50,60,0.6)] max-w-[42rem] m-0 max-md:!text-xl">{subtitle}</p>
+          <p className="hero-animate hero-animate-delay-3 font-body !text-2xl !leading-snug !font-normal !text-[rgba(0,50,60,0.75)] max-w-[42rem] m-0 max-md:!text-xl">{subtitle}</p>
           {tags.length > 0 && (
             <div className="hero-animate hero-animate-delay-4 flex gap-3 items-center mt-2 flex-wrap">
               {tags.map((tag, i) => (

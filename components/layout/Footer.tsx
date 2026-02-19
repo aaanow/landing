@@ -11,14 +11,14 @@ interface FooterLinkGroupProps {
 function FooterLinkGroup({ title, children }: FooterLinkGroupProps) {
   return (
     <div className="flex flex-col gap-2 flex-1 justify-start items-start w-full max-md:flex-none max-md:w-[49%] max-md:mt-4 max-sm:flex-1 max-sm:w-[48%] max-sm:min-w-[40%]">
-      <h5 className="text-button text-lg">{title}</h5>
+      <h5 className="font-heading !font-bold !text-[20px] !leading-[28px] !text-[#d2f9c5]">{title}</h5>
       <div className="flex flex-col">{children}</div>
     </div>
   );
 }
 
 function FooterLink({ href, children, external, indent, className = '' }: { href: string; children: React.ReactNode; external?: boolean; indent?: boolean; className?: string }) {
-  const baseClasses = `!text-white/80 !no-underline text-lg leading-normal flex-none py-[0.15rem] block hover:!text-white${indent ? ' border-l border-white/30 pl-4' : ''}`;
+  const baseClasses = `!text-white/80 !no-underline font-body !font-normal !text-[16px] !leading-[22px] flex-none py-[0.15rem] block hover:!text-white${indent ? ' border-l border-white/30 pl-4' : ''}`;
 
   if (external) {
     return (

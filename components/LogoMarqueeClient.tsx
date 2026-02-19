@@ -15,7 +15,7 @@ interface LogoMarqueeClientProps {
 export function LogoMarqueeClient({
   heading,
   logos,
-  speed = 30,
+  speed = 60,
   direction = 'forward',
 }: LogoMarqueeClientProps) {
   const animationDirection = direction === 'backward' ? 'reverse' : 'normal'

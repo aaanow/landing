@@ -134,7 +134,7 @@ p {
   font-size: var(--_text---body);
   line-height: var(--_text---line-height);
   letter-spacing: var(--letter-spacing-normal);
-  color: rgba(0, 50, 60, 0.6);
+  color: rgba(0, 50, 60, 0.75);
 }
 
 [data-background="dark"] p {
@@ -1429,7 +1429,7 @@ figcaption {
 }
 
 .body__small {
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-base);
   line-height: var(--line-height-snug);
 }
 
@@ -3705,7 +3705,7 @@ figcaption {
   flex-flow: row;
   flex: 1;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: stretch;
   width: 100%;
   max-width: 90%;
   height: 100%;
@@ -3721,7 +3721,7 @@ figcaption {
   color: var(--neutral-0);
   flex-flow: column;
   flex: 1;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
   display: flex;
 }
