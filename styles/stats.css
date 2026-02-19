@@ -55,6 +55,7 @@
 .stats-description {
   font-size: var(--font-size-body);
   line-height: var(--line-height-normal);
+  color: var(--color-button);
   opacity: 0.85;
 }
 

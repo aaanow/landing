@@ -121,7 +121,7 @@ export function TimelineTabsSection() {
   return (
     <section className="section sticky relative top-0">
       <div className="w-[95%] max-w-[1440px] mx-auto py-8">
-        <div className="section__content-wrapper card _2">
+        <div className="section__content-wrapper card _2 dark-section-green">
           <div className="section-header__wrapper">
             <h2 className="heading-3">
               AiSC - &lsquo;one change&rsquo; how long for results?
@@ -146,20 +146,20 @@ export function TimelineTabsSection() {
             <div className="tabs-content">
               <div className="tab__pane">
                 <div className="tab__pane-grid">
-                  <div className="tab__pane-text-wrapper-copy">
+                  <div className="tab__pane-text-wrapper-copy" style={{ gridColumn: '1 / -1' }}>
                     {/* Left column: heading + description + research link */}
                     <div className="tab__pane-thing">
                       <div>
-                        <h3 className="heading-5">{tab.heading}</h3>
-                        <p className="p_xxxlarge">{tab.description}</p>
+                        <h3 className="heading-5 text-button">{tab.heading}</h3>
+                        <p className="p_xxxlarge text-button">{tab.description}</p>
                       </div>
                       {tab.researchLink && (
                         <div className="div-block-170">
-                          <a href="#" className="button button--text">
+                          <a href="#" className="button button--text button--light">
                             The research behind our numbers.
                             <ArrowIcon className="icon-16" />
                           </a>
-                          <p className="body__small">
+                          <p className="body__small text-white">
                             How behavioural science, AI modelling evidence can
                             be used to removes noise, and increases profit.
                           </p>
@@ -173,8 +173,8 @@ export function TimelineTabsSection() {
                         <div key={step.number} className="div-block-163">
                           <div className="text-block-2">{step.number}</div>
                           <div className="div-block-161">
-                            <p className="p_default bold">{step.title}</p>
-                            <p>{step.description}</p>
+                            <p className="p_default bold text-button">{step.title}</p>
+                            <p className="text-white">{step.description}</p>
                           </div>
                         </div>
                       ))}

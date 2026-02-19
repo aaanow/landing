@@ -73,7 +73,7 @@ export async function Footer() {
         <div className="grid grid-cols-4 gap-8 border-t border-white/10 pt-8 items-center w-full max-md:flex max-md:flex-col max-md:gap-2 max-sm:flex max-sm:flex-col">
           <div className="flex flex-col gap-6" style={{ gridColumn: 'span 3 / span 3' }}>
             {disclaimerText && (
-              <p className="text-white/60 flex-1 text-base max-w-[900px]">
+              <p className="text-white/60 flex-1 text-base max-w-[900px]" style={{ color: 'rgba(255,255,255,0.6)' }}>
                 {disclaimerText}
               </p>
             )}

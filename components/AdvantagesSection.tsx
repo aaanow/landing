@@ -117,7 +117,7 @@ export function AdvantagesSection() {
   return (
     <section className="section sticky relative top-0">
       <div className="w-[95%] max-w-[1440px] mx-auto py-8">
-        <div className="section__content-wrapper card _2">
+        <div className="section__content-wrapper card _2 dark-section-white">
           <div className="section-header__wrapper">
             <h2 className="heading-3">Ways Agencies Drive Commercial Advantage</h2>
           </div>
@@ -140,9 +140,9 @@ export function AdvantagesSection() {
             <div className="tabs-content">
               <div className="tab__pane">
                 <div className="tab__pane-grid">
-                  <div className="tab__pane-content">
+                  <div className="tab__pane-content" style={{ gridColumn: '1 / -1' }}>
                     {/* Image with video overlay links */}
-                    <div className="tab__pane-video-wrapper">
+                    <div className="tab__pane-video-wrapper" style={{ gridColumn: 'span 7' }}>
                       <div className="div-block-158">
                         <img
                           src={tab.image.src}
@@ -170,13 +170,13 @@ export function AdvantagesSection() {
                     </div>
 
                     {/* Text content */}
-                    <div className="tab__pane-text-wrapper">
+                    <div className="tab__pane-text-wrapper" style={{ gridColumn: 'span 3' }}>
                       <div className="tab__pane-text">
                         <div className="div-block-122">
                           {tab.iconSvg}
                         </div>
-                        <h3>{tab.heading}</h3>
-                        <p>{tab.description}</p>
+                        <h3 className="text-white">{tab.heading}</h3>
+                        <p className="text-white">{tab.description}</p>
                       </div>
                       <div className="tab__pane-btn-wrapper">
                         {tab.ctaLinks.map((link) => (
@@ -185,7 +185,7 @@ export function AdvantagesSection() {
                             href={link.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="button button--text"
+                            className="button button--text button--light"
                           >
                             {link.label}
                             <ArrowIcon className="icon-16" />

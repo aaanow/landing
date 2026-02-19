@@ -199,6 +199,17 @@
   animation: hero-fade-up 0.7s ease-out forwards;
 }
 
+/* Force light text inside dark sections — overrides global p/h3 color */
+.dark-section-green p,
+.dark-section-green h3 {
+  color: var(--color-button);
+}
+
+.dark-section-white p,
+.dark-section-white h3 {
+  color: var(--color-neutral-0);
+}
+
 .hero-animate-delay-1 { animation-delay: 0.1s; }
 .hero-animate-delay-2 { animation-delay: 0.2s; }
 .hero-animate-delay-3 { animation-delay: 0.35s; }
