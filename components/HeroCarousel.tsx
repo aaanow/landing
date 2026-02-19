@@ -107,7 +107,7 @@ export function HeroCarousel({ slides = [], autoplayDuration = 5000 }: HeroCarou
         {Array.from({ length: slideCount }, (_, i) => (
           <button
             key={i}
-            className="relative w-8 h-1 rounded-full border-none bg-border p-0 cursor-pointer overflow-hidden transition-colors"
+            className="relative w-12 h-1 rounded-full border-none bg-border p-0 cursor-pointer overflow-hidden transition-colors"
             onClick={() => scrollTo(i)}
             aria-label={`Go to slide ${i + 1}`}
           >

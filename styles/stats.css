@@ -83,6 +83,21 @@
   color: var(--color-primary-900);
 }
 
+/* Light variant — CTA-style green background, dark text */
+.stats-card--light {
+  background: var(--color-button);
+  color: var(--color-primary-900);
+}
+
+.stats-card--light .stats-heading {
+  color: var(--color-primary-900);
+}
+
+.stats-card--light .stats-description {
+  color: var(--color-primary-900);
+  opacity: 0.7;
+}
+
 @media (max-width: 991px) {
   .stats-heading {
     font-size: var(--font-size-3xl);

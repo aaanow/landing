@@ -1,8 +1,8 @@
 import { getStaticPageContent } from '@/lib/static-content';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
-import { LogoMarquee } from '@/components/LogoMarqueeServer';
+
 import { HeroSection } from '@/components/HeroSection';
-import { CTASection } from '@/components/CTASection';
+
 // import { HowItWorksSectionServer } from '@/components/HowItWorksSectionServer';
 import { StatsSection } from '@/components/StatsSection';
 import { TimelineTabsSection } from '@/components/TimelineTabsSection';
@@ -45,13 +45,7 @@ export default function Home() {
       )}
       {afterTestimonials && <div dangerouslySetInnerHTML={{ __html: afterTestimonials }} />}
       <ScrollReveal>
-        <LogoMarquee />
-      </ScrollReveal>
-      <ScrollReveal>
-        <StatsSection />
-      </ScrollReveal>
-      <ScrollReveal>
-        <CTASection />
+        <StatsSection variant="light" />
       </ScrollReveal>
     </>
   );

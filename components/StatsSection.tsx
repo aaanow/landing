@@ -4,7 +4,11 @@ import type { ResearchStatsGlobal } from '@/types/cms'
 import { Button } from './Button'
 import { ArrowIcon } from './icons'
 
-export async function StatsSection() {
+interface StatsSectionProps {
+  variant?: 'dark' | 'light'
+}
+
+export async function StatsSection({ variant = 'dark' }: StatsSectionProps) {
   let data: ResearchStatsGlobal = {}
 
   try {
@@ -25,10 +29,13 @@ export async function StatsSection() {
     ctaLink = '#',
   } = data
 
+  const cardClass = variant === 'light' ? 'stats-card stats-card--light' : 'stats-card'
+  const buttonColor = variant === 'light' ? 'dark' : 'green'
+
   return (
     <section id="stats" className="section sticky">
       <div className="container top-bottom-padding landing">
-        <div className="stats-card">
+        <div className={cardClass}>
           <div className="stats-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 10" width="48" height="40" fill="none">
               <path d="M2,0h2v1H2zM8,0h2v1H8zM1,1h4v1H1zM7,1h4v1H7zM0,2h12v3H0zM1,5h10v1H1zM2,6h8v1H2zM3,7h6v1H3zM4,8h4v1H4zM5,9h2v1H5z" fill="currentColor" />
@@ -46,7 +53,7 @@ export async function StatsSection() {
               </Fragment>
             ))}
           </div>
-          <Button href={ctaLink} variant="sub" color="green" icon={<ArrowIcon className="icon-16" />}>
+          <Button href={ctaLink} variant="sub" color={buttonColor} icon={<ArrowIcon className="icon-16" />}>
             {ctaText}
           </Button>
         </div>

@@ -123,8 +123,9 @@ export function NavigationClient({ variant = 'light', links, ctaLabel = 'Get Sta
             <Button
               variant="main"
               size="sm"
-              href="#"
-              data-modal-open="get-started"
+              data-cal-namespace="aisc-prove"
+              data-cal-link="aaanow-ljs/aisc-prove"
+              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
               onClick={closeMenu}
               icon={<ArrowIcon className="icon-16" />}
             >
