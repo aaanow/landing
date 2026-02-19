@@ -14,17 +14,9 @@ export const Hero: GlobalConfig = {
       name: 'pillText',
       type: 'text',
       label: 'Pill Text',
-      defaultValue: 'Latest news item',
+      defaultValue: 'For Agencies',
       admin: {
-        description: 'Text shown in the small pill/tag above the title',
-      },
-    },
-    {
-      name: 'pillLink',
-      type: 'text',
-      label: 'Pill Link',
-      admin: {
-        description: 'Optional URL the pill links to',
+        description: 'Text shown in the small pill above the title (e.g. "For Agencies")',
       },
     },
     {

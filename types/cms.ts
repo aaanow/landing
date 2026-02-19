@@ -217,7 +217,6 @@ export interface HeroSlide {
 
 export interface HeroGlobal {
   pillText?: string;
-  pillLink?: string;
   title?: string;
   subtitle?: string;
   tags?: HeroTag[];
