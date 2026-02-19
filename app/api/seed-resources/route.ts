@@ -3,72 +3,9 @@ import config from '@payload-config'
 import { NextResponse } from 'next/server'
 import { checkSeedAuth } from '@/lib/seed-auth'
 import { parseCSV } from '@/lib/csv'
+import { htmlToLexical } from '@/lib/lexical'
 import fs from 'fs'
 import path from 'path'
-
-/** Resources use a paragraph-only split (different from the block-level split in lib/lexical) */
-function htmlToLexicalParagraphs(html: string) {
-  if (!html || html.trim() === '') {
-    return {
-      root: {
-        type: 'root',
-        children: [
-          {
-            type: 'paragraph',
-            children: [{ type: 'text', text: '', version: 1 }],
-            direction: 'ltr',
-            format: '',
-            indent: 0,
-            textFormat: 0,
-            version: 1,
-          },
-        ],
-        direction: 'ltr',
-        format: '',
-        indent: 0,
-        version: 1,
-      },
-    }
-  }
-
-  const paragraphs = html
-    .split(/<\/?p[^>]*>/)
-    .map((p) => p.trim())
-    .filter((p) => p && p !== '\u200D')
-
-  const children = paragraphs.map((text) => ({
-    type: 'paragraph',
-    children: [{ type: 'text', text: text.replace(/<[^>]*>/g, ''), version: 1 }],
-    direction: 'ltr',
-    format: '',
-    indent: 0,
-    textFormat: 0,
-    version: 1,
-  }))
-
-  if (children.length === 0) {
-    children.push({
-      type: 'paragraph',
-      children: [{ type: 'text', text: '', version: 1 }],
-      direction: 'ltr',
-      format: '',
-      indent: 0,
-      textFormat: 0,
-      version: 1,
-    })
-  }
-
-  return {
-    root: {
-      type: 'root',
-      children,
-      direction: 'ltr',
-      format: '',
-      indent: 0,
-      version: 1,
-    },
-  }
-}
 
 export async function GET(request: Request) {
   const authError = checkSeedAuth(request)
@@ -207,7 +144,7 @@ export async function GET(request: Request) {
           chapter: chapterId,
           snippet: row.Snippet || null,
           order: row.Order ? parseInt(row.Order, 10) : null,
-          richText: row['Rich Text'] ? htmlToLexicalParagraphs(row['Rich Text']) : null,
+          richText: row['Rich Text'] ? htmlToLexical(row['Rich Text']) : null,
           quote: row.Quote || null,
           tag: row.Tag || null,
           pdf: row.PDF || null,

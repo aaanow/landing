@@ -10,7 +10,7 @@ export default function NotFound() {
             <p className="body__xlarge">The page you&apos;re looking for doesn&apos;t exist or has been moved.</p>
           </div>
           <div className="card-grid animate">
-            <Button variant="primary" href="/">
+            <Button variant="main" href="/">
               Return Home
             </Button>
           </div>

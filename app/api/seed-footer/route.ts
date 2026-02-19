@@ -38,48 +38,52 @@ export async function GET(request: Request) {
           {
             title: 'About AAAnow',
             links: [
-              { label: 'About us', href: '/about/about-us', external: false },
+              { label: 'About us', href: '/about/about-us', external: false, indent: false },
               ...aboutPopups.map((p: any) => ({
                 label: p.name,
                 href: `/about/${p.slug}`,
                 external: false,
+                indent: true,
               })),
-              { label: 'Our capability', href: '/our-capability', external: false },
-              { label: 'LinkedIn', href: 'https://www.linkedin.com/company/aaanow', external: true },
+              { label: 'Our capability', href: '/our-capability', external: false, indent: false },
+              { label: 'LinkedIn', href: 'https://www.linkedin.com/company/aaanow', external: true, indent: false },
             ],
           },
           {
             title: 'AiSC',
             links: [
-              { label: 'AiSC Introduction', href: '/about/aisc', external: false },
+              { label: 'AiSC Introduction', href: '/about/aisc', external: false, indent: false },
               ...aiscPopups.map((p: any) => ({
                 label: p.name,
                 href: `/about/${p.slug}`,
                 external: false,
+                indent: true,
               })),
             ],
           },
           {
             title: 'Public scorecards',
             links: [
-              { label: 'Introduction', href: '/scorecards', external: false },
+              { label: 'Introduction', href: '/scorecards', external: false, indent: false },
               ...scorecards.map((s: any) => ({
                 label: s.name,
                 href: s.link || `/scorecards/${s.slug}`,
                 external: false,
+                indent: true,
               })),
             ],
           },
           {
             title: 'Resources',
             links: [
-              { label: 'All Reference Materials', href: '/reference-material', external: false },
+              { label: 'All Reference Materials', href: '/reference-material', external: false, indent: false },
               ...footerResources.map((r: any) => ({
                 label: r.name,
                 href: r.externalLink || r.blogArticle || `/resources/${r.slug}`,
                 external: false,
+                indent: true,
               })),
-              { label: 'I want to...', href: '/reference-material#i-want-to', external: false },
+              { label: 'I want to...', href: '/reference-material#i-want-to', external: false, indent: false },
             ],
           },
           {

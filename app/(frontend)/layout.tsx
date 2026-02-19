@@ -1,8 +1,20 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
+/* Base & legacy styles */
 import '@/styles/base.css';
 import '@/styles/components.css';
+/* Design tokens & Tailwind */
 import '@/app/globals.css';
+/* Component styles */
+import '@/styles/button.css';
+import '@/styles/navigation.css';
+import '@/styles/articles.css';
+import '@/styles/article-card.css';
+import '@/styles/pricing.css';
+import '@/styles/reference-materials.css';
+import '@/styles/stats.css';
+import '@/styles/marquee.css';
+import '@/styles/modal.css';
 import '@/styles/scorecard.css';
 import '@/styles/how-it-works.css';
 import { Footer, Navigation } from '@/components/layout';

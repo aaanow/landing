@@ -3,6 +3,9 @@ import type { GlobalConfig } from 'payload'
 export const HowItWorks: GlobalConfig = {
   slug: 'how-it-works',
   label: 'How It Works',
+  admin: {
+    group: 'Landing Page',
+  },
   access: {
     read: () => true,
   },

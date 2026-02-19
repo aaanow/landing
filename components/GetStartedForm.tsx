@@ -103,7 +103,7 @@ export function GetStartedForm({ onSuccess }: GetStartedFormProps) {
         </div>
 
         <Button
-          variant="primary"
+          variant="main"
           type="submit"
           disabled={isSubmitting}
         >

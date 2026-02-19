@@ -1,0 +1,116 @@
+/* =================================================================
+   REFERENCE MATERIALS TABLE STYLES
+   ================================================================= */
+.resources-table,
+.resource-table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / -1;
+}
+
+.resources-table-header,
+.resource-table-header {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 2fr;
+  gap: 1.5rem;
+  padding: 0 0 1rem 0;
+  border-bottom: 2px solid var(--color-primary-600);
+  margin-bottom: 0.5rem;
+}
+
+.resources-table-header span,
+.resource-table-header span {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-900);
+}
+
+.resources-row,
+.resource-table-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 2fr;
+  gap: 1.5rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px dashed var(--color-border-dashed);
+  position: relative;
+  align-items: flex-start;
+  background: transparent;
+  border-radius: 0;
+  width: 100%;
+}
+
+.resources-row:last-child,
+.resource-table-row:last-child {
+  border-bottom: none;
+}
+
+.resources-row:hover,
+.resource-table-row:hover {
+  background: var(--color-hover-subtle);
+}
+
+.resource-name {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-900);
+  font-size: var(--font-size-lg);
+}
+
+.resource-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.resource-badge,
+.resource-type {
+  display: inline-block;
+  background: var(--color-bg-subtle-darker);
+  color: var(--color-primary-900);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  width: fit-content;
+}
+
+.resource-snippet {
+  color: var(--color-primary-900);
+  font-size: var(--font-size-md);
+}
+
+.resources-row a.card__link,
+.resource-table-row a.card__link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .resources-table-header,
+  .resources-row,
+  .resource-table-header,
+  .resource-table-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .resources-table-header span:not(:first-child),
+  .resource-table-header span:not(:first-child) {
+    display: none;
+  }
+
+  .resource-badge,
+  .resource-type {
+    font-size: var(--font-size-xs);
+  }
+
+  .resource-snippet {
+    font-size: var(--font-size-base);
+  }
+}

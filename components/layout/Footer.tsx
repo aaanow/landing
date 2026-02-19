@@ -10,23 +10,25 @@ interface FooterLinkGroupProps {
 
 function FooterLinkGroup({ title, children }: FooterLinkGroupProps) {
   return (
-    <div className="footer__group flex flex-col gap-2">
-      <h5 className="footer-heading">{title}</h5>
-      <div className="footer__link-list flex flex-col gap-1">{children}</div>
+    <div className="flex flex-col gap-2 flex-1 justify-start items-start w-full max-md:flex-none max-md:w-[49%] max-md:mt-4 max-sm:flex-1 max-sm:w-[48%] max-sm:min-w-[40%]">
+      <h5 className="text-button">{title}</h5>
+      <div className="flex flex-col">{children}</div>
     </div>
   );
 }
 
-function FooterLink({ href, children, external }: { href: string; children: React.ReactNode; external?: boolean }) {
+function FooterLink({ href, children, external, indent, className = '' }: { href: string; children: React.ReactNode; external?: boolean; indent?: boolean; className?: string }) {
+  const baseClasses = `!text-white/80 !no-underline text-lg leading-normal flex-none py-[0.15rem] block hover:!text-white${indent ? ' border-l border-white/30 pl-4' : ''}`;
+
   if (external) {
     return (
-      <a href={href} className="footer__link" target="_blank" rel="noopener noreferrer">
+      <a href={href} className={`${baseClasses} ${className}`} target="_blank" rel="noopener noreferrer">
         {children}
       </a>
     );
   }
   return (
-    <Link href={href} className="footer__link">
+    <Link href={href} className={`${baseClasses} ${className}`}>
       {children}
     </Link>
   );
@@ -52,13 +54,13 @@ export async function Footer() {
   } = footer;
 
   return (
-    <section className="footer">
+    <section className="bg-linear-to-b from-[#004452] to-[#002B33] text-neutral-0 rounded-t-[4rem] max-md:rounded-t-[2rem] flex flex-col gap-8 max-sm:gap-0 w-full pt-16 max-sm:pt-12 max-sm:px-1 pb-12 relative">
       <div className="container">
-        <div className="footer__link-container">
+        <div className="flex flex-row gap-[var(--_sizing---gap-m)] w-full max-md:flex-wrap max-md:gap-2 max-sm:gap-4">
           {linkGroups.map((group) => (
             <FooterLinkGroup key={group.id} title={group.title}>
               {group.links?.map((link) => (
-                <FooterLink key={link.id} href={link.href} external={link.external}>
+                <FooterLink key={link.id} href={link.href} external={link.external} indent={link.indent}>
                   {link.label}
                 </FooterLink>
               ))}
@@ -66,33 +68,33 @@ export async function Footer() {
           ))}
         </div>
 
-        <div className="spacer-vertical" />
+        <div className="h-16" />
 
-        <div className="footer__bottom">
-          <div className="footer__disclaimer" style={{ gridArea: 'span 1 / span 3 / span 1 / span 3' }}>
+        <div className="grid grid-cols-4 gap-8 border-t border-white/10 pt-8 items-center w-full max-md:flex max-md:flex-col max-md:gap-2 max-sm:flex max-sm:flex-col">
+          <div className="flex flex-col gap-6" style={{ gridColumn: 'span 3 / span 3' }}>
             {disclaimerText && (
-              <p className="footer__text long">
+              <p className="text-white/60 flex-1 text-base max-w-[900px]">
                 {disclaimerText}
               </p>
             )}
             {copyrightText && (
-              <div className="footer__link copyright">
+              <div className="text-white/60 text-base mt-12">
                 {copyrightText}
               </div>
             )}
           </div>
-          <div className="footer__branding" style={{ gridArea: 'span 1 / span 1 / span 1 / span 1' }}>
+          <div className="flex flex-col gap-4 justify-start self-start items-start w-full max-w-[500px]">
             {logo && (
               <Image
                 src={logo}
                 alt="AAAnow Logo"
                 width={120}
                 height={30}
-                className="footer__logo"
+                className="w-full max-w-[200px] h-auto"
               />
             )}
             {attributionText && attributionLink && (
-              <div className="footer__attribution">
+              <div className="flex flex-col items-start w-full">
                 <FooterLink href={attributionLink} external>
                   {attributionText}
                 </FooterLink>

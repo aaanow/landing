@@ -2,6 +2,9 @@ import type { GlobalConfig } from 'payload'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
+  admin: {
+    group: 'Site',
+  },
   access: {
     read: () => true,
   },
@@ -34,6 +37,14 @@ export const Footer: GlobalConfig = {
               name: 'external',
               type: 'checkbox',
               defaultValue: false,
+            },
+            {
+              name: 'indent',
+              type: 'checkbox',
+              defaultValue: false,
+              admin: {
+                description: 'Indent this link with a left border (sub-item style)',
+              },
             },
           ],
         },

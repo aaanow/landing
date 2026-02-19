@@ -3,6 +3,9 @@ import type { GlobalConfig } from 'payload'
 export const CTA: GlobalConfig = {
   slug: 'cta',
   label: 'CTA Section',
+  admin: {
+    group: 'Landing Page',
+  },
   access: {
     read: () => true,
   },

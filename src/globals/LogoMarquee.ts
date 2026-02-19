@@ -3,6 +3,9 @@ import type { GlobalConfig } from 'payload'
 export const LogoMarquee: GlobalConfig = {
   slug: 'logo-marquee',
   label: 'Logo Marquee',
+  admin: {
+    group: 'Landing Page',
+  },
   access: {
     read: () => true,
   },

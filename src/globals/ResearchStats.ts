@@ -3,6 +3,9 @@ import type { GlobalConfig } from 'payload'
 export const ResearchStats: GlobalConfig = {
   slug: 'research-stats',
   label: 'Research Stats',
+  admin: {
+    group: 'Landing Page',
+  },
   access: {
     read: () => true,
   },

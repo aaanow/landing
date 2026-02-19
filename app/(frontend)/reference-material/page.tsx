@@ -200,7 +200,7 @@ export default async function ReferenceMaterialPage() {
               <div className="subheading__wrapper">
                 <p className="body__xlarge">Join agencies who are turning oversight into revenue.<br />Monitor fundamentals, show value, and convert insights into paid work.</p>
                 <Button
-                  variant="primary"
+                  variant="main"
                   href="#"
                   data-modal-open="get-started"
                   icon={<ArrowIcon className="icon-16 green" />}

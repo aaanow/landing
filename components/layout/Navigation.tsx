@@ -121,7 +121,7 @@ export function NavigationClient({ variant = 'light', links, ctaLabel = 'Get Sta
           ))}
           <div className="nav__cta">
             <Button
-              variant="primary"
+              variant="main"
               size="sm"
               href="#"
               data-modal-open="get-started"

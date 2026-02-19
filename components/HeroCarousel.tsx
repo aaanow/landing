@@ -71,14 +71,14 @@ export function HeroCarousel({ slides = [], autoplayDuration = 5000 }: HeroCarou
   }, [emblaApi, selectedIndex, autoplayDuration])
 
   return (
-    <div className="nhero__carousel">
-      <div className="nhero__carousel-viewport" ref={emblaRef}>
-        <div className="nhero__carousel-container">
+    <div className="flex-[7] min-w-0 flex flex-col gap-4">
+      <div className="overflow-hidden rounded-xl" ref={emblaRef}>
+        <div className="flex">
           {hasImages
             ? slides.map((slide, i) => {
                 const url = getMediaUrl(slide.image)
                 return (
-                  <div key={slide.id ?? i} className="nhero__screen">
+                  <div key={slide.id ?? i} className="relative flex-[0_0_100%] min-w-0 aspect-[16/10] bg-primary-900 border border-border flex items-center justify-center overflow-hidden">
                     {url ? (
                       <Image
                         src={url}
@@ -88,30 +88,30 @@ export function HeroCarousel({ slides = [], autoplayDuration = 5000 }: HeroCarou
                         priority={i === 0}
                       />
                     ) : (
-                      <span className="nhero__screen-label">Slide {i + 1}</span>
+                      <span className="text-primary-200 font-body text-sm">Slide {i + 1}</span>
                     )}
                   </div>
                 )
               })
             : FALLBACK_SLIDES.map((s, i) => (
-                <div key={i} className="nhero__screen">
-                  <span className="nhero__screen-label">{s.label}</span>
+                <div key={i} className="relative flex-[0_0_100%] min-w-0 aspect-[16/10] bg-primary-900 border border-border flex items-center justify-center overflow-hidden">
+                  <span className="text-primary-200 font-body text-sm">{s.label}</span>
                 </div>
               ))
           }
         </div>
       </div>
-      <div className="nhero__carousel-dots">
+      <div className="flex justify-center gap-2">
         {Array.from({ length: slideCount }, (_, i) => (
           <button
             key={i}
-            className={`nhero__carousel-dot${i === selectedIndex ? ' nhero__carousel-dot--active' : ''}`}
+            className="relative w-8 h-1 rounded-full border-none bg-border p-0 cursor-pointer overflow-hidden transition-colors"
             onClick={() => scrollTo(i)}
             aria-label={`Go to slide ${i + 1}`}
           >
             {i === selectedIndex && (
               <span
-                className="nhero__carousel-dot-fill"
+                className="block absolute inset-0 bg-primary-900 rounded-full origin-left will-change-transform pointer-events-none"
                 style={{ transform: `scaleX(${progress})` }}
               />
             )}

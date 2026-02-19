@@ -1,11 +1,13 @@
 import { forwardRef } from 'react';
 
-type ButtonVariant = 'primary' | 'solid' | 'secondary' | 'outline' | 'ghost';
+type ButtonVariant = 'main' | 'sub' | 'text' | 'link';
 type ButtonSize = 'sm' | 'md' | 'lg';
+type ButtonColor = 'dark' | 'light';
 
 interface ButtonBaseProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  color?: ButtonColor;
   icon?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
@@ -23,16 +25,17 @@ type ButtonAsAnchor = ButtonBaseProps &
 
 type ButtonProps = ButtonAsButton | ButtonAsAnchor;
 
-function buildClassName(variant: ButtonVariant, size: ButtonSize, className?: string) {
+function buildClassName(variant: ButtonVariant, size: ButtonSize, color: ButtonColor, className?: string) {
   const classes = ['button', `button--${variant}`];
+  if (color === 'light') classes.push('button--light');
   if (size !== 'md') classes.push(`button--${size}`);
   if (className) classes.push(className);
   return classes.join(' ');
 }
 
 export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
-  function Button({ variant = 'primary', size = 'md', icon, children, className, ...rest }, ref) {
-    const cls = buildClassName(variant, size, className);
+  function Button({ variant = 'main', size = 'md', color = 'dark', icon, children, className, ...rest }, ref) {
+    const cls = buildClassName(variant, size, color, className);
 
     if ('href' in rest && rest.href !== undefined) {
       return (

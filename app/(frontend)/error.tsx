@@ -17,7 +17,7 @@ export default function Error({ reset }: ErrorProps) {
             <p className="body__xlarge">We apologize for the inconvenience. Please try again.</p>
           </div>
           <div className="card-grid animate">
-            <Button variant="primary" onClick={reset}>
+            <Button variant="main" onClick={reset}>
               Try again
             </Button>
           </div>

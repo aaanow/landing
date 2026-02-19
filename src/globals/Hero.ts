@@ -3,6 +3,9 @@ import type { GlobalConfig } from 'payload'
 export const Hero: GlobalConfig = {
   slug: 'hero',
   label: 'Hero',
+  admin: {
+    group: 'Landing Page',
+  },
   access: {
     read: () => true,
   },
