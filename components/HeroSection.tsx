@@ -1,5 +1,8 @@
+import Image from 'next/image'
+
 import { getPayloadClient } from '@/src/payload'
 import type { HeroGlobal } from '@/types/cms'
+import { getMediaUrl } from '@/types/cms'
 
 import { HeroCarousel } from './HeroCarousel'
 import { HeroStats } from './HeroStats'
@@ -16,6 +19,7 @@ export async function HeroSection() {
 
   const {
     pillText = 'For Agencies',
+    pillIcon,
     title = 'Uncover What Your Clients Need and the Revenue You\'re Missing',
     subtitle = 'List your clients, analyse their sites, and generate actionable, costed plans you can use to win, retain, and expand accounts.',
     tags = [
@@ -31,10 +35,10 @@ export async function HeroSection() {
       <div className="flex items-center w-[95%] max-w-[1440px] mx-auto gap-12 max-md:flex-col max-md:gap-8">
         <div className="flex-[5] min-w-0 flex flex-col items-start justify-center gap-5 max-md:text-center max-md:items-center">
           <div className="flex flex-col items-start gap-1 max-md:items-center">
-            <span className="hero-animate hero-animate-delay-1 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-border bg-transparent text-primary-900 text-sm font-body">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-                <path d="M8 0L9.8 5.2L15.6 5.2L10.9 8.8L12.7 14L8 10.4L3.3 14L5.1 8.8L0.4 5.2L6.2 5.2L8 0Z" fill="currentColor" />
-              </svg>
+            <span className="hero-animate hero-animate-delay-1 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border bg-[rgba(0,50,60,0.05)] text-primary-900 text-sm font-medium font-body">
+              {getMediaUrl(pillIcon) && (
+                <Image src={getMediaUrl(pillIcon)!} alt="" width={20} height={20} className="shrink-0" />
+              )}
               {pillText}
             </span>
             <h1 className="hero-animate hero-animate-delay-2 font-heading !text-[clamp(3rem,6.5vw,5rem)] !font-normal !leading-none tracking-tight text-primary-900 m-0 max-md:!text-[2rem]">{title}</h1>
@@ -43,10 +47,10 @@ export async function HeroSection() {
           {tags.length > 0 && (
             <div className="hero-animate hero-animate-delay-4 flex gap-3 items-center mt-2 flex-wrap">
               {tags.map((tag, i) => (
-                <span key={tag.id ?? i} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-body text-sm font-medium text-primary-900 bg-[rgba(0,50,60,0.08)] border border-border">
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-                    <path d="M8 0L9.8 5.2L15.6 5.2L10.9 8.8L12.7 14L8 10.4L3.3 14L5.1 8.8L0.4 5.2L6.2 5.2L8 0Z" fill="currentColor" />
-                  </svg>
+                <span key={tag.id ?? i} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-body text-sm font-medium text-primary-900 bg-[rgba(0,50,60,0.05)] border border-border">
+                  {getMediaUrl(tag.icon) && (
+                    <Image src={getMediaUrl(tag.icon)!} alt="" width={18} height={18} className="shrink-0" />
+                  )}
                   {tag.label}
                 </span>
               ))}

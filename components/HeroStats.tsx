@@ -5,7 +5,7 @@ export function HeroStats() {
   const heading = 'AiSC \u2018Ai for good\u2019 provides new ways to work. Without AiSC are at a disadvantage.'
   const stats = [
     { value: '58%', description: 'Email openings, better lead generation \u2013 stand out from the noise, be heard.' },
-    { value: '21%', description: 'Email openings, better lead generation \u2013 stand out from the noise, be heard.' },
+    { value: '21%', description: 'Improvement in client retention when agencies provide continuous, evidence-based oversight.' },
     { value: '17%', description: 'Revenue uplift across client base and remove those undermining value.' },
   ]
   const ctaText = 'Download the research report'

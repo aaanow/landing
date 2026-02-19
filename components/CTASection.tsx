@@ -58,7 +58,7 @@ export async function CTASection() {
                   variant="sub"
                   data-cal-namespace="aisc-prove"
                   data-cal-link="aaanow-ljs/aisc-prove"
-                  data-cal-config='{"layout":"month_view"}'
+                  data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
                 >
                   Get in Touch
                 </Button>

@@ -132,7 +132,7 @@ export function TimelineTabsSection() {
   }, [selectedTab])
 
   return (
-    <section className="section sticky relative top-0">
+    <section className="section sticky">
       <div className="w-[95%] max-w-[1440px] mx-auto py-8">
         <div className="section__content-wrapper card _2 dark-section-green">
           <div className="section-header__wrapper">

@@ -119,7 +119,7 @@
   --accent-100: var(--color-accent-100);
   --accent-200: var(--color-accent-200);
   --accent-600: var(--color-accent-600);
-  --accent-900: #ff6d2e;
+  --accent-900: var(--color-accent-900);
   --primary-100: var(--color-primary-100);
   --primary-200: var(--color-primary-200);
   --primary-400: var(--color-primary-400);

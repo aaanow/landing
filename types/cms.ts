@@ -206,6 +206,7 @@ export interface LogoMarqueeGlobal {
 // Hero global
 export interface HeroTag {
   label: string;
+  icon?: Media | string;
   id?: string;
 }
 
@@ -217,6 +218,7 @@ export interface HeroSlide {
 
 export interface HeroGlobal {
   pillText?: string;
+  pillIcon?: Media | string;
   title?: string;
   subtitle?: string;
   tags?: HeroTag[];

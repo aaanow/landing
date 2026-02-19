@@ -48,15 +48,7 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, close]);
 
-  // Body scroll lock
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => { document.body.style.overflow = ''; };
-  }, [isOpen]);
+  // Scroll lock is handled by LenisModalBridge in AnimationProvider
 
   return (
     <ModalContext.Provider value={{ isOpen, open, close }}>

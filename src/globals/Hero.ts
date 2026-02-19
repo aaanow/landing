@@ -20,6 +20,15 @@ export const Hero: GlobalConfig = {
       },
     },
     {
+      name: 'pillIcon',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Pill Icon',
+      admin: {
+        description: 'Small icon image shown in the pill above the title',
+      },
+    },
+    {
       name: 'title',
       type: 'text',
       label: 'Title',
@@ -47,6 +56,12 @@ export const Hero: GlobalConfig = {
           type: 'text',
           label: 'Label',
           required: true,
+        },
+        {
+          name: 'icon',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Icon',
         },
       ],
     },

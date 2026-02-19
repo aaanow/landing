@@ -25,7 +25,7 @@ export function HeroCarousel({ slides = [], autoplayDuration = 5000 }: HeroCarou
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [progress, setProgress] = useState(0)
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const rafRef = useRef<number>(0)
   const startRef = useRef(Date.now())
 
   const onSelect = useCallback(() => {
@@ -55,19 +55,21 @@ export function HeroCarousel({ slides = [], autoplayDuration = 5000 }: HeroCarou
   useEffect(() => {
     if (!emblaApi) return
 
-    timerRef.current = setInterval(() => {
+    const tick = () => {
       const elapsed = Date.now() - startRef.current
       const pct = Math.min(elapsed / autoplayDuration, 1)
       setProgress(pct)
 
       if (pct >= 1) {
         emblaApi.scrollNext()
+      } else {
+        rafRef.current = requestAnimationFrame(tick)
       }
-    }, 30)
-
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current)
     }
+
+    rafRef.current = requestAnimationFrame(tick)
+
+    return () => cancelAnimationFrame(rafRef.current)
   }, [emblaApi, selectedIndex, autoplayDuration])
 
   return (

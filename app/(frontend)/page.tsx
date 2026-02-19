@@ -7,6 +7,7 @@ import { CTASection } from '@/components/CTASection';
 import { StatsSection } from '@/components/StatsSection';
 import { TimelineTabsSection } from '@/components/TimelineTabsSection';
 import { AdvantagesSection } from '@/components/AdvantagesSection';
+import { ScrollReveal } from '@/components/ScrollReveal';
 
 const STATS_MARKER = '<!-- STATS_SECTION -->';
 const HOW_IT_WORKS_MARKER = '<!-- HOW_IT_WORKS_SECTION -->';
@@ -29,15 +30,29 @@ export default function Home() {
       <HeroSection />
       {beforeStats && <div dangerouslySetInnerHTML={{ __html: beforeStats }} />}
       {betweenStatsAndHIW && <div dangerouslySetInnerHTML={{ __html: betweenStatsAndHIW }} />}
-      <TimelineTabsSection />
-      <AdvantagesSection />
+      <ScrollReveal>
+        <TimelineTabsSection />
+      </ScrollReveal>
+      <ScrollReveal>
+        <AdvantagesSection />
+      </ScrollReveal>
       {/* <HowItWorksSectionServer /> */}
       {middleContent && <div dangerouslySetInnerHTML={{ __html: middleContent }} />}
-      {afterTestimonials !== undefined && <TestimonialsSection />}
+      {afterTestimonials !== undefined && (
+        <ScrollReveal>
+          <TestimonialsSection />
+        </ScrollReveal>
+      )}
       {afterTestimonials && <div dangerouslySetInnerHTML={{ __html: afterTestimonials }} />}
-      <LogoMarquee />
-      <StatsSection />
-      <CTASection />
+      <ScrollReveal>
+        <LogoMarquee />
+      </ScrollReveal>
+      <ScrollReveal>
+        <StatsSection />
+      </ScrollReveal>
+      <ScrollReveal>
+        <CTASection />
+      </ScrollReveal>
     </>
   );
 }

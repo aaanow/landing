@@ -11,7 +11,7 @@ interface VideoLink {
 interface TabData {
   id: string
   label: string
-  image: { src: string; srcSet: string; sizes: string }
+  image: { src: string; srcSet: string; sizes: string; alt: string }
   videoLinks: VideoLink[]
   iconSvg: React.ReactNode
   heading: string
@@ -33,6 +33,7 @@ const TABS: TabData[] = [
       src: '/images/1_11.avif',
       srcSet: '/images/1_1-p-500.avif 500w, /images/1_11.avif 783w',
       sizes: '(max-width: 767px) 100vw, (max-width: 991px) 728px, 783px',
+      alt: 'AiSC dashboard showing client confidence and revenue growth metrics',
     },
     videoLinks: [
       { label: 'Client confidence, Agency revenue', href: 'https://youtu.be/TMWlp4o-ezk' },
@@ -54,6 +55,7 @@ const TABS: TabData[] = [
       src: '/images/2_12.avif',
       srcSet: '/images/2_1-p-500.avif 500w, /images/2_1-p-800.avif 800w, /images/2_1-p-1080.avif 1080w, /images/2_1-p-1600.avif 1600w, /images/2_12.avif 1744w',
       sizes: '(max-width: 767px) 100vw, (max-width: 991px) 728px, 783px',
+      alt: 'AiSC pitch differentiation and business development overview',
     },
     videoLinks: [
       { label: 'Client confidence, Agency revenue', href: 'https://youtu.be/TMWlp4o-ezk' },
@@ -75,6 +77,7 @@ const TABS: TabData[] = [
       src: '/images/3_13.avif',
       srcSet: '/images/3_1-p-500.avif 500w, /images/3_1-p-800.avif 800w, /images/3_13.avif 980w',
       sizes: '(max-width: 767px) 100vw, (max-width: 991px) 728px, 783px',
+      alt: 'AiSC competitive analysis replacing external tools',
     },
     videoLinks: [
       { label: 'Client confidence, Agency revenue', href: 'https://youtu.be/TMWlp4o-ezk' },
@@ -95,6 +98,7 @@ const TABS: TabData[] = [
       src: '/images/4.avif',
       srcSet: '/images/302bf39f9c030bcf57ceed97da9095d7_4-p-500.avif 500w, /images/302bf39f9c030bcf57ceed97da9095d7_4-p-800.avif 800w, /images/4.avif 924w',
       sizes: '(max-width: 767px) 100vw, (max-width: 991px) 728px, 783px',
+      alt: 'AiSC agency growth engine across the full client lifecycle',
     },
     videoLinks: [
       { label: 'Client confidence, Agency revenue', href: 'https://youtu.be/TMWlp4o-ezk' },
@@ -128,7 +132,7 @@ export function AdvantagesSection() {
   }, [selectedTab])
 
   return (
-    <section className="section sticky relative top-0">
+    <section className="section sticky">
       <div className="w-[95%] max-w-[1440px] mx-auto py-8">
         <div className="section__content-wrapper card _2 dark-section-white">
           <div className="section-header__wrapper">
@@ -167,7 +171,7 @@ export function AdvantagesSection() {
                         <img
                           src={tab.image.src}
                           loading="lazy"
-                          alt=""
+                          alt={tab.image.alt}
                           sizes={tab.image.sizes}
                           srcSet={tab.image.srcSet}
                           className="image-19"

@@ -112,7 +112,7 @@
 /* Size modifiers */
 .button--sm {
   font-size: var(--font-size-lg);
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
 }
 
 /* Reset padding for text/link at sm size */

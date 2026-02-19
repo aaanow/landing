@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 /* Base & legacy styles */
 import '@/styles/base.css';
 import '@/styles/components.css';
@@ -47,10 +46,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href={`https://use.typekit.net/${EXTERNAL_URLS.typekitId}.css`} />
-        <Script src={`https://use.typekit.net/${EXTERNAL_URLS.typekitId}.js`} strategy="beforeInteractive" />
-        <Script id="typekit-load" strategy="beforeInteractive">
-          {`try{Typekit.load()}catch(e){}`}
-        </Script>
       </head>
       <body>
         <AnimationProvider>

@@ -20,29 +20,6 @@ export function useLenis() {
   return useContext(LenisContext);
 }
 
-function initTabs() {
-  document.querySelectorAll('.tabs').forEach(wrapper => {
-    const tabLinks = wrapper.querySelectorAll('.tab-link');
-    const tabPanes = wrapper.querySelectorAll('.tab-pane');
-
-    tabLinks.forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const tabName = link.getAttribute('data-tab');
-
-        tabLinks.forEach(l => l.classList.remove('is-active'));
-        link.classList.add('is-active');
-
-        tabPanes.forEach(pane => {
-          pane.classList.toggle('is-tab-active', pane.getAttribute('data-tab') === tabName);
-        });
-
-        wrapper.setAttribute('data-current', tabName || '');
-      });
-    });
-  });
-}
-
 function LenisModalBridge({ children }: { children: React.ReactNode }) {
   const { isOpen } = useModal();
   const lenis = useLenis();
@@ -80,8 +57,6 @@ export function AnimationProvider({ children }: { children: React.ReactNode }) {
     const rafCallback = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(rafCallback);
     gsap.ticker.lagSmoothing(0);
-
-    initTabs();
 
     return () => {
       gsap.ticker.remove(rafCallback);

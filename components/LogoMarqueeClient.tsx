@@ -22,7 +22,7 @@ export function LogoMarqueeClient({
   // Repeat logos enough times so one half fills the viewport on wide screens
   const repeats = Math.max(2, Math.ceil(12 / logos.length))
   const set = Array.from({ length: repeats }, () => logos).flat()
-  const duration = `${Math.max(10, set.length * 3)}s`
+  const duration = `${Math.max(10, set.length * (60 / speed))}s`
 
   const renderLogo = (logo: ResolvedLogo, index: number, prefix: string) => (
     <div className="logo-marquee__slide" key={`${prefix}-${index}`}>
