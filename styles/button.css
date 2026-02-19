@@ -61,6 +61,16 @@
   color: var(--color-primary-900);
 }
 
+.button--sub.button--green {
+  border-color: var(--color-button);
+  color: var(--color-button);
+}
+
+.button--sub.button--green:hover:not(:disabled) {
+  background: var(--color-button);
+  color: var(--color-primary-900);
+}
+
 /* Text – no background or border, text only */
 .button--text {
   background: transparent;

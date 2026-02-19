@@ -3,7 +3,7 @@ import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { LogoMarquee } from '@/components/LogoMarqueeServer';
 import { HeroSection } from '@/components/HeroSection';
 import { CTASection } from '@/components/CTASection';
-import { HowItWorksSectionServer } from '@/components/HowItWorksSectionServer';
+// import { HowItWorksSectionServer } from '@/components/HowItWorksSectionServer';
 import { StatsSection } from '@/components/StatsSection';
 import { TimelineTabsSection } from '@/components/TimelineTabsSection';
 import { AdvantagesSection } from '@/components/AdvantagesSection';
@@ -31,7 +31,7 @@ export default function Home() {
       {betweenStatsAndHIW && <div dangerouslySetInnerHTML={{ __html: betweenStatsAndHIW }} />}
       <TimelineTabsSection />
       <AdvantagesSection />
-      <HowItWorksSectionServer />
+      {/* <HowItWorksSectionServer /> */}
       {middleContent && <div dangerouslySetInnerHTML={{ __html: middleContent }} />}
       {afterTestimonials !== undefined && <TestimonialsSection />}
       {afterTestimonials && <div dangerouslySetInnerHTML={{ __html: afterTestimonials }} />}

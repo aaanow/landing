@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { ArrowIcon } from './icons'
 
 interface VideoLink {
@@ -112,7 +112,20 @@ const TABS: TabData[] = [
 
 export function AdvantagesSection() {
   const [activeTab, setActiveTab] = useState(TABS[0].id)
+  const [selectedTab, setSelectedTab] = useState(TABS[0].id)
+  const [transitioning, setTransitioning] = useState(false)
+  const selectedIndex = TABS.findIndex((t) => t.id === selectedTab)
   const tab = TABS.find((t) => t.id === activeTab)!
+
+  const goToTab = useCallback((id: string) => {
+    if (id === selectedTab) return
+    setSelectedTab(id)
+    setTransitioning(true)
+    setTimeout(() => {
+      setActiveTab(id)
+      setTimeout(() => setTransitioning(false), 20)
+    }, 300)
+  }, [selectedTab])
 
   return (
     <section className="section sticky relative top-0">
@@ -125,11 +138,18 @@ export function AdvantagesSection() {
           <div className="tab__wrapper">
             {/* Tab navigation */}
             <div className="tab__nav-wrapper">
+              <div
+                className="tab__nav-slider"
+                style={{
+                  width: `calc((100% - 0.5rem) / ${TABS.length})`,
+                  transform: `translateX(${selectedIndex * 100}%)`,
+                }}
+              />
               {TABS.map((t) => (
                 <button
                   key={t.id}
-                  className={`tab__nav-item${activeTab === t.id ? ' is-active' : ''}`}
-                  onClick={() => setActiveTab(t.id)}
+                  className={`tab__nav-item${selectedTab === t.id ? ' is-active' : ''}`}
+                  onClick={() => goToTab(t.id)}
                 >
                   {t.label}
                 </button>
@@ -138,7 +158,7 @@ export function AdvantagesSection() {
 
             {/* Tab content */}
             <div className="tabs-content">
-              <div className="tab__pane">
+              <div className={`tab__pane${transitioning ? ' tab__pane--exit' : ' tab__pane--enter'}`}>
                 <div className="tab__pane-grid">
                   <div className="tab__pane-content" style={{ gridColumn: '1 / -1' }}>
                     {/* Image with video overlay links */}
@@ -175,8 +195,8 @@ export function AdvantagesSection() {
                         <div className="div-block-122">
                           {tab.iconSvg}
                         </div>
-                        <h3 className="text-white">{tab.heading}</h3>
-                        <p className="text-white">{tab.description}</p>
+                        <h3>{tab.heading}</h3>
+                        <p>{tab.description}</p>
                       </div>
                       <div className="tab__pane-btn-wrapper">
                         {tab.ctaLinks.map((link) => (

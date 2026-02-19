@@ -38,7 +38,7 @@ export async function CTASection() {
             </svg>
             <h2>{heading}</h2>
             <div className="flex flex-col items-center w-full max-w-[55rem] mx-auto">
-              <p className="tracking-snug text-2xl max-md:text-xl leading-normal">
+              <p style={{ fontSize: 'clamp(1rem, 1.5vw, 1.35rem)', lineHeight: 1.5 }} className="tracking-snug">
                 {bodyLines.map((line, i) => (
                   <span key={i}>
                     {i > 0 && <br />}

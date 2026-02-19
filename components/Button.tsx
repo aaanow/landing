@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 
 type ButtonVariant = 'main' | 'sub' | 'text' | 'link';
 type ButtonSize = 'sm' | 'md' | 'lg';
-type ButtonColor = 'dark' | 'light';
+type ButtonColor = 'dark' | 'light' | 'green';
 
 interface ButtonBaseProps {
   variant?: ButtonVariant;
@@ -27,7 +27,7 @@ type ButtonProps = ButtonAsButton | ButtonAsAnchor;
 
 function buildClassName(variant: ButtonVariant, size: ButtonSize, color: ButtonColor, className?: string) {
   const classes = ['button', `button--${variant}`];
-  if (color === 'light') classes.push('button--light');
+  if (color !== 'dark') classes.push(`button--${color}`);
   if (size !== 'md') classes.push(`button--${size}`);
   if (className) classes.push(className);
   return classes.join(' ');

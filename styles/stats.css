@@ -56,7 +56,7 @@
   font-size: var(--font-size-body);
   line-height: var(--line-height-normal);
   color: var(--color-button);
-  opacity: 0.85;
+  opacity: 0.75;
 }
 
 .stats-divider {

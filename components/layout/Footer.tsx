@@ -11,7 +11,7 @@ interface FooterLinkGroupProps {
 function FooterLinkGroup({ title, children }: FooterLinkGroupProps) {
   return (
     <div className="flex flex-col gap-2 flex-1 justify-start items-start w-full max-md:flex-none max-md:w-[49%] max-md:mt-4 max-sm:flex-1 max-sm:w-[48%] max-sm:min-w-[40%]">
-      <h5 className="text-button">{title}</h5>
+      <h5 className="text-button text-lg">{title}</h5>
       <div className="flex flex-col">{children}</div>
     </div>
   );
@@ -70,8 +70,8 @@ export async function Footer() {
 
         <div className="h-16" />
 
-        <div className="grid grid-cols-4 gap-8 border-t border-white/10 pt-8 items-center w-full max-md:flex max-md:flex-col max-md:gap-2 max-sm:flex max-sm:flex-col">
-          <div className="flex flex-col gap-6" style={{ gridColumn: 'span 3 / span 3' }}>
+        <div className="border-t border-white/10 pt-8 w-full max-md:flex max-md:flex-col max-md:gap-2" style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', gap: '2rem', alignItems: 'center' }}>
+          <div className="flex flex-col gap-6">
             {disclaimerText && (
               <p className="text-white/60 flex-1 text-base max-w-[900px]" style={{ color: 'rgba(255,255,255,0.6)' }}>
                 {disclaimerText}

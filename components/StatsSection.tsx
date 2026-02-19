@@ -1,6 +1,8 @@
 import { Fragment } from 'react'
 import { getPayloadClient } from '@/src/payload'
 import type { ResearchStatsGlobal } from '@/types/cms'
+import { Button } from './Button'
+import { ArrowIcon } from './icons'
 
 export async function StatsSection() {
   let data: ResearchStatsGlobal = {}
@@ -44,7 +46,9 @@ export async function StatsSection() {
               </Fragment>
             ))}
           </div>
-          <a href={ctaLink} className="stats-cta">{ctaText}</a>
+          <Button href={ctaLink} variant="sub" color="green" icon={<ArrowIcon className="icon-16" />}>
+            {ctaText}
+          </Button>
         </div>
       </div>
     </section>

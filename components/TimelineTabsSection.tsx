@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { ArrowIcon } from './icons'
 
 const TABS = [
@@ -116,7 +116,20 @@ const TABS = [
 
 export function TimelineTabsSection() {
   const [activeTab, setActiveTab] = useState(TABS[0].id)
+  const [selectedTab, setSelectedTab] = useState(TABS[0].id)
+  const [transitioning, setTransitioning] = useState(false)
+  const selectedIndex = TABS.findIndex((t) => t.id === selectedTab)
   const tab = TABS.find((t) => t.id === activeTab)!
+
+  const goToTab = useCallback((id: string) => {
+    if (id === selectedTab) return
+    setSelectedTab(id)
+    setTransitioning(true)
+    setTimeout(() => {
+      setActiveTab(id)
+      setTimeout(() => setTransitioning(false), 20)
+    }, 300)
+  }, [selectedTab])
 
   return (
     <section className="section sticky relative top-0">
@@ -131,11 +144,18 @@ export function TimelineTabsSection() {
           <div className="tab__wrapper-copy">
             {/* Tab navigation */}
             <div className="tab__nav-wrapper">
+              <div
+                className="tab__nav-slider"
+                style={{
+                  width: `calc((100% - 0.5rem) / ${TABS.length})`,
+                  transform: `translateX(${selectedIndex * 100}%)`,
+                }}
+              />
               {TABS.map((t) => (
                 <button
                   key={t.id}
-                  className={`tab__nav-item${activeTab === t.id ? ' is-active' : ''}`}
-                  onClick={() => setActiveTab(t.id)}
+                  className={`tab__nav-item${selectedTab === t.id ? ' is-active' : ''}`}
+                  onClick={() => goToTab(t.id)}
                 >
                   {t.label}
                 </button>
@@ -144,14 +164,14 @@ export function TimelineTabsSection() {
 
             {/* Tab content */}
             <div className="tabs-content">
-              <div className="tab__pane">
+              <div className={`tab__pane${transitioning ? ' tab__pane--exit' : ' tab__pane--enter'}`}>
                 <div className="tab__pane-grid">
                   <div className="tab__pane-text-wrapper-copy" style={{ gridColumn: '1 / -1' }}>
                     {/* Left column: heading + description + research link */}
                     <div className="tab__pane-thing">
                       <div>
-                        <h3 className="heading-5 text-button">{tab.heading}</h3>
-                        <p className="p_xxxlarge text-button">{tab.description}</p>
+                        <h3 className="heading-5">{tab.heading}</h3>
+                        <p className="p_xxxlarge">{tab.description}</p>
                       </div>
                       {tab.researchLink && (
                         <div className="div-block-170">
@@ -159,7 +179,7 @@ export function TimelineTabsSection() {
                             The research behind our numbers.
                             <ArrowIcon className="icon-16" />
                           </a>
-                          <p className="body__small text-white">
+                          <p className="body__small">
                             How behavioural science, AI modelling evidence can
                             be used to removes noise, and increases profit.
                           </p>
@@ -173,8 +193,8 @@ export function TimelineTabsSection() {
                         <div key={step.number} className="div-block-163">
                           <div className="text-block-2">{step.number}</div>
                           <div className="div-block-161">
-                            <p className="p_default bold text-button">{step.title}</p>
-                            <p className="text-white">{step.description}</p>
+                            <p className="p_default bold">{step.title}</p>
+                            <p>{step.description}</p>
                           </div>
                         </div>
                       ))}

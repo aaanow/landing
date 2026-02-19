@@ -30,7 +30,7 @@ export async function TestimonialsSection() {
             <TestimonialsIcon className="w-16 h-16 mb-4 block mx-auto" />
             <h2>{heading}</h2>
             <div className="flex flex-col items-center w-full max-w-[55rem] mx-auto">
-              <p className="tracking-snug mb-0 text-2xl leading-normal max-md:text-xl">{subheading}</p>
+              <p className="tracking-snug mb-0" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.35rem)', lineHeight: 1.5 }}>{subheading}</p>
             </div>
           </div>
 
@@ -47,7 +47,7 @@ export async function TestimonialsSection() {
                         <div className="flex-[16] min-w-0 flex flex-col gap-8 justify-between items-start w-full max-md:gap-4 self-end">
                           <div className="flex flex-col gap-6 relative max-md:gap-4">
                             <QuoteIcon className="opacity-10 w-1/3 absolute top-0 left-0" />
-                            <blockquote className="relative border-l-0 mb-4 p-0 font-heading text-[2.5rem] leading-tight max-md:text-[1.5rem]">
+                            <blockquote className="relative border-l-0 mb-4 p-0 font-heading leading-tight" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
                               {study.quote}
                             </blockquote>
                           </div>
