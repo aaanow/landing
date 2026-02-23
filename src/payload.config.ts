@@ -1,6 +1,6 @@
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { lexicalEditor, EXPERIMENTAL_TableFeature } from '@payloadcms/richtext-lexical'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -37,7 +37,9 @@ export default buildConfig({
   },
   collections: [Users, Media, Posts, Pages, FAQs, ResourceChapters, Resources, Popups, Legals, Scorecards],
   globals: [Footer, NavigationGlobal, Testimonials, LogoMarquee, Hero, CTA, HowItWorks, ResearchStats],
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [...defaultFeatures, EXPERIMENTAL_TableFeature()],
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

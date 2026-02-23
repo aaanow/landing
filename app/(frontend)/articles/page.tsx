@@ -20,7 +20,7 @@ export default async function ArticlesPage() {
     const postsResult = await payload.find({
       collection: 'posts',
       where: {
-        status: {
+        _status: {
           equals: 'published',
         },
       },

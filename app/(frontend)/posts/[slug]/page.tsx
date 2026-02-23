@@ -4,6 +4,7 @@ import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { formatDate } from '@/lib/format';
+import { getMediaUrl } from '@/types/cms';
 import type { Post, DynamicPageProps } from '@/types/cms';
 
 // Revalidate every hour for standard content
@@ -23,8 +24,8 @@ export async function generateMetadata({ params }: DynamicPageProps): Promise<Me
     const post = result.docs[0] as Post | undefined;
 
     return {
-      title: post ? `${post.title} - AAAnow` : 'Post - AAAnow',
-      description: post?.excerpt,
+      title: post?.meta?.title || (post ? `${post.title} - AAAnow` : 'Post - AAAnow'),
+      description: post?.meta?.description || post?.excerpt,
     };
   } catch {
     return {
@@ -38,7 +39,7 @@ export async function generateStaticParams() {
     const payload = await getPayloadClient();
     const result = await payload.find({
       collection: 'posts',
-      where: { status: { equals: 'published' } },
+      where: { _status: { equals: 'published' } },
       limit: 100,
     });
 
@@ -72,37 +73,46 @@ export default async function PostPage({ params }: DynamicPageProps) {
     notFound();
   }
 
-  const backgroundImage = post.featuredImage || post.thumbnailImage || '/images/aisc_blog_bg-01.svg';
+  const backgroundImage = getMediaUrl(post.featuredImage) || '/images/aisc_blog_bg-01.svg';
 
   return (
     <section className="section sticky">
       <div className="container top-padding">
-        <div className="section__content-wrapper">
-          <div className="post-header">
-            {backgroundImage && (
-              <img
-                src={backgroundImage}
-                alt={post.title}
-                className="post-featured-image"
-              />
-            )}
-            <div className="post-meta">
-              {post.category && <span className="post-category">{post.category}</span>}
-              {post.publishedAt && <span className="post-date">{formatDate(post.publishedAt)}</span>}
-              <span className="post-reading-time">{formatReadingTime(calculateReadingTime(post.content))}</span>
-              {post.author && <span className="post-author">By {post.author}</span>}
+        <div
+          data-category={post.category || ''}
+          className="blog-article__img-wrapper"
+        >
+          <img
+            src={backgroundImage}
+            loading="lazy"
+            alt=""
+            className="blog-article__banner-img"
+          />
+          <div className="blog-article__gradient"></div>
+          <div className="blog__banner-wrapper">
+            <div className="bog__data">
+              {post.category && <span>{post.category}</span>}
+              {post.category && post.publishedAt && <span>/</span>}
+              {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
+              <span>/</span>
+              <span>{formatReadingTime(calculateReadingTime(post.content))}</span>
             </div>
             <h1>{post.title}</h1>
-            {post.excerpt && <p className="post-excerpt">{post.excerpt}</p>}
+            {post.excerpt && (
+              <div className="blog-title__subheading-wrapper">
+                <p className="body__subheading">{post.excerpt}</p>
+              </div>
+            )}
           </div>
-          <div className="card-grid animate">
-            <div className="post-content rich-text">
-              {post.content ? (
-                <RichText content={post.content} />
-              ) : (
-                <p>No content available.</p>
-              )}
-            </div>
+        </div>
+
+        <div className="blog__content-wrapper">
+          <div className="blog__content-text top-padding">
+            {post.content ? (
+              <RichText content={post.content} />
+            ) : (
+              <p>No content available.</p>
+            )}
           </div>
         </div>
       </div>

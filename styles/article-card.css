@@ -4,10 +4,22 @@
 
 /* Base article card using CSS custom properties for category theming */
 .article-card,
-.card-article__item {
+.card-article__item,
+.articles-grid__card,
+.blog-article__img-wrapper {
   --card-bg: var(--color-primary-900);
   --card-text: var(--color-cat1-text);
   --card-btn: var(--color-primary-600);
+}
+
+.article-card,
+.card-article__item,
+.articles-grid__card {
+  background-color: var(--card-bg);
+  color: var(--card-text);
+}
+
+.blog-article__img-wrapper[data-category] {
   background-color: var(--card-bg);
   color: var(--card-text);
 }
@@ -15,70 +27,88 @@
 .article-card .article-card-gradient,
 .article-card .card-article__img-gradient,
 .card-article__item .article-card-gradient,
-.card-article__item .card-article__img-gradient {
+.card-article__item .card-article__img-gradient,
+.articles-grid__card .articles-grid__gradient {
   background: linear-gradient(180deg, var(--card-bg) 50%, transparent 100%);
 }
 
 .article-card .article-card-btn,
 .article-card .card-article__btn,
 .card-article__item .article-card-btn,
-.card-article__item .card-article__btn {
+.card-article__item .card-article__btn,
+.articles-grid__card .articles-grid__btn {
   background-color: var(--card-text);
   color: var(--card-btn);
 }
 
 /* Category variations */
 .article-card[data-category="Category 1"],
-.card-article__item[data-category="Category 1"] {
+.card-article__item[data-category="Category 1"],
+.articles-grid__card[data-category="Category 1"],
+.blog-article__img-wrapper[data-category="Category 1"] {
   --card-bg: var(--color-cat1-bg);
   --card-text: var(--color-cat1-text);
   --card-btn: var(--color-cat1-btn);
 }
 
 .article-card[data-category="Category 2"],
-.card-article__item[data-category="Category 2"] {
+.card-article__item[data-category="Category 2"],
+.articles-grid__card[data-category="Category 2"],
+.blog-article__img-wrapper[data-category="Category 2"] {
   --card-bg: var(--color-cat2-bg);
   --card-text: var(--color-cat2-text);
   --card-btn: var(--color-cat2-bg);
 }
 
 .article-card[data-category="Category 3"],
-.card-article__item[data-category="Category 3"] {
+.card-article__item[data-category="Category 3"],
+.articles-grid__card[data-category="Category 3"],
+.blog-article__img-wrapper[data-category="Category 3"] {
   --card-bg: var(--color-cat3-bg);
   --card-text: var(--color-cat3-text);
   --card-btn: var(--color-cat3-bg);
 }
 
 .article-card[data-category="Category 4"],
-.card-article__item[data-category="Category 4"] {
+.card-article__item[data-category="Category 4"],
+.articles-grid__card[data-category="Category 4"],
+.blog-article__img-wrapper[data-category="Category 4"] {
   --card-bg: var(--color-cat4-bg);
   --card-text: var(--color-cat4-text);
   --card-btn: var(--color-cat4-bg);
 }
 
 .article-card[data-category="Category 5"],
-.card-article__item[data-category="Category 5"] {
+.card-article__item[data-category="Category 5"],
+.articles-grid__card[data-category="Category 5"],
+.blog-article__img-wrapper[data-category="Category 5"] {
   --card-bg: var(--color-cat5-bg);
   --card-text: var(--color-cat5-text);
   --card-btn: var(--color-cat5-bg);
 }
 
 .article-card[data-category="Category 6"],
-.card-article__item[data-category="Category 6"] {
+.card-article__item[data-category="Category 6"],
+.articles-grid__card[data-category="Category 6"],
+.blog-article__img-wrapper[data-category="Category 6"] {
   --card-bg: var(--color-cat6-bg);
   --card-text: var(--color-cat6-text);
   --card-btn: var(--color-cat6-bg);
 }
 
 .article-card[data-category="Category 7"],
-.card-article__item[data-category="Category 7"] {
+.card-article__item[data-category="Category 7"],
+.articles-grid__card[data-category="Category 7"],
+.blog-article__img-wrapper[data-category="Category 7"] {
   --card-bg: var(--color-cat7-bg);
   --card-text: var(--color-cat7-text);
   --card-btn: var(--color-cat7-bg);
 }
 
 .article-card[data-category="Category 8"],
-.card-article__item[data-category="Category 8"] {
+.card-article__item[data-category="Category 8"],
+.articles-grid__card[data-category="Category 8"],
+.blog-article__img-wrapper[data-category="Category 8"] {
   --card-bg: var(--color-cat8-bg);
   --card-text: var(--color-cat8-text);
   --card-btn: var(--color-cat8-bg);

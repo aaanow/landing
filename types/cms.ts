@@ -53,16 +53,19 @@ export interface Post {
   id: string;
   title: string;
   slug: string;
-  featuredImage?: string;
-  thumbnailImage?: string;
+  featuredImage?: Media | string;
   excerpt?: string;
   content?: LexicalContent;
   publishedAt?: string;
-  status?: 'draft' | 'published';
+  _status?: 'draft' | 'published';
   category?: string;
-  tag?: string;
-  author?: string;
+  tags?: string[];
+  author?: { id: string; email: string; name?: string } | string;
   externalLink?: string;
+  meta?: {
+    title?: string;
+    description?: string;
+  };
 }
 
 // Popups collection (used for about pages)

@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { formatDate } from '@/lib/format';
 import { GridIcon, ListIcon, SearchIcon, PlusIcon } from '@/components/icons';
+import { getMediaUrl } from '@/types/cms';
 import type { Post } from '@/types/cms';
 
 interface ArticlesContentProps {
@@ -60,10 +61,10 @@ export function ArticlesContent({ posts }: ArticlesContentProps) {
           role="list"
           className={view === 'grid' ? 'articles-grid' : 'articles-list'}
         >
-          {filtered.map((post) => {
+          {filtered.map((post, index) => {
             const postLink = post.externalLink || `/posts/${post.slug}`;
             const backgroundImage =
-              post.featuredImage || post.thumbnailImage || '/images/aisc_blog_bg-01.svg';
+              getMediaUrl(post.featuredImage) || '/images/aisc_blog_bg-01.svg';
 
             if (view === 'list') {
               return (
@@ -96,11 +97,10 @@ export function ArticlesContent({ posts }: ArticlesContentProps) {
                 key={post.id}
                 data-category={post.category || ''}
                 role="listitem"
-                className="articles-grid__card"
+                className={`articles-grid__card${index % 12 === 0 ? ' articles-grid__card--2x2' : index % 12 === 7 ? ' articles-grid__card--2x1' : ''}`}
               >
                 <img loading="lazy" src={backgroundImage} alt="" className="articles-grid__bg-img" />
                 <div className="articles-grid__gradient"></div>
-                <img loading="lazy" src={backgroundImage} alt="" className="articles-grid__img" />
                 <div className="articles-grid__content">
                   <div className="articles-card__meta">
                     <p className="articles-card__date">{formatDate(post.publishedAt)}</p>
@@ -109,7 +109,6 @@ export function ArticlesContent({ posts }: ArticlesContentProps) {
                     </span>
                   </div>
                   <h3>{post.title}</h3>
-                  {post.excerpt && <p className="articles-card__excerpt">{post.excerpt}</p>}
                   <div className="articles-grid__btn">
                     <PlusIcon />
                   </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createElement } from 'react';
+import React, { createElement, Fragment } from 'react';
 import type { LexicalNode, LexicalContent } from '@/types/cms';
 
 interface RichTextProps {
@@ -76,8 +76,38 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
     case 'quote':
       return <blockquote key={index}>{renderChildren()}</blockquote>;
 
+    case 'table':
+      return (
+        <div key={index} className="rich-text-table-wrapper">
+          <table>{renderChildren()}</table>
+        </div>
+      );
+
+    case 'tablerow':
+      return <tr key={index}>{renderChildren()}</tr>;
+
+    case 'tablecell': {
+      const headerState = (node as Record<string, unknown>).headerState;
+      const Tag = headerState === 1 ? 'th' : 'td';
+      return <Tag key={index}>{renderChildren()}</Tag>;
+    }
+
+    case 'upload': {
+      const value = (node as Record<string, unknown>).value as
+        | { url?: string; alt?: string }
+        | undefined;
+      if (value?.url) {
+        return (
+          <figure key={index}>
+            <img src={value.url} alt={value.alt || ''} loading="lazy" />
+          </figure>
+        );
+      }
+      return null;
+    }
+
     case 'root':
-      return renderChildren() || null;
+      return <Fragment key={index}>{renderChildren()}</Fragment>;
 
     default:
       return renderChildren() || null;
@@ -87,5 +117,11 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
 export function RichText({ content, className }: RichTextProps) {
   if (!content?.root) return null;
 
-  return <div className={className}>{renderNode(content.root, 0)}</div>;
+  const rendered = content.root.children?.map((c, i) => renderNode(c, i));
+
+  if (className) {
+    return <div className={className}>{rendered}</div>;
+  }
+
+  return <>{rendered}</>;
 }
