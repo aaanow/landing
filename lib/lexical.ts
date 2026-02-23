@@ -165,7 +165,7 @@ function parseInline(html: string, parentFormat = 0): LexicalAnyNode[] {
           version: 1,
         };
         // Add fields for the link
-        (linkNode as Record<string, unknown>).fields = { url: href, newTab };
+        (linkNode as unknown as Record<string, unknown>).fields = { url: href, newTab };
         nodes.push(linkNode);
         break;
       }
@@ -340,7 +340,7 @@ function parseTableRows(html: string): LexicalAnyNode[] {
       const cellNode = makeBlock('tablecell', [
         makeBlock('paragraph', inlineNodes.length > 0 ? inlineNodes : [makeText('')], { textFormat: 0 }),
       ]);
-      (cellNode as Record<string, unknown>).headerState = isHeader ? 1 : 0;
+      (cellNode as unknown as Record<string, unknown>).headerState = isHeader ? 1 : 0;
       cells.push(cellNode);
     }
 
