@@ -5,6 +5,7 @@ import { RichText } from '@/components/RichText';
 import { TableOfContents } from '@/components/TableOfContents';
 import { ShareButtons } from '@/components/ShareButtons';
 import { PlusIcon } from '@/components/icons/PlusIcon';
+import { BannerFade } from '@/components/BannerFade';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { formatDate } from '@/lib/format';
 import { getMediaUrl } from '@/types/cms';
@@ -135,6 +136,7 @@ export default async function PostPage({ params }: DynamicPageProps) {
   return (
     <section className="section sticky">
       <div className="container top-padding">
+        <BannerFade targetSelector=".blog-article__img-wrapper" />
         <div
           data-category={post.category || ''}
           className="blog-article__img-wrapper"
