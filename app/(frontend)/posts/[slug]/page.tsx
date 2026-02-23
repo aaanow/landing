@@ -4,6 +4,7 @@ import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
 import { TableOfContents } from '@/components/TableOfContents';
 import { ShareButtons } from '@/components/ShareButtons';
+import { PlusIcon } from '@/components/icons/PlusIcon';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { formatDate } from '@/lib/format';
 import { getMediaUrl } from '@/types/cms';
@@ -96,6 +97,41 @@ export default async function PostPage({ params }: DynamicPageProps) {
 
   const backgroundImage = getMediaUrl(post.featuredImage) || '/images/aisc_blog_bg-01.svg';
 
+  // Fetch related articles (same category first, then recent)
+  let relatedPosts: Post[] = [];
+  try {
+    const payload = await getPayloadClient();
+    if (post.category) {
+      const sameCat = await payload.find({
+        collection: 'posts',
+        where: {
+          _status: { equals: 'published' },
+          category: { equals: post.category },
+          slug: { not_equals: post.slug },
+        },
+        sort: '-publishedAt',
+        limit: 3,
+      });
+      relatedPosts = sameCat.docs as Post[];
+    }
+    // Fill remaining slots with recent posts
+    if (relatedPosts.length < 3) {
+      const excludeSlugs = [post.slug, ...relatedPosts.map((p) => p.slug)];
+      const recent = await payload.find({
+        collection: 'posts',
+        where: {
+          _status: { equals: 'published' },
+          slug: { not_in: excludeSlugs },
+        },
+        sort: '-publishedAt',
+        limit: 3 - relatedPosts.length,
+      });
+      relatedPosts = [...relatedPosts, ...(recent.docs as Post[])];
+    }
+  } catch {
+    // Silently fail — related articles are non-critical
+  }
+
   return (
     <section className="section sticky">
       <div className="container top-padding">
@@ -144,6 +180,42 @@ export default async function PostPage({ params }: DynamicPageProps) {
             )}
           </div>
         </div>
+
+        {relatedPosts.length > 0 && (
+          <div className="related-articles">
+            <h2 className="related-articles__heading">Related Articles</h2>
+            <div className="related-articles__grid">
+              {relatedPosts.map((related) => {
+                const relatedImage = getMediaUrl(related.featuredImage) || '/images/aisc_blog_bg-01.svg';
+                return (
+                  <div
+                    key={related.id}
+                    data-category={related.category || ''}
+                    className="articles-grid__card"
+                  >
+                    <img loading="lazy" src={relatedImage} alt="" className="articles-grid__bg-img" />
+                    <div className="articles-grid__gradient"></div>
+                    <div className="articles-grid__content">
+                      <div className="articles-card__meta">
+                        {related.publishedAt && (
+                          <p className="articles-card__date">{formatDate(related.publishedAt)}</p>
+                        )}
+                        <span className="articles-card__reading-time">
+                          {formatReadingTime(calculateReadingTime(related.content))}
+                        </span>
+                      </div>
+                      <h3>{related.title}</h3>
+                      <div className="articles-grid__btn">
+                        <PlusIcon />
+                      </div>
+                    </div>
+                    <a href={`/posts/${related.slug}`} className="articles-grid__link"></a>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -2362,6 +2362,42 @@ figcaption {
   background: rgba(255, 255, 255, 0.3);
 }
 
+.related-articles {
+  padding: 3rem;
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+  background-color: #f2f1e1;
+  border-radius: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.related-articles__heading {
+  font-size: var(--font-size-3xl);
+  color: var(--color-primary-900);
+  margin-bottom: 2rem;
+}
+
+.related-articles__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.related-articles__grid .articles-grid__card {
+  aspect-ratio: 1;
+}
+
+@media (max-width: 768px) {
+  .related-articles {
+    padding: 1.5rem;
+  }
+
+  .related-articles__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .article__meta-row {
   grid-column-gap: 12px;
   grid-row-gap: 12px;
