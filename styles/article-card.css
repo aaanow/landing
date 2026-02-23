@@ -42,73 +42,73 @@
 }
 
 /* Category variations */
-.article-card[data-category="Category 1"],
-.card-article__item[data-category="Category 1"],
-.articles-grid__card[data-category="Category 1"],
-.blog-article__img-wrapper[data-category="Category 1"] {
+.article-card[data-category="category-1"],
+.card-article__item[data-category="category-1"],
+.articles-grid__card[data-category="category-1"],
+.blog-article__img-wrapper[data-category="category-1"] {
   --card-bg: var(--color-cat1-bg);
   --card-text: var(--color-cat1-text);
   --card-btn: var(--color-cat1-btn);
 }
 
-.article-card[data-category="Category 2"],
-.card-article__item[data-category="Category 2"],
-.articles-grid__card[data-category="Category 2"],
-.blog-article__img-wrapper[data-category="Category 2"] {
+.article-card[data-category="category-2"],
+.card-article__item[data-category="category-2"],
+.articles-grid__card[data-category="category-2"],
+.blog-article__img-wrapper[data-category="category-2"] {
   --card-bg: var(--color-cat2-bg);
   --card-text: var(--color-cat2-text);
   --card-btn: var(--color-cat2-bg);
 }
 
-.article-card[data-category="Category 3"],
-.card-article__item[data-category="Category 3"],
-.articles-grid__card[data-category="Category 3"],
-.blog-article__img-wrapper[data-category="Category 3"] {
+.article-card[data-category="category-3"],
+.card-article__item[data-category="category-3"],
+.articles-grid__card[data-category="category-3"],
+.blog-article__img-wrapper[data-category="category-3"] {
   --card-bg: var(--color-cat3-bg);
   --card-text: var(--color-cat3-text);
   --card-btn: var(--color-cat3-bg);
 }
 
-.article-card[data-category="Category 4"],
-.card-article__item[data-category="Category 4"],
-.articles-grid__card[data-category="Category 4"],
-.blog-article__img-wrapper[data-category="Category 4"] {
+.article-card[data-category="category-4"],
+.card-article__item[data-category="category-4"],
+.articles-grid__card[data-category="category-4"],
+.blog-article__img-wrapper[data-category="category-4"] {
   --card-bg: var(--color-cat4-bg);
   --card-text: var(--color-cat4-text);
   --card-btn: var(--color-cat4-bg);
 }
 
-.article-card[data-category="Category 5"],
-.card-article__item[data-category="Category 5"],
-.articles-grid__card[data-category="Category 5"],
-.blog-article__img-wrapper[data-category="Category 5"] {
+.article-card[data-category="category-5"],
+.card-article__item[data-category="category-5"],
+.articles-grid__card[data-category="category-5"],
+.blog-article__img-wrapper[data-category="category-5"] {
   --card-bg: var(--color-cat5-bg);
   --card-text: var(--color-cat5-text);
   --card-btn: var(--color-cat5-bg);
 }
 
-.article-card[data-category="Category 6"],
-.card-article__item[data-category="Category 6"],
-.articles-grid__card[data-category="Category 6"],
-.blog-article__img-wrapper[data-category="Category 6"] {
+.article-card[data-category="category-6"],
+.card-article__item[data-category="category-6"],
+.articles-grid__card[data-category="category-6"],
+.blog-article__img-wrapper[data-category="category-6"] {
   --card-bg: var(--color-cat6-bg);
   --card-text: var(--color-cat6-text);
   --card-btn: var(--color-cat6-bg);
 }
 
-.article-card[data-category="Category 7"],
-.card-article__item[data-category="Category 7"],
-.articles-grid__card[data-category="Category 7"],
-.blog-article__img-wrapper[data-category="Category 7"] {
+.article-card[data-category="category-7"],
+.card-article__item[data-category="category-7"],
+.articles-grid__card[data-category="category-7"],
+.blog-article__img-wrapper[data-category="category-7"] {
   --card-bg: var(--color-cat7-bg);
   --card-text: var(--color-cat7-text);
   --card-btn: var(--color-cat7-bg);
 }
 
-.article-card[data-category="Category 8"],
-.card-article__item[data-category="Category 8"],
-.articles-grid__card[data-category="Category 8"],
-.blog-article__img-wrapper[data-category="Category 8"] {
+.article-card[data-category="category-8"],
+.card-article__item[data-category="category-8"],
+.articles-grid__card[data-category="category-8"],
+.blog-article__img-wrapper[data-category="category-8"] {
   --card-bg: var(--color-cat8-bg);
   --card-text: var(--color-cat8-text);
   --card-btn: var(--color-cat8-bg);
