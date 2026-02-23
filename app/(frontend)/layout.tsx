@@ -23,6 +23,7 @@ import { CalFloatingButton } from '@/components/CalFloatingButton';
 import { SITE_CONFIG, EXTERNAL_URLS } from '@/lib/constants';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_CONFIG.url),
   title: SITE_CONFIG.title,
   description: SITE_CONFIG.description,
   openGraph: {

@@ -51,7 +51,14 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
 
     case 'heading': {
       const level = tag || 'h2';
-      return createElement(level, { key: index }, renderChildren());
+      const headingText = children?.map((c) => c.text || '').join('') || '';
+      const headingId = headingText
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+      return createElement(level, { key: index, id: headingId || undefined }, renderChildren());
     }
 
     case 'list': {

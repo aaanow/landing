@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
+import { TableOfContents } from '@/components/TableOfContents';
+import { ShareButtons } from '@/components/ShareButtons';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { formatDate } from '@/lib/format';
 import { getMediaUrl } from '@/types/cms';
@@ -22,10 +24,29 @@ export async function generateMetadata({ params }: DynamicPageProps): Promise<Me
     });
 
     const post = result.docs[0] as Post | undefined;
+    if (!post) return { title: 'Post - AAAnow' };
+
+    const title = post.meta?.title || `${post.title} - AAAnow`;
+    const description = post.meta?.description || post.excerpt || '';
+    const image = getMediaUrl(post.featuredImage);
 
     return {
-      title: post?.meta?.title || (post ? `${post.title} - AAAnow` : 'Post - AAAnow'),
-      description: post?.meta?.description || post?.excerpt,
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        type: 'article',
+        url: `/posts/${slug}`,
+        ...(image && { images: [{ url: image }] }),
+        ...(post.publishedAt && { publishedTime: post.publishedAt }),
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        ...(image && { images: [image] }),
+      },
     };
   } catch {
     return {
@@ -103,15 +124,23 @@ export default async function PostPage({ params }: DynamicPageProps) {
                 <p className="body__subheading">{post.excerpt}</p>
               </div>
             )}
+            <ShareButtons title={post.title} description={post.excerpt} />
           </div>
         </div>
 
         <div className="blog__content-wrapper">
-          <div className="blog__content-text top-padding">
-            {post.content ? (
-              <RichText content={post.content} />
-            ) : (
-              <p>No content available.</p>
+          <div className="blog__content-layout">
+            <div className="blog__content-text top-padding">
+              {post.content ? (
+                <RichText content={post.content} />
+              ) : (
+                <p>No content available.</p>
+              )}
+            </div>
+            {post.content && (
+              <aside className="blog__toc-sidebar">
+                <TableOfContents content={post.content} />
+              </aside>
             )}
           </div>
         </div>

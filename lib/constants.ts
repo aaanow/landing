@@ -7,6 +7,7 @@ export const SITE_CONFIG = {
   description:
     'The first solution to productise client retention and revenue growth for agencies. Use 3.7 trillion data points, and 25 years results to map Website Value and Risk - create actionable intelligence your commercial teams can use daily.',
   ogTitle: 'Scorecard — Fundamentals of online - confirmed',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://aaanow.vercel.app',
 } as const;
 
 export const EXTERNAL_URLS = {
