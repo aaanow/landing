@@ -87,13 +87,13 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
       return <tr key={index}>{renderChildren()}</tr>;
 
     case 'tablecell': {
-      const headerState = (node as Record<string, unknown>).headerState;
+      const headerState = (node as unknown as Record<string, unknown>).headerState;
       const Tag = headerState === 1 ? 'th' : 'td';
       return <Tag key={index}>{renderChildren()}</Tag>;
     }
 
     case 'upload': {
-      const value = (node as Record<string, unknown>).value as
+      const value = (node as unknown as Record<string, unknown>).value as
         | { url?: string; alt?: string }
         | undefined;
       if (value?.url) {
