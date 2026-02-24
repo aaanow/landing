@@ -51,7 +51,7 @@ export function PricingContent() {
       {/* Main Pricing Section */}
       <section className="section">
         <div className="container top-padding">
-          <div className="section-header__wrapper">
+          <div className="section-header__wrapper hero-animate hero-animate-delay-1">
             <h1>Pricing</h1>
             <div className="subheading__wrapper">
               <p className="body__xlarge">
@@ -63,7 +63,7 @@ export function PricingContent() {
           <div className="section__content-wrapper dark-green">
             {/* Tab Toggle */}
             <div className="pricing-wrapper">
-              <div className="pricing-tabs" role="tablist" aria-label="Pricing options">
+              <div className="pricing-tabs hero-animate hero-animate-delay-2" role="tablist" aria-label="Pricing options">
                 <div
                   className="pricing-tabs__slider"
                   style={{
@@ -93,7 +93,7 @@ export function PricingContent() {
                 </button>
               </div>
 
-              <div className={`tab__pane${transitioning ? ' tab__pane--exit' : ' tab__pane--enter'}`}>
+              <div className={`hero-animate hero-animate-delay-3 tab__pane${transitioning ? ' tab__pane--exit' : ' tab__pane--enter'}`}>
               {/* Description */}
               <p className="pricing-intro">
                 {activeTab === 'subscription'
@@ -221,7 +221,7 @@ export function PricingContent() {
                   <div className="pricing-card">
                     <h2 className="pricing-card__title">Trial options</h2>
 
-                    <div className="pricing-table-grid pricing-table-grid--trial">
+                    <div className="pricing-table-grid">
                       {/* Type Row */}
                       <div className="pricing-row pricing-row--trial">
                         <div className="pricing-row__label">
@@ -273,7 +273,7 @@ export function PricingContent() {
                         </div>
                         {trialPlans.map((plan, index) => (
                           <div key={index} className="pricing-row__value">
-                            <span className="pricing-badge pricing-badge--fee">{plan.fee}</span>
+                            <span className="pricing-badge pricing-badge--primary">{plan.fee}</span>
                           </div>
                         ))}
                       </div>

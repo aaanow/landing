@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
+import { TableOfContents } from '@/components/TableOfContents';
 import type { LegalPage, DynamicPageProps } from '@/types/cms';
 
 // Revalidate every hour for standard content
@@ -56,18 +57,23 @@ export default async function LegalPageView({ params }: DynamicPageProps) {
   return (
     <section className="section sticky">
       <div className="container top-padding">
-        <div className="section__content-wrapper">
-          <div className="section-header__wrapper">
-            <h1>{legal.name}</h1>
-          </div>
-          <div className="card-grid animate">
-            <div className="legal-content rich-text">
+        <div className="section-header__wrapper">
+          <h1>{legal.name}</h1>
+        </div>
+        <div className="blog__content-wrapper">
+          <div className="blog__content-layout">
+            <div className="blog__content-text top-padding">
               {legal.content ? (
                 <RichText content={legal.content} />
               ) : (
                 <p>No content available.</p>
               )}
             </div>
+            {legal.content && (
+              <aside className="blog__toc-sidebar">
+                <TableOfContents content={legal.content} />
+              </aside>
+            )}
           </div>
         </div>
       </div>

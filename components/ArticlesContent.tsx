@@ -27,7 +27,7 @@ export function ArticlesContent({ posts }: ArticlesContentProps) {
 
   return (
     <>
-      <div className="articles-toolbar">
+      <div className="articles-toolbar hero-animate hero-animate-delay-3">
         <div className="articles-search">
           <SearchIcon />
           <input
@@ -73,7 +73,8 @@ export function ArticlesContent({ posts }: ArticlesContentProps) {
                   href={postLink}
                   data-category={post.category || ''}
                   role="listitem"
-                  className="articles-list__card"
+                  className="articles-list__card articles-card-animate"
+                  style={{ animationDelay: `${0.45 + index * 0.07}s` }}
                 >
                   <div className="articles-list__img-wrapper">
                     <img loading="lazy" src={backgroundImage} alt="" className="articles-list__img" />
@@ -97,7 +98,8 @@ export function ArticlesContent({ posts }: ArticlesContentProps) {
                 key={post.id}
                 data-category={post.category || ''}
                 role="listitem"
-                className={`articles-grid__card${index % 12 === 0 ? ' articles-grid__card--2x2' : index % 12 === 7 ? ' articles-grid__card--2x1' : ''}`}
+                className={`articles-grid__card articles-card-animate${index % 12 === 0 ? ' articles-grid__card--2x2' : index % 12 === 7 ? ' articles-grid__card--2x1' : ''}`}
+                style={{ animationDelay: `${0.45 + index * 0.07}s` }}
               >
                 <img loading="lazy" src={backgroundImage} alt="" className="articles-grid__bg-img" />
                 <div className="articles-grid__gradient"></div>

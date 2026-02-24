@@ -2,6 +2,11 @@
    ARTICLES PAGE STYLES
    ================================================================= */
 
+/* Match pricing page spacing between header and content */
+.section .section-header__wrapper + .section__content-wrapper:has(.articles-toolbar) {
+  margin-top: 2.5rem;
+}
+
 /* Match home page section padding */
 .section .section__content-wrapper:has(.articles-toolbar) {
   padding-left: 3rem;
@@ -254,6 +259,12 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Card load-in animation */
+.articles-card-animate {
+  opacity: 0;
+  animation: hero-fade-up 0.7s ease-out forwards;
 }
 
 /* Empty state */

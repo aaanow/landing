@@ -1,4 +1,39 @@
 /* =================================================================
+   REFERENCE MATERIALS STYLES
+   ================================================================= */
+
+/* Match articles page spacing between header and content */
+.section .section-header__wrapper + .section__content-wrapper:has(.reference-toolbar) {
+  margin-top: 2.5rem;
+}
+
+/* Match articles page section padding */
+.section .section__content-wrapper:has(.reference-toolbar) {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+/* Give the main section a background so the CTA sticky section doesn't show through */
+.reference-section {
+  background-color: #F9F9F3;
+}
+
+/* Search toolbar */
+.reference-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* I Want To section content padding */
+.reference-section .section-header__wrapper + .section__content-wrapper {
+  margin-top: 2.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+/* =================================================================
    REFERENCE MATERIALS TABLE STYLES
    ================================================================= */
 .resources-table,
@@ -112,5 +147,13 @@
 
   .resource-snippet {
     font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 600px) {
+  .section .section__content-wrapper:has(.reference-toolbar),
+  .reference-section .section-header__wrapper + .section__content-wrapper {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }

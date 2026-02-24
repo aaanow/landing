@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useRef, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
@@ -37,6 +38,7 @@ function LenisModalBridge({ children }: { children: React.ReactNode }) {
 
 export function AnimationProvider({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
 
   const stop = useCallback(() => {
     lenisRef.current?.stop();
@@ -46,6 +48,7 @@ export function AnimationProvider({ children }: { children: React.ReactNode }) {
     lenisRef.current?.start();
   }, []);
 
+  // Initialize Lenis once
   useEffect(() => {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
@@ -55,6 +58,7 @@ export function AnimationProvider({ children }: { children: React.ReactNode }) {
     const lenis = new Lenis({
       duration: 1.2,
       easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      autoResize: false,
     });
 
     lenisRef.current = lenis;
@@ -63,11 +67,25 @@ export function AnimationProvider({ children }: { children: React.ReactNode }) {
     gsap.ticker.add(rafCallback);
     gsap.ticker.lagSmoothing(0);
 
+    // Watch for content size changes so Lenis always has correct scroll limits
+    const wrapper = document.querySelector('.page__wrapper');
+    const ro = new ResizeObserver(() => {
+      lenis.resize();
+      ScrollTrigger.refresh();
+    });
+    if (wrapper) ro.observe(wrapper);
+
     return () => {
+      ro.disconnect();
       gsap.ticker.remove(rafCallback);
       lenis.destroy();
     };
   }, []);
+
+  // Reset scroll position on route change
+  useEffect(() => {
+    lenisRef.current?.scrollTo(0, { immediate: true });
+  }, [pathname]);
 
   return (
     <LenisContext.Provider value={{ stop, start }}>

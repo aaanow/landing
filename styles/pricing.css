@@ -202,11 +202,6 @@
   color: var(--color-primary-600);
 }
 
-.pricing-badge--fee {
-  background: var(--color-button);
-  color: var(--color-primary-600);
-}
-
 /* Pricing Check */
 .pricing-check {
   color: var(--color-button);
@@ -220,22 +215,7 @@
   height: 24px;
 }
 
-/* Pricing Divider */
-.pricing-divider {
-  height: 2px;
-  background: var(--color-button);
-  margin: 0.5rem 0;
-  border-radius: 1px;
-}
-
 /* Pricing Values */
-.pricing-price {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-neutral-0);
-  font-family: var(--font-family-heading);
-}
-
 .pricing-margin {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);

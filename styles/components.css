@@ -2961,6 +2961,15 @@ figcaption {
   display: flex;
 }
 
+.section__content-wrapper.not-found {
+  align-items: center;
+  padding: 6rem 2rem;
+}
+
+.section.not-found {
+  padding-bottom: 4rem;
+}
+
 .section__content-wrapper.xl-gap {
   grid-column-gap: 80px;
   grid-row-gap: 80px;

@@ -36,11 +36,11 @@ export default async function ArticlesPage() {
   return (
     <section className="section sticky">
       <div className="container top-padding">
-        <div className="section-header__wrapper">
+        <div className="section-header__wrapper hero-animate hero-animate-delay-1">
           <h1>Articles, News &amp; Stories</h1>
         </div>
 
-        <div className="section__content-wrapper">
+        <div className="section__content-wrapper hero-animate hero-animate-delay-2">
           <ArticlesContent posts={posts} />
         </div>
       </div>
