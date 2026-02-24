@@ -12,6 +12,19 @@ const ICON_MAP: Record<string, string> = {
   document: '/images/icon-document.svg',
 };
 
+const DEFAULT_RESOURCES: ResourceSidebarItem[] = [
+  { name: 'Agency Growth Platform', icon: 'pdf' },
+  { name: 'AiSC - 60secs... WHY', icon: 'document' },
+  { name: 'AISC - Agency pricing', icon: 'pdf' },
+  { name: 'AISC - The Application', icon: 'pdf' },
+  { name: 'Agency revenue, client confidence', icon: 'document' },
+  { name: 'IN|SITE', icon: 'document' },
+  { name: 'OVER|SITE', icon: 'document' },
+  { name: 'WORK|PACK', icon: 'document' },
+  { name: 'AOD', icon: 'document' },
+  { name: 'Try /CONFIRM', icon: 'document' },
+];
+
 export const revalidate = 3600;
 
 type ResolvedContent =
@@ -287,15 +300,17 @@ export default async function SlugPage({ params }: DynamicPageProps) {
     notFound();
   }
 
-  // Fetch resource sidebar global for page content
-  let sidebarItems: ResourceSidebarItem[] = [];
+  // Fetch resource sidebar global for page content, fall back to defaults
+  let sidebarItems: ResourceSidebarItem[] = DEFAULT_RESOURCES;
   if (resolved.type === 'page') {
     try {
       const payload = await getPayloadClient();
       const sidebar = await payload.findGlobal({ slug: 'resource-sidebar' }) as ResourceSidebarGlobal;
-      sidebarItems = sidebar.items || [];
+      if (sidebar.items && sidebar.items.length > 0) {
+        sidebarItems = sidebar.items;
+      }
     } catch {
-      // Fall through with empty items
+      // Use default resources
     }
   }
 
