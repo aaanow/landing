@@ -146,8 +146,6 @@ function HowItWorksDesktop({ tabs }: { tabs: HowItWorksTab[] }) {
 
   // Scroll-driven timeline – GSAP handles pinning AND panel transitions directly
   useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger)
-
     const count = tabs.length
     const textEls = textPanelRefs.current
     const visualEls = visualPanelRefs.current

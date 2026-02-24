@@ -157,8 +157,12 @@ export interface NavigationGlobal {
 // Footer global
 export interface FooterLink {
   label: string;
-  href: string;
-  external?: boolean;
+  linkType: 'internal' | 'external';
+  reference?: {
+    relationTo: 'pages' | 'popups' | 'legals' | 'scorecards' | 'posts';
+    value: { slug: string; name?: string; title?: string; link?: string } | string;
+  };
+  url?: string;
   indent?: boolean;
   id?: string;
 }

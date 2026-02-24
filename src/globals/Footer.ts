@@ -29,14 +29,33 @@ export const Footer: GlobalConfig = {
               required: true,
             },
             {
-              name: 'href',
-              type: 'text',
-              required: true,
+              name: 'linkType',
+              type: 'select',
+              defaultValue: 'internal',
+              options: [
+                { label: 'Internal Page', value: 'internal' },
+                { label: 'External URL', value: 'external' },
+              ],
+              admin: {
+                description: 'Internal links let you pick a CMS page; external links use a manual URL',
+              },
             },
             {
-              name: 'external',
-              type: 'checkbox',
-              defaultValue: false,
+              name: 'reference',
+              type: 'relationship',
+              relationTo: ['pages', 'popups', 'legals', 'scorecards', 'posts'],
+              admin: {
+                condition: (_, siblingData) => siblingData?.linkType !== 'external',
+                description: 'Select a page to link to',
+              },
+            },
+            {
+              name: 'url',
+              type: 'text',
+              admin: {
+                condition: (_, siblingData) => siblingData?.linkType === 'external',
+                description: 'Full URL (e.g. https://example.com)',
+              },
             },
             {
               name: 'indent',

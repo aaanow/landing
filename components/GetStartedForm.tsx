@@ -115,8 +115,8 @@ export function GetStartedForm({ onSuccess }: GetStartedFormProps) {
             Your data is used for purposes of building your own scorecard and communicating with
             you about it. If you are requesting via one of our qualified partners, details are
             provided only on the basis of scorecard preparation. Completing your details is
-            acceptance of our <Link href="/legal/privacy-policy">privacy policy</Link> and{' '}
-            <Link href="/legal/terms-and-conditions">terms &amp; conditions</Link>.
+            acceptance of our <Link href="/privacy-policy">privacy policy</Link> and{' '}
+            <Link href="/terms-and-conditions">terms &amp; conditions</Link>.
           </p>
         </div>
       </form>

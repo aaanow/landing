@@ -13,6 +13,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 interface LenisContextValue {
   stop: () => void;
   start: () => void;
+  scrollTo: (target: string | number | HTMLElement, options?: { offset?: number; immediate?: boolean }) => void;
 }
 
 const LenisContext = createContext<LenisContextValue | null>(null);
@@ -48,6 +49,10 @@ export function AnimationProvider({ children }: { children: React.ReactNode }) {
     lenisRef.current?.start();
   }, []);
 
+  const scrollTo = useCallback((target: string | number | HTMLElement, options?: { offset?: number; immediate?: boolean }) => {
+    lenisRef.current?.scrollTo(target, options);
+  }, []);
+
   // Initialize Lenis once
   useEffect(() => {
     if ('scrollRestoration' in history) {
@@ -69,13 +74,18 @@ export function AnimationProvider({ children }: { children: React.ReactNode }) {
 
     // Watch for content size changes so Lenis always has correct scroll limits
     const wrapper = document.querySelector('.page__wrapper');
+    let resizeTimer: ReturnType<typeof setTimeout>;
     const ro = new ResizeObserver(() => {
-      lenis.resize();
-      ScrollTrigger.refresh();
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        lenis.resize();
+        ScrollTrigger.refresh();
+      }, 100);
     });
     if (wrapper) ro.observe(wrapper);
 
     return () => {
+      clearTimeout(resizeTimer);
       ro.disconnect();
       gsap.ticker.remove(rafCallback);
       lenis.destroy();
@@ -88,7 +98,7 @@ export function AnimationProvider({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   return (
-    <LenisContext.Provider value={{ stop, start }}>
+    <LenisContext.Provider value={{ stop, start, scrollTo }}>
       <ModalProvider>
         <LenisModalBridge>
           {children}

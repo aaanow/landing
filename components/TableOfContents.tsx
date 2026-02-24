@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useLenis } from '@/components/AnimationProvider';
 import type { LexicalContent, LexicalNode } from '@/types/cms';
 
 interface TocItem {
@@ -53,6 +54,7 @@ interface TableOfContentsProps {
 
 export function TableOfContents({ content }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState('');
+  const lenis = useLenis();
   const headings = extractHeadings(content);
 
   const handleScroll = useCallback(() => {
@@ -100,7 +102,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
                 e.preventDefault();
                 const el = document.getElementById(heading.id);
                 if (el) {
-                  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  lenis?.scrollTo(el, { offset: -100 });
                 }
               }}
             >

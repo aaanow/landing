@@ -3,6 +3,21 @@ import config from '@payload-config'
 import { NextResponse } from 'next/server'
 import { checkSeedAuth } from '@/lib/seed-auth'
 
+// Helper to create an internal link referencing a CMS page
+function internalLink(
+  label: string,
+  relationTo: string,
+  docId: string,
+  indent = false,
+) {
+  return { label, linkType: 'internal', reference: { relationTo, value: docId }, indent }
+}
+
+// Helper to create an external/manual URL link
+function externalLink(label: string, url: string, indent = false) {
+  return { label, linkType: 'external', url, indent }
+}
+
 export async function GET(request: Request) {
   const authError = checkSeedAuth(request)
   if (authError) return authError
@@ -23,7 +38,9 @@ export async function GET(request: Request) {
     const resources = resourcesResult.docs
     const legals = legalsResult.docs
 
+    const aboutUsPopup = popups.find((p: any) => p.slug === 'about-us')
     const aboutPopups = popups.filter((p: any) => p.aboutPage === 'about-us')
+    const aiscPopup = popups.find((p: any) => p.slug === 'aisc')
     const aiscPopups = popups.filter((p: any) =>
       ['aisc', 'aod---ai-for-agency-growth', 'lifecycle-alignment'].includes(p.aboutPage || '')
     )
@@ -38,61 +55,43 @@ export async function GET(request: Request) {
           {
             title: 'About AAAnow',
             links: [
-              { label: 'About us', href: '/about/about-us', external: false, indent: false },
-              ...aboutPopups.map((p: any) => ({
-                label: p.name,
-                href: `/about/${p.slug}`,
-                external: false,
-                indent: true,
-              })),
-              { label: 'Our capability', href: '/our-capability', external: false, indent: false },
-              { label: 'LinkedIn', href: 'https://www.linkedin.com/company/aaanow', external: true, indent: false },
+              aboutUsPopup
+                ? internalLink('About us', 'popups', aboutUsPopup.id as string)
+                : externalLink('About us', '/about-us'),
+              ...aboutPopups.map((p: any) => internalLink(p.name, 'popups', p.id, true)),
+              externalLink('Our capability', '/our-capability'),
+              externalLink('LinkedIn', 'https://www.linkedin.com/company/aaanow'),
             ],
           },
           {
             title: 'AiSC',
             links: [
-              { label: 'AiSC Introduction', href: '/about/aisc', external: false, indent: false },
-              ...aiscPopups.map((p: any) => ({
-                label: p.name,
-                href: `/about/${p.slug}`,
-                external: false,
-                indent: true,
-              })),
+              aiscPopup
+                ? internalLink('AiSC Introduction', 'popups', aiscPopup.id as string)
+                : externalLink('AiSC Introduction', '/aisc'),
+              ...aiscPopups.map((p: any) => internalLink(p.name, 'popups', p.id, true)),
             ],
           },
           {
             title: 'Public scorecards',
             links: [
-              { label: 'Introduction', href: '/scorecards', external: false, indent: false },
-              ...scorecards.map((s: any) => ({
-                label: s.name,
-                href: s.link || `/scorecards/${s.slug}`,
-                external: false,
-                indent: true,
-              })),
+              externalLink('Introduction', '/scorecards'),
+              ...scorecards.map((s: any) => internalLink(s.name, 'scorecards', s.id, true)),
             ],
           },
           {
             title: 'Resources',
             links: [
-              { label: 'All Reference Materials', href: '/reference-material', external: false, indent: false },
-              ...footerResources.map((r: any) => ({
-                label: r.name,
-                href: r.externalLink || r.blogArticle || `/resources/${r.slug}`,
-                external: false,
-                indent: true,
-              })),
-              { label: 'I want to...', href: '/reference-material#i-want-to', external: false, indent: false },
+              externalLink('All Reference Materials', '/reference-material'),
+              ...footerResources.map((r: any) =>
+                externalLink(r.name, r.externalLink || r.blogArticle || `/resources/${r.slug}`, true),
+              ),
+              externalLink('I want to...', '/reference-material#i-want-to'),
             ],
           },
           {
             title: 'Legal',
-            links: legals.map((l: any) => ({
-              label: l.name,
-              href: `/legal/${l.slug}`,
-              external: false,
-            })),
+            links: legals.map((l: any) => internalLink(l.name, 'legals', l.id)),
           },
         ],
         disclaimerText:

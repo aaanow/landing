@@ -979,10 +979,16 @@ figcaption {
   color: var(--color-primary-600);
 }
 
-.blog__content-text ul,
+.blog__content-text ul {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
 .blog__content-text ol {
   margin: 1.5rem 0;
   padding-left: 1.5rem;
+  list-style-type: decimal;
 }
 
 .blog__content-text li {
@@ -1286,10 +1292,8 @@ figcaption {
   grid-column-gap: 16px;
   grid-row-gap: 16px;
   color: var(--primary-900);
-  border-width: 1px;
-  border-color: #0000001a;
-  border-top-style: solid;
-  border-bottom-style: none;
+  border: none;
+  border-top: 1px solid #0000001a;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
@@ -2995,6 +2999,8 @@ figcaption {
 
 .section__content-wrapper.abouts {
   overflow: clip;
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
 
 .card-grid {

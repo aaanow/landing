@@ -7,6 +7,68 @@ import { htmlToLexical } from '@/lib/lexical'
 import fs from 'fs'
 import path from 'path'
 
+// Download an image from URL and create a Media document in Payload
+async function uploadImageFromUrl(
+  payload: Awaited<ReturnType<typeof getPayload>>,
+  imageUrl: string,
+  altText: string,
+): Promise<string | null> {
+  try {
+    const response = await fetch(imageUrl)
+    if (!response.ok) return null
+
+    const buffer = Buffer.from(await response.arrayBuffer())
+    const contentType = response.headers.get('content-type') || 'image/png'
+
+    const urlPath = new URL(imageUrl).pathname
+    const filename = urlPath.split('/').pop() || 'image.png'
+
+    const media = await payload.create({
+      collection: 'media',
+      data: {
+        alt: altText || 'Popup image',
+      },
+      file: {
+        data: buffer,
+        mimetype: contentType,
+        name: filename,
+        size: buffer.length,
+      },
+    })
+
+    return media.id as string
+  } catch (error) {
+    console.error(`Failed to upload image ${imageUrl}:`, error)
+    return null
+  }
+}
+
+// DELETE: Clear all popups (run before re-seeding)
+export async function DELETE(request: Request) {
+  const authError = checkSeedAuth(request)
+  if (authError) return authError
+
+  try {
+    const payload = await getPayload({ config })
+    const result = await payload.find({
+      collection: 'popups',
+      limit: 500,
+    })
+
+    let deleted = 0
+    for (const doc of result.docs) {
+      await payload.delete({ collection: 'popups', id: doc.id })
+      deleted++
+    }
+
+    return NextResponse.json({ success: true, deleted })
+  } catch (error) {
+    console.error('Delete error:', error)
+    return NextResponse.json({ success: false, error: String(error) }, { status: 500 })
+  }
+}
+
+// GET: Seed popups from CSV with proper field mapping
 export async function GET(request: Request) {
   const authError = checkSeedAuth(request)
   if (authError) return authError
@@ -59,12 +121,34 @@ export async function GET(request: Request) {
 
       const isDraft = row.Draft?.toLowerCase() === 'true'
 
+      // Upload icon image → media relation
+      let iconId: string | null = null
+      const iconUrl = row.Icon?.trim()
+      if (iconUrl && iconUrl.startsWith('http')) {
+        iconId = await uploadImageFromUrl(payload, iconUrl, `${row.Name} icon`)
+        if (iconId) {
+          results.push(`  Uploaded icon for: ${row.Name}`)
+        }
+      }
+
+      // Upload featured image → media relation
+      let imageId: string | null = null
+      const imageUrl = row.Image?.trim()
+      if (imageUrl && imageUrl.startsWith('http')) {
+        imageId = await uploadImageFromUrl(payload, imageUrl, `${row.Name} image`)
+        if (imageId) {
+          results.push(`  Uploaded image for: ${row.Name}`)
+        }
+      }
+
       await payload.create({
         collection: 'popups',
         draft: isDraft,
         data: {
           name: row.Name,
           slug: row.Slug,
+          icon: iconId,
+          image: imageId,
           shortDescription: row['Short Description'] || null,
           content: row['Rich Text'] ? htmlToLexical(row['Rich Text']) : null,
           link: row.Link || null,

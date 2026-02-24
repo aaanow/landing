@@ -166,6 +166,131 @@
   }
 }
 
+/* Exit animations */
+@keyframes modal-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes modal-scale-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+}
+
+.modal-overlay.closing {
+  animation: modal-fade-out 0.2s ease-in forwards;
+}
+
+.modal-overlay.closing .modal-dialog {
+  animation: modal-scale-out 0.2s ease-in forwards;
+}
+
+/* =================================================================
+   POPUP CARDS & MODAL
+   ================================================================= */
+
+/* Slider wrapper */
+.popup-slider {
+  background-image: linear-gradient(#fff, #fffceb);
+  border: 1px solid #0000001a;
+  border-radius: 4rem;
+  padding: 2rem;
+  margin-top: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Nav arrows row */
+.popup-slider__nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.popup-slider__nav button {
+  border: none;
+  cursor: pointer;
+}
+
+.popup-slider__nav button:disabled {
+  cursor: default;
+}
+
+/* Card button inside carousel */
+.popup-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  background: var(--color-neutral-0, #fff);
+  border: 1px solid #0000001a;
+  border-radius: 2rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+  max-width: 420px;
+  width: 100%;
+  min-height: 180px;
+}
+
+.popup-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px #0000000d;
+}
+
+/* Popup modal overlay — scrollable when content is tall */
+.popup-modal-overlay {
+  overflow-y: auto;
+  align-items: flex-start;
+  padding: 3rem 1rem;
+}
+
+/* Popup modal dialog override */
+.popup-modal-dialog {
+  max-width: 860px;
+  min-height: auto;
+  border-radius: 2rem;
+  margin: auto;
+}
+
+.popup-modal-body {
+  padding: 2.5rem;
+}
+
+.popup-modal-header {
+  margin-bottom: 1.5rem;
+}
+
+.popup-modal-page-label {
+  margin: 0 0 0.25rem;
+  font-size: var(--font-size-sm, 0.875rem);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.5;
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+@media (max-width: 479px) {
+  .popup-slider {
+    padding: 1.25rem;
+    border-radius: 1.5rem;
+  }
+
+  .popup-card {
+    max-width: 320px;
+    min-height: auto;
+  }
+}
+
 /* Responsive: tablet */
 @media (max-width: 991px) {
   .modal-content {

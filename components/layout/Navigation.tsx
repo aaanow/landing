@@ -11,7 +11,7 @@ import type { NavLink } from '@/types/cms';
 const DEFAULT_LINKS: NavLink[] = [
   { href: '/articles', label: 'Articles' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/about/lifecycle-alignment', label: 'Client Lifecycle' },
+  { href: '/lifecycle-alignment', label: 'Client Lifecycle' },
 ];
 
 interface NavigationClientProps {
@@ -22,9 +22,9 @@ interface NavigationClientProps {
 
 export function NavigationClient({ variant = 'light', links, ctaLabel = 'Get Started' }: NavigationClientProps) {
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+  const lastScrollYRef = useRef(0);
   const pathname = usePathname();
   const lenis = useLenis();
 
@@ -36,33 +36,32 @@ export function NavigationClient({ variant = 'light', links, ctaLabel = 'Get Sta
     closeMenu();
   }, [pathname, closeMenu]);
 
-  // Handle scroll behavior and Lenis control
+  // Handle scroll behavior
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      const prevScrollY = lastScrollYRef.current;
 
-      if (isMenuOpen && Math.abs(currentScrollY - lastScrollY) > 10) {
+      if (isMenuOpen && Math.abs(currentScrollY - prevScrollY) > 10) {
         closeMenu();
       }
 
-      setIsVisible(currentScrollY <= lastScrollY || currentScrollY <= 100);
-      setLastScrollY(currentScrollY);
+      setIsVisible(currentScrollY <= prevScrollY || currentScrollY <= 100);
+      lastScrollYRef.current = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isMenuOpen, closeMenu]);
 
-    // Use Lenis stop/start instead of overflow:hidden to prevent scroll lock issues
+  // Lenis stop/start for menu open state
+  useEffect(() => {
     if (isMenuOpen) {
       lenis?.stop();
     } else {
       lenis?.start();
     }
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      lenis?.start();
-    };
-  }, [lastScrollY, isMenuOpen, closeMenu, lenis]);
+  }, [isMenuOpen, lenis]);
 
   // Handle click outside and escape key
   useEffect(() => {

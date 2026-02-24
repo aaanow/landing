@@ -1,7 +1,33 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { getPayloadClient } from '@/src/payload';
-import type { FooterGlobal } from '@/types/cms';
+import type { FooterGlobal, FooterLink as FooterLinkType } from '@/types/cms';
+
+const collectionPrefixes: Record<string, string> = {
+  pages: '',
+  popups: '',
+  legals: '',
+  scorecards: '/scorecards',
+  posts: '/posts',
+};
+
+function resolveFooterLinkHref(link: FooterLinkType): { href: string; external: boolean } {
+  if (link.linkType === 'external') {
+    return { href: link.url || '#', external: true };
+  }
+
+  if (link.reference && typeof link.reference.value === 'object') {
+    const { relationTo, value } = link.reference;
+    // Scorecards can have an external link field
+    if (relationTo === 'scorecards' && value.link) {
+      return { href: value.link, external: true };
+    }
+    const prefix = collectionPrefixes[relationTo] || '';
+    return { href: `${prefix}/${value.slug}`, external: false };
+  }
+
+  return { href: '#', external: false };
+}
 
 interface FooterLinkGroupProps {
   title: string;
@@ -59,11 +85,14 @@ export async function Footer() {
         <div className="flex flex-row gap-[var(--_sizing---gap-m)] w-full max-md:flex-wrap max-md:gap-2 max-sm:gap-4">
           {linkGroups.map((group) => (
             <FooterLinkGroup key={group.id} title={group.title}>
-              {group.links?.map((link) => (
-                <FooterLink key={link.id} href={link.href} external={link.external} indent={link.indent}>
-                  {link.label}
-                </FooterLink>
-              ))}
+              {group.links?.map((link) => {
+                const { href, external } = resolveFooterLinkHref(link);
+                return (
+                  <FooterLink key={link.id} href={href} external={external} indent={link.indent}>
+                    {link.label}
+                  </FooterLink>
+                );
+              })}
             </FooterLinkGroup>
           ))}
         </div>

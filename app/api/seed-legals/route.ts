@@ -59,7 +59,6 @@ export async function GET(request: Request) {
 
       await payload.create({
         collection: 'legals',
-        draft: isDraft,
         data: {
           name: row.Name,
           slug: row.Slug,
@@ -75,6 +74,23 @@ export async function GET(request: Request) {
     return NextResponse.json({ success: true, count: results.length, results })
   } catch (error) {
     console.error('Seed error:', error)
+    return NextResponse.json({ success: false, error: String(error) }, { status: 500 })
+  }
+}
+
+export async function DELETE(request: Request) {
+  const authError = checkSeedAuth(request)
+  if (authError) return authError
+
+  try {
+    const payload = await getPayload({ config })
+    const all = await payload.find({ collection: 'legals', limit: 200 })
+    for (const doc of all.docs) {
+      await payload.delete({ collection: 'legals', id: doc.id })
+    }
+    return NextResponse.json({ success: true, deleted: all.docs.length })
+  } catch (error) {
+    console.error('Delete error:', error)
     return NextResponse.json({ success: false, error: String(error) }, { status: 500 })
   }
 }

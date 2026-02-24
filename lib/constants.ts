@@ -18,7 +18,7 @@ export const EXTERNAL_URLS = {
 export const NAV_LINKS = [
   { href: '/articles', label: 'Articles' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/about/lifecycle-alignment', label: 'Client Lifecycle' },
+  { href: '/lifecycle-alignment', label: 'Client Lifecycle' },
 ] as const;
 
 // Note: ISR revalidation times must be literal numbers in page files
