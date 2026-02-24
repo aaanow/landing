@@ -4,21 +4,13 @@ import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
 import { AboutUsBanner } from '@/components/AboutUsBanner';
 import { PopupCards } from '@/components/PopupCards';
-import type { Page, Popup, LegalPage, DynamicPageProps } from '@/types/cms';
+import type { Page, Popup, LegalPage, DynamicPageProps, ResourceSidebarItem, ResourceSidebarGlobal } from '@/types/cms';
 import { getMediaUrl } from '@/types/cms';
 
-const SIDEBAR_RESOURCES = [
-  { name: 'Agency Growth Platform', icon: '/images/icon-pdf.svg' },
-  { name: 'AiSC - 60secs... WHY', icon: '/images/icon-document.svg' },
-  { name: 'AISC - Agency pricing', icon: '/images/icon-pdf.svg' },
-  { name: 'AISC - The Application', icon: '/images/icon-pdf.svg' },
-  { name: 'Agency revenue, client confidence', icon: '/images/icon-document.svg' },
-  { name: 'IN|SITE', icon: '/images/icon-document.svg', bold: 'IN' },
-  { name: 'OVER|SITE', icon: '/images/icon-document.svg', bold: 'OVER' },
-  { name: 'WORK|PACK', icon: '/images/icon-document.svg', bold: 'WORK' },
-  { name: 'AOD', icon: '/images/icon-document.svg' },
-  { name: 'Try /CONFIRM', icon: '/images/icon-document.svg' },
-];
+const ICON_MAP: Record<string, string> = {
+  pdf: '/images/icon-pdf.svg',
+  document: '/images/icon-document.svg',
+};
 
 export const revalidate = 3600;
 
@@ -161,7 +153,7 @@ export async function generateStaticParams() {
   }
 }
 
-function PageContent({ page, relatedPopups }: { page: Page; relatedPopups: Popup[] }) {
+function PageContent({ page, relatedPopups, resources }: { page: Page; relatedPopups: Popup[]; resources: ResourceSidebarItem[] }) {
   const sidebarImage = getMediaUrl(page.sidebarImage);
 
   return (
@@ -199,23 +191,19 @@ function PageContent({ page, relatedPopups }: { page: Page; relatedPopups: Popup
                   {page.sidebarQuote}
                 </blockquote>
               )}
-              <div className="audience__sidebar">
-                <h3>Resources</h3>
-                <div className="resource__list-wrapper">
-                  {SIDEBAR_RESOURCES.map((resource) => (
-                    <a key={resource.name} href="#" className="resource__item w-inline-block">
-                      <img src={resource.icon} loading="lazy" alt="" className="image-18" />
-                      <div>
-                        {resource.bold ? (
-                          <><strong>{resource.bold}</strong>{resource.name.slice(resource.bold.length)}</>
-                        ) : (
-                          resource.name
-                        )}
-                      </div>
-                    </a>
-                  ))}
+              {resources.length > 0 && (
+                <div className="audience__sidebar">
+                  <h3>Resources</h3>
+                  <div className="resource__list-wrapper">
+                    {resources.map((resource) => (
+                      <a key={resource.id || resource.name} href={resource.url || '#'} className="resource__item w-inline-block">
+                        <img src={ICON_MAP[resource.icon || 'document']} loading="lazy" alt="" className="image-18" />
+                        <div>{resource.name}</div>
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -271,7 +259,7 @@ function LegalContent({ legal }: { legal: LegalPage }) {
   return (
     <section className="section sticky">
       <div className="container top-bottom-padding narrow">
-        <h1>{legal.name}</h1>
+        <h1 style={{ textAlign: 'center' }}>{legal.name}</h1>
         <div className="blog__content-text">
           {legal.content ? (
             <RichText content={legal.content} />
@@ -299,9 +287,21 @@ export default async function SlugPage({ params }: DynamicPageProps) {
     notFound();
   }
 
+  // Fetch resource sidebar global for page content
+  let sidebarItems: ResourceSidebarItem[] = [];
+  if (resolved.type === 'page') {
+    try {
+      const payload = await getPayloadClient();
+      const sidebar = await payload.findGlobal({ slug: 'resource-sidebar' }) as ResourceSidebarGlobal;
+      sidebarItems = sidebar.items || [];
+    } catch {
+      // Fall through with empty items
+    }
+  }
+
   switch (resolved.type) {
     case 'page':
-      return <PageContent page={resolved.doc} relatedPopups={resolved.relatedPopups} />;
+      return <PageContent page={resolved.doc} relatedPopups={resolved.relatedPopups} resources={sidebarItems} />;
     case 'popup':
       return <PopupContent popup={resolved.doc} siblingPopups={resolved.siblingPopups} parentTitle={resolved.parentTitle} />;
     case 'legal':

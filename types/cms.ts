@@ -294,6 +294,18 @@ export interface ResearchStatsGlobal {
   ctaLink?: string;
 }
 
+// Resource Sidebar global
+export interface ResourceSidebarItem {
+  name: string;
+  icon?: 'document' | 'pdf';
+  url?: string;
+  id?: string;
+}
+
+export interface ResourceSidebarGlobal {
+  items?: ResourceSidebarItem[];
+}
+
 // Page props for dynamic routes (Next.js 15 pattern)
 export interface DynamicPageProps {
   params: Promise<{ slug: string }>;
