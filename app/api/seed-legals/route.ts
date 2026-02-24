@@ -59,12 +59,13 @@ export async function GET(request: Request) {
 
       await payload.create({
         collection: 'legals',
+        draft: isDraft,
         data: {
           name: row.Name,
           slug: row.Slug,
           content: row['Rich Text'] ? htmlToLexical(row['Rich Text']) : null,
           order: row.Order ? parseInt(row.Order, 10) : null,
-          status: isDraft ? 'draft' : 'published',
+          _status: isDraft ? 'draft' : 'published',
         },
       })
 

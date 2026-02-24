@@ -1,12 +1,32 @@
 import type { CollectionConfig } from 'payload'
 
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim()
+
 export const Resources: CollectionConfig = {
   slug: 'resources',
   admin: {
     useAsTitle: 'name',
+    defaultColumns: ['name', 'chapter', 'type', 'order'],
   },
+  defaultSort: 'order',
   access: {
     read: () => true,
+  },
+  hooks: {
+    beforeValidate: [
+      ({ data, operation }) => {
+        if (data && !data.slug && data.name && operation === 'create') {
+          data.slug = slugify(data.name)
+        }
+        return data
+      },
+    ],
   },
   fields: [
     {
@@ -21,6 +41,7 @@ export const Resources: CollectionConfig = {
       unique: true,
       admin: {
         position: 'sidebar',
+        description: 'Auto-generated from name if left empty',
       },
     },
     {
@@ -34,6 +55,9 @@ export const Resources: CollectionConfig = {
     {
       name: 'snippet',
       type: 'textarea',
+      admin: {
+        description: 'Short description shown in resource lists',
+      },
     },
     {
       name: 'order',
@@ -57,18 +81,30 @@ export const Resources: CollectionConfig = {
     {
       name: 'pdf',
       type: 'text',
+      admin: {
+        description: 'URL to PDF file',
+      },
     },
     {
       name: 'icon',
       type: 'text',
+      admin: {
+        description: 'Icon identifier for the resource',
+      },
     },
     {
       name: 'blogArticle',
       type: 'text',
+      admin: {
+        description: 'Slug of related blog post',
+      },
     },
     {
       name: 'externalLink',
       type: 'text',
+      admin: {
+        description: 'External URL for this resource',
+      },
     },
     {
       name: 'type',
@@ -85,6 +121,9 @@ export const Resources: CollectionConfig = {
     {
       name: 'location',
       type: 'text',
+      admin: {
+        description: 'Storage location identifier',
+      },
     },
   ],
 }

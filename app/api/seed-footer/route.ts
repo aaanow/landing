@@ -12,10 +12,10 @@ export async function GET(request: Request) {
 
     // Fetch existing collection data to build footer links
     const [popupsResult, scorecardsResult, resourcesResult, legalsResult] = await Promise.all([
-      payload.find({ collection: 'popups', where: { status: { equals: 'published' } }, limit: 100 }),
-      payload.find({ collection: 'scorecards', where: { status: { equals: 'published' } }, limit: 100 }),
+      payload.find({ collection: 'popups', where: { _status: { equals: 'published' } }, limit: 100 }),
+      payload.find({ collection: 'scorecards', where: { _status: { equals: 'published' } }, limit: 100 }),
       payload.find({ collection: 'resources', limit: 100, sort: 'order' }),
-      payload.find({ collection: 'legals', where: { status: { equals: 'published' } }, limit: 100, sort: 'order' }),
+      payload.find({ collection: 'legals', where: { _status: { equals: 'published' } }, limit: 100, sort: 'order' }),
     ])
 
     const popups = popupsResult.docs

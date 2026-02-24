@@ -12,7 +12,7 @@ export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'status', 'publishedAt'],
+    defaultColumns: ['title', 'category', '_status', 'publishedAt'],
   },
   defaultSort: '-publishedAt',
   versions: {

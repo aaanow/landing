@@ -7,6 +7,90 @@ import { htmlToLexical } from '@/lib/lexical'
 import fs from 'fs'
 import path from 'path'
 
+// Download an image from URL and create a Media document in Payload
+async function uploadImageFromUrl(
+  payload: Awaited<ReturnType<typeof getPayload>>,
+  imageUrl: string,
+  altText: string,
+): Promise<string | null> {
+  try {
+    const response = await fetch(imageUrl)
+    if (!response.ok) return null
+
+    const buffer = Buffer.from(await response.arrayBuffer())
+    const contentType = response.headers.get('content-type') || 'image/png'
+
+    const urlPath = new URL(imageUrl).pathname
+    const filename = urlPath.split('/').pop() || 'image.png'
+
+    const media = await payload.create({
+      collection: 'media',
+      data: {
+        alt: altText || 'Page sidebar image',
+      },
+      file: {
+        data: buffer,
+        mimetype: contentType,
+        name: filename,
+        size: buffer.length,
+      },
+    })
+
+    return media.id as string
+  } catch (error) {
+    console.error(`Failed to upload image ${imageUrl}:`, error)
+    return null
+  }
+}
+
+// Resolve semicolon-separated popup slugs to relationship IDs
+async function resolvePopupSlugs(
+  payload: Awaited<ReturnType<typeof getPayload>>,
+  popupString: string,
+): Promise<string[]> {
+  const slugs = popupString.split(';').map((s) => s.trim()).filter(Boolean)
+  const ids: string[] = []
+
+  for (const slug of slugs) {
+    const found = await payload.find({
+      collection: 'popups',
+      where: { slug: { equals: slug } },
+      limit: 1,
+    })
+    if (found.docs[0]) {
+      ids.push(found.docs[0].id as string)
+    }
+  }
+
+  return ids
+}
+
+// DELETE: Clear all pages (run before re-seeding)
+export async function DELETE(request: Request) {
+  const authError = checkSeedAuth(request)
+  if (authError) return authError
+
+  try {
+    const payload = await getPayload({ config })
+    const result = await payload.find({
+      collection: 'pages',
+      limit: 500,
+    })
+
+    let deleted = 0
+    for (const doc of result.docs) {
+      await payload.delete({ collection: 'pages', id: doc.id })
+      deleted++
+    }
+
+    return NextResponse.json({ success: true, deleted })
+  } catch (error) {
+    console.error('Delete error:', error)
+    return NextResponse.json({ success: false, error: String(error) }, { status: 500 })
+  }
+}
+
+// GET: Seed pages from CSV with proper field mapping
 export async function GET(request: Request) {
   const authError = checkSeedAuth(request)
   if (authError) return authError
@@ -48,7 +132,6 @@ export async function GET(request: Request) {
 
     for (const row of rows) {
       if (!row.Name || !row.Slug) continue
-
       if (row.Slug.includes('<') || row.Slug.includes('>')) continue
 
       const existing = await payload.find({
@@ -63,8 +146,26 @@ export async function GET(request: Request) {
 
       const isDraft = row.Draft?.toLowerCase() === 'true'
 
+      // Resolve popup slugs → relationship IDs
+      let popupIds: string[] | null = null
+      if (row.Popups) {
+        popupIds = await resolvePopupSlugs(payload, row.Popups)
+        if (popupIds.length === 0) popupIds = null
+      }
+
+      // Upload sidebar image → media relation
+      let sidebarImageId: string | null = null
+      const imageUrl = row['Sidebar Image']?.trim()
+      if (imageUrl && imageUrl.startsWith('http')) {
+        sidebarImageId = await uploadImageFromUrl(payload, imageUrl, row.Name)
+        if (sidebarImageId) {
+          results.push(`  Uploaded sidebar image for: ${row.Name}`)
+        }
+      }
+
       await payload.create({
         collection: 'pages',
+        draft: isDraft,
         data: {
           title: row.Name,
           slug: row.Slug,
@@ -72,13 +173,10 @@ export async function GET(request: Request) {
           content: row['Rich Text 1'] ? htmlToLexical(row['Rich Text 1']) : null,
           quote: row['Quote 1'] || null,
           quoteAuthor: row['Quote Author'] || null,
-          order: row.Order ? parseInt(row.Order, 10) : null,
-          footerIndent: row['Footer Indent']?.toLowerCase() === 'true',
-          popups: row.Popups || null,
-          footerCategory: row['Footer Category'] || null,
-          sidebarImage: row['Sidebar Image'] || null,
+          popups: popupIds,
+          sidebarImage: sidebarImageId,
           sidebarQuote: row['Sidebar Quote'] || null,
-          status: isDraft ? 'draft' : 'published',
+          _status: isDraft ? 'draft' : 'published',
         },
       })
 

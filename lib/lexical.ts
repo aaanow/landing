@@ -1,12 +1,18 @@
 /**
  * Convert an HTML string to a Payload Lexical rich-text JSON structure.
  * Properly parses HTML elements into Lexical nodes preserving formatting.
+ *
+ * All nodes include the full set of properties required by the Payload
+ * Lexical editor so that imported content is editable in the admin panel.
  */
 
 interface LexicalTextNode {
   type: 'text';
   text: string;
   format: number;
+  detail: number;
+  mode: 'normal';
+  style: string;
   version: 1;
 }
 
@@ -24,7 +30,10 @@ interface LexicalBlockNode {
   version: 1;
   tag?: string;
   listType?: string;
+  start?: number;
+  value?: number;
   textFormat?: number;
+  textStyle?: string;
 }
 
 type LexicalAnyNode = LexicalTextNode | LexicalLinebreakNode | LexicalBlockNode;
@@ -49,7 +58,15 @@ function decodeEntities(str: string): string {
 }
 
 function makeText(text: string, format = 0): LexicalTextNode {
-  return { type: 'text', text: decodeEntities(text), format, version: 1 };
+  return {
+    type: 'text',
+    text: decodeEntities(text),
+    format,
+    detail: 0,
+    mode: 'normal',
+    style: '',
+    version: 1,
+  };
 }
 
 function makeBlock(
@@ -151,6 +168,9 @@ function parseInline(html: string, parentFormat = 0): LexicalAnyNode[] {
       case 'code':
         nodes.push(...parseInline(innerHtml, parentFormat | FORMAT_CODE));
         break;
+      case 'sup':
+        nodes.push(...parseInline(innerHtml, parentFormat));
+        break;
       case 'a': {
         const hrefMatch = attrs.match(/href=["']([^"']*)["']/);
         const href = hrefMatch ? decodeEntities(hrefMatch[1]) : '#';
@@ -197,7 +217,7 @@ function parseBlocks(html: string): LexicalAnyNode[] {
       // No block tag found — treat remaining as inline content in a paragraph
       const text = remaining.replace(/<[^>]*>/g, '').trim();
       if (text) {
-        blocks.push(makeBlock('paragraph', [makeText(text)], { textFormat: 0 }));
+        blocks.push(makeBlock('paragraph', [makeText(text)], { textFormat: 0, textStyle: '' }));
       }
       break;
     }
@@ -207,7 +227,7 @@ function parseBlocks(html: string): LexicalAnyNode[] {
     if (beforeBlock) {
       const cleanText = beforeBlock.replace(/<[^>]*>/g, '').trim();
       if (cleanText) {
-        blocks.push(makeBlock('paragraph', parseInline(beforeBlock), { textFormat: 0 }));
+        blocks.push(makeBlock('paragraph', parseInline(beforeBlock), { textFormat: 0, textStyle: '' }));
       }
     }
 
@@ -216,7 +236,7 @@ function parseBlocks(html: string): LexicalAnyNode[] {
 
     // Self-closing block elements
     if (tag === 'hr') {
-      blocks.push(makeBlock('paragraph', [makeText('---')]));
+      blocks.push(makeBlock('paragraph', [makeText('---')], { textFormat: 0, textStyle: '' }));
       continue;
     }
 
@@ -230,7 +250,7 @@ function parseBlocks(html: string): LexicalAnyNode[] {
       case 'figcaption': {
         const inlineNodes = parseInline(innerContent.inner);
         if (inlineNodes.length > 0 || innerContent.inner.trim()) {
-          blocks.push(makeBlock('paragraph', inlineNodes.length > 0 ? inlineNodes : [makeText('')], { textFormat: 0 }));
+          blocks.push(makeBlock('paragraph', inlineNodes.length > 0 ? inlineNodes : [makeText('')], { textFormat: 0, textStyle: '' }));
         }
         break;
       }
@@ -253,7 +273,7 @@ function parseBlocks(html: string): LexicalAnyNode[] {
       case 'ol': {
         const listItems = parseListItems(innerContent.inner);
         const listType = tag === 'ul' ? 'bullet' : 'number';
-        blocks.push(makeBlock('list', listItems, { listType }));
+        blocks.push(makeBlock('list', listItems, { listType, start: 1, tag }));
         break;
       }
       case 'table': {
@@ -313,13 +333,15 @@ function parseListItems(html: string): LexicalAnyNode[] {
   const items: LexicalAnyNode[] = [];
   const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi;
   let match;
+  let itemIndex = 1;
 
   while ((match = liRegex.exec(html)) !== null) {
     const inlineNodes = parseInline(match[1].replace(/<\/?p[^>]*>/gi, ''));
-    items.push(makeBlock('listitem', inlineNodes.length > 0 ? inlineNodes : [makeText('')]));
+    items.push(makeBlock('listitem', inlineNodes.length > 0 ? inlineNodes : [makeText('')], { value: itemIndex }));
+    itemIndex++;
   }
 
-  return items.length > 0 ? items : [makeBlock('listitem', [makeText('')])];
+  return items.length > 0 ? items : [makeBlock('listitem', [makeText('')], { value: 1 })];
 }
 
 function parseTableRows(html: string): LexicalAnyNode[] {
@@ -338,7 +360,7 @@ function parseTableRows(html: string): LexicalAnyNode[] {
       const cellContent = cellMatch[2].replace(/<\/?p[^>]*>/gi, '');
       const inlineNodes = parseInline(cellContent);
       const cellNode = makeBlock('tablecell', [
-        makeBlock('paragraph', inlineNodes.length > 0 ? inlineNodes : [makeText('')], { textFormat: 0 }),
+        makeBlock('paragraph', inlineNodes.length > 0 ? inlineNodes : [makeText('')], { textFormat: 0, textStyle: '' }),
       ]);
       (cellNode as unknown as Record<string, unknown>).headerState = isHeader ? 1 : 0;
       cells.push(cellNode);
@@ -349,7 +371,7 @@ function parseTableRows(html: string): LexicalAnyNode[] {
     }
   }
 
-  return rows.length > 0 ? rows : [makeBlock('tablerow', [makeBlock('tablecell', [makeBlock('paragraph', [makeText('')])])])];
+  return rows.length > 0 ? rows : [makeBlock('tablerow', [makeBlock('tablecell', [makeBlock('paragraph', [makeText('')], { textFormat: 0, textStyle: '' })])])];
 }
 
 export function htmlToLexical(html: string) {
@@ -360,11 +382,12 @@ export function htmlToLexical(html: string) {
         children: [
           {
             type: 'paragraph',
-            children: [{ type: 'text', text: '', version: 1 }],
+            children: [makeText('')],
             direction: 'ltr',
             format: '',
             indent: 0,
             textFormat: 0,
+            textStyle: '',
             version: 1,
           },
         ],
@@ -379,7 +402,7 @@ export function htmlToLexical(html: string) {
   const blocks = parseBlocks(html);
 
   if (blocks.length === 0) {
-    blocks.push(makeBlock('paragraph', [makeText('')], { textFormat: 0 }));
+    blocks.push(makeBlock('paragraph', [makeText('')], { textFormat: 0, textStyle: '' }));
   }
 
   return {

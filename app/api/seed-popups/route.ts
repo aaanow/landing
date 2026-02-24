@@ -61,16 +61,15 @@ export async function GET(request: Request) {
 
       await payload.create({
         collection: 'popups',
+        draft: isDraft,
         data: {
           name: row.Name,
           slug: row.Slug,
-          icon: row.Icon || null,
-          image: row.Image || null,
           shortDescription: row['Short Description'] || null,
           content: row['Rich Text'] ? htmlToLexical(row['Rich Text']) : null,
           link: row.Link || null,
           aboutPage: row.About || null,
-          status: isDraft ? 'draft' : 'published',
+          _status: isDraft ? 'draft' : 'published',
         },
       })
 

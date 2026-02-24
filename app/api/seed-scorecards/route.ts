@@ -55,11 +55,12 @@ export async function GET(request: Request) {
 
       await payload.create({
         collection: 'scorecards',
+        draft: isDraft,
         data: {
           name: row.Name.trim(),
           slug: row.Slug,
           link: row.Link || null,
-          status: isDraft ? 'draft' : 'published',
+          _status: isDraft ? 'draft' : 'published',
         },
       })
 

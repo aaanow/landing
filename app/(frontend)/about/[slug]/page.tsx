@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
 import type { Popup, DynamicPageProps } from '@/types/cms';
+import { getMediaUrl } from '@/types/cms';
 
 // Revalidate every hour for standard content
 export const revalidate = 3600;
@@ -36,7 +37,7 @@ export async function generateStaticParams() {
     const payload = await getPayloadClient();
     const result = await payload.find({
       collection: 'popups',
-      where: { status: { equals: 'published' } },
+      where: { _status: { equals: 'published' } },
       limit: 100,
     });
 
@@ -75,17 +76,17 @@ export default async function AboutPage({ params }: DynamicPageProps) {
       <div className="container top-padding">
         <div className="section__content-wrapper">
           <div className="section-header__wrapper">
-            {popup.icon && (
-              <img src={popup.icon} alt="" className="about-icon" />
+            {getMediaUrl(popup.icon) && (
+              <img src={getMediaUrl(popup.icon)} alt="" className="about-icon" />
             )}
             <h1>{popup.name}</h1>
             {popup.shortDescription && (
               <p className="about-description">{popup.shortDescription}</p>
             )}
           </div>
-          {popup.image && (
+          {getMediaUrl(popup.image) && (
             <div className="about-image-wrapper">
-              <img src={popup.image} alt={popup.name} className="about-image" />
+              <img src={getMediaUrl(popup.image)} alt={popup.name} className="about-image" />
             </div>
           )}
           <div className="card-grid animate">

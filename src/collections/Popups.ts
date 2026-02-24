@@ -1,12 +1,34 @@
 import type { CollectionConfig } from 'payload'
 
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim()
+
 export const Popups: CollectionConfig = {
   slug: 'popups',
   admin: {
     useAsTitle: 'name',
+    defaultColumns: ['name', 'aboutPage', '_status'],
+  },
+  versions: {
+    drafts: true,
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    beforeValidate: [
+      ({ data, operation }) => {
+        if (data && !data.slug && data.name && operation === 'create') {
+          data.slug = slugify(data.name)
+        }
+        return data
+      },
+    ],
   },
   fields: [
     {
@@ -21,20 +43,23 @@ export const Popups: CollectionConfig = {
       unique: true,
       admin: {
         position: 'sidebar',
+        description: 'Auto-generated from name if left empty',
       },
     },
     {
       name: 'icon',
-      type: 'text',
+      type: 'upload',
+      relationTo: 'media',
       admin: {
-        description: 'URL to icon image',
+        description: 'Icon image',
       },
     },
     {
       name: 'image',
-      type: 'text',
+      type: 'upload',
+      relationTo: 'media',
       admin: {
-        description: 'URL to image',
+        description: 'Featured image',
       },
     },
     {
@@ -57,18 +82,6 @@ export const Popups: CollectionConfig = {
       type: 'text',
       admin: {
         description: 'Slug of the related About page',
-        position: 'sidebar',
-      },
-    },
-    {
-      name: 'status',
-      type: 'select',
-      options: [
-        { label: 'Draft', value: 'draft' },
-        { label: 'Published', value: 'published' },
-      ],
-      defaultValue: 'draft',
-      admin: {
         position: 'sidebar',
       },
     },

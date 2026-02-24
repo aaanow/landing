@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
-import type { Page, DynamicPageProps } from '@/types/cms';
+import type { Page, DynamicPageProps, Media } from '@/types/cms';
 
 // Revalidate every hour for standard content
 export const revalidate = 3600;
@@ -36,7 +36,7 @@ export async function generateStaticParams() {
     const payload = await getPayloadClient();
     const result = await payload.find({
       collection: 'pages',
-      where: { status: { equals: 'published' } },
+      where: { _status: { equals: 'published' } },
       limit: 100,
     });
 

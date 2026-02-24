@@ -21,12 +21,12 @@ export function getMediaUrl(media: Media | string | undefined | null): string | 
   return media.url;
 }
 
-// Base interface for all CMS items
+// Base interface for CMS items
 export interface BaseItem {
   id: string;
   name: string;
   slug: string;
-  status?: 'draft' | 'published';
+  _status?: 'draft' | 'published';
 }
 
 // Lexical editor content types
@@ -70,8 +70,8 @@ export interface Post {
 
 // Popups collection (used for about pages)
 export interface Popup extends BaseItem {
-  icon?: string;
-  image?: string;
+  icon?: Media | string;
+  image?: Media | string;
   shortDescription?: string;
   content?: LexicalContent;
   link?: string;
@@ -87,13 +87,14 @@ export interface Page {
   content?: LexicalContent;
   quote?: string;
   quoteAuthor?: string;
-  sidebarImage?: string;
+  popups?: Popup[] | string[];
+  sidebarImage?: Media | string;
   sidebarQuote?: string;
   meta?: {
     title?: string;
     description?: string;
   };
-  status?: 'draft' | 'published';
+  _status?: 'draft' | 'published';
 }
 
 // Legal pages collection
@@ -110,11 +111,22 @@ export interface ResourceChapter {
   order?: number;
 }
 
+// FAQs collection
+export interface FAQ {
+  id: string;
+  question: string;
+  slug: string;
+  answer?: LexicalContent;
+  order?: number;
+  showOnLanding?: boolean;
+}
+
 // Resources collection
 export interface Resource extends BaseItem {
   chapter?: ResourceChapter | string;
   snippet?: string;
   order?: number;
+  richText?: LexicalContent;
   quote?: string;
   tag?: string;
   pdf?: string;

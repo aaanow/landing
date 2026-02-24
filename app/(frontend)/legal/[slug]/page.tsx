@@ -30,6 +30,7 @@ export async function generateStaticParams() {
 
   const result = await payload.find({
     collection: 'legals',
+    where: { _status: { equals: 'published' } },
     limit: 100,
   });
 
