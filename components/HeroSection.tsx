@@ -31,7 +31,7 @@ export async function HeroSection() {
   } = data
 
   return (
-    <section className="bg-gradient-to-b from-[#e1ede0] to-transparent pt-32 pb-32 min-h-[80vh] flex flex-col items-center gap-16 text-primary-900 max-md:pt-20 max-md:px-4 max-md:pb-10">
+    <section data-sticky-card className="section sticky bg-gradient-to-b from-[#e1ede0] to-transparent pt-32 pb-32 min-h-[80vh] flex flex-col items-center gap-16 text-primary-900 max-md:pt-20 max-md:px-4 max-md:pb-10">
       <div className="flex items-center w-[95%] max-w-[1440px] mx-auto gap-12 max-md:flex-col max-md:gap-8">
         <div className="flex-[5] min-w-0 flex flex-col items-start gap-5 pb-8 max-md:text-center max-md:items-center">
           <div className="flex flex-col items-start gap-0 max-md:items-center">

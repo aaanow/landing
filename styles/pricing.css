@@ -2,6 +2,11 @@
    PRICING PAGE STYLES
    ================================================================= */
 
+/* Pricing Section Header Spacing */
+.section .section-header__wrapper + .section__content-wrapper.dark-green {
+  margin-top: 2.5rem;
+}
+
 /* Pricing Wrapper */
 .pricing-wrapper {
   display: flex;
@@ -15,36 +20,51 @@
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
-  background: var(--color-neutral-0);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-full);
-  padding: 4px;
-  width: fit-content;
+  background-color: #ffffff1a;
+  border: 1px solid #d2f9c533;
+  border-radius: 12px;
+  padding: 0.25rem;
+  width: 320px;
   margin-inline: auto;
+  position: relative;
+}
+
+.pricing-tabs__slider {
+  position: absolute;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  left: 0.25rem;
+  border-radius: 10px;
+  background-color: var(--color-button);
+  border: none;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
 }
 
 .pricing-tab {
-  padding: 0.75rem 2.5rem;
-  border: none;
+  padding: 0.5rem 2.5rem;
+  border: 1px solid transparent;
   background: transparent;
   cursor: pointer;
   font-family: var(--font-family-heading);
   font-size: var(--font-size-body);
-  border-radius: var(--radius-full);
-  color: var(--color-primary-400);
-  transition: all 0.25s ease;
+  border-radius: 10px;
+  color: var(--color-neutral-0);
+  transition: color 0.3s ease;
   letter-spacing: var(--letter-spacing-snug);
+  position: relative;
+  z-index: 1;
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
 }
 
 .pricing-tab--active {
-  background: var(--color-primary-600);
-  color: var(--color-neutral-0);
-  box-shadow: 0 2px 8px var(--color-shadow-strong);
+  color: var(--color-primary-600);
 }
 
 .pricing-tab:hover:not(.pricing-tab--active) {
-  color: var(--color-primary-900);
-  background: var(--color-bg-subtle);
+  color: var(--color-button);
 }
 
 /* Pricing Intro */
@@ -53,9 +73,9 @@
   max-width: 48rem;
   margin-inline: auto;
   margin-bottom: 2.5rem;
-  font-size: var(--font-size-body);
+  font-size: var(--font-size-body-large);
   line-height: var(--line-height-normal);
-  color: var(--color-primary-900);
+  color: var(--color-button);
 }
 
 /* Pricing Content */
@@ -68,11 +88,16 @@
 /* Pricing Card */
 .pricing-card {
   width: 100%;
-  background: var(--color-neutral-0);
+  background: rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-xl);
   padding: 2rem;
-  border: 1px solid var(--color-border);
-  box-shadow: 0 4px 20px var(--color-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+.pricing-card--skeptic {
+  background: transparent;
+  border: none;
 }
 
 .pricing-card__title {
@@ -80,7 +105,7 @@
   font-family: var(--font-family-heading);
   font-size: var(--font-size-title-3);
   font-weight: var(--font-weight-normal);
-  color: var(--color-primary-900);
+  color: var(--color-neutral-0);
   letter-spacing: var(--letter-spacing-tight);
   text-align: center;
 }
@@ -88,10 +113,10 @@
 .pricing-card__body {
   font-size: var(--font-size-body);
   line-height: var(--line-height-normal);
-  color: var(--color-primary-900);
 }
 
 .pricing-card__body p {
+  color: rgba(255, 255, 255, 0.75);
   margin-bottom: 1rem;
 }
 
@@ -114,10 +139,19 @@
 .pricing-row {
   display: grid;
   grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
-  background: var(--color-accent-200);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
   overflow: hidden;
+}
+
+.pricing-row:last-child {
+  border-bottom: none;
+}
+
+.pricing-row--thick-border {
+  border-bottom: 2px solid var(--color-button);
 }
 
 .pricing-row--trial {
@@ -129,20 +163,19 @@
   flex-direction: column;
   justify-content: center;
   padding: 1rem 1.25rem;
-  border-right: 1px solid var(--color-border);
   min-width: 200px;
 }
 
 .pricing-row__name {
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-md);
-  color: var(--color-primary-900);
+  color: var(--color-neutral-0);
   line-height: var(--line-height-snug);
 }
 
 .pricing-row__desc {
   font-size: var(--font-size-sm);
-  color: var(--color-primary-400);
+  color: rgba(255, 255, 255, 0.5);
   line-height: var(--line-height-normal);
   margin-top: 0.15rem;
 }
@@ -153,11 +186,6 @@
   justify-content: center;
   text-align: center;
   padding: 0.75rem 0.5rem;
-  border-right: 1px solid var(--color-border);
-}
-
-.pricing-row__value:last-child {
-  border-right: none;
 }
 
 /* Pricing Badges */
@@ -166,23 +194,22 @@
   border-radius: 6px;
   font-size: var(--font-size-lg);
   font-family: var(--font-family-heading);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
 }
 
 .pricing-badge--primary {
-  background: var(--color-primary-600);
-  color: var(--color-neutral-0);
+  background: var(--color-button);
+  color: var(--color-primary-600);
 }
 
 .pricing-badge--fee {
   background: var(--color-button);
-  color: var(--color-primary-900);
-  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-600);
 }
 
 /* Pricing Check */
 .pricing-check {
-  color: var(--color-primary-900);
+  color: var(--color-button);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -196,7 +223,7 @@
 /* Pricing Divider */
 .pricing-divider {
   height: 2px;
-  background: var(--color-primary-600);
+  background: var(--color-button);
   margin: 0.5rem 0;
   border-radius: 1px;
 }
@@ -205,20 +232,20 @@
 .pricing-price {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary-900);
+  color: var(--color-neutral-0);
   font-family: var(--font-family-heading);
 }
 
 .pricing-margin {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-primary-900);
+  color: var(--color-button);
 }
 
 .pricing-by-page {
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-base);
-  color: var(--color-primary-900);
+  color: var(--color-neutral-0);
 }
 
 /* Pricing Note */
@@ -227,7 +254,7 @@
   padding: 0.75rem 0;
   font-style: italic;
   font-size: var(--font-size-sm);
-  color: var(--color-primary-400);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* Pricing Legal Link */
@@ -235,7 +262,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--color-primary-900);
+  color: var(--color-neutral-0);
   font-size: var(--font-size-base);
   text-decoration: none;
 }
@@ -253,7 +280,7 @@
 
 .pricing-legal-note {
   font-size: var(--font-size-sm);
-  color: var(--color-primary-400);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* Pricing Responsive */

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Button } from '@/components/Button';
 import { ArrowIcon, CheckIcon, CTAIcon } from '@/components/icons';
 
@@ -33,11 +33,23 @@ const trialFeatures = [
 
 export function PricingContent() {
   const [activeTab, setActiveTab] = useState<'subscription' | 'trial'>('subscription');
+  const [selectedTab, setSelectedTab] = useState<'subscription' | 'trial'>('subscription');
+  const [transitioning, setTransitioning] = useState(false);
+
+  const goToTab = useCallback((id: 'subscription' | 'trial') => {
+    if (id === selectedTab) return;
+    setSelectedTab(id);
+    setTransitioning(true);
+    setTimeout(() => {
+      setActiveTab(id);
+      setTimeout(() => setTransitioning(false), 20);
+    }, 300);
+  }, [selectedTab]);
 
   return (
     <>
       {/* Main Pricing Section */}
-      <section className="section sticky">
+      <section className="section">
         <div className="container top-padding">
           <div className="section-header__wrapper">
             <h1>Pricing</h1>
@@ -48,17 +60,24 @@ export function PricingContent() {
             </div>
           </div>
 
-          <div className="section__content-wrapper">
+          <div className="section__content-wrapper dark-green">
             {/* Tab Toggle */}
             <div className="pricing-wrapper">
               <div className="pricing-tabs" role="tablist" aria-label="Pricing options">
+                <div
+                  className="pricing-tabs__slider"
+                  style={{
+                    width: 'calc((100% - 0.5rem) / 2)',
+                    transform: selectedTab === 'trial' ? 'translateX(100%)' : 'translateX(0)',
+                  }}
+                />
                 <button
                   role="tab"
                   id="tab-subscription"
                   aria-selected={activeTab === 'subscription'}
                   aria-controls="panel-subscription"
-                  className={`pricing-tab ${activeTab === 'subscription' ? 'pricing-tab--active' : ''}`}
-                  onClick={() => setActiveTab('subscription')}
+                  className={`pricing-tab ${selectedTab === 'subscription' ? 'pricing-tab--active' : ''}`}
+                  onClick={() => goToTab('subscription')}
                 >
                   Subscription
                 </button>
@@ -67,13 +86,14 @@ export function PricingContent() {
                   id="tab-trial"
                   aria-selected={activeTab === 'trial'}
                   aria-controls="panel-trial"
-                  className={`pricing-tab ${activeTab === 'trial' ? 'pricing-tab--active' : ''}`}
-                  onClick={() => setActiveTab('trial')}
+                  className={`pricing-tab ${selectedTab === 'trial' ? 'pricing-tab--active' : ''}`}
+                  onClick={() => goToTab('trial')}
                 >
                   Trial
                 </button>
               </div>
 
+              <div className={`tab__pane${transitioning ? ' tab__pane--exit' : ' tab__pane--enter'}`}>
               {/* Description */}
               <p className="pricing-intro">
                 {activeTab === 'subscription'
@@ -115,7 +135,7 @@ export function PricingContent() {
                       ))}
 
                       {/* Users Row */}
-                      <div className="pricing-row">
+                      <div className="pricing-row pricing-row--thick-border">
                         <div className="pricing-row__label">
                           <span className="pricing-row__name">Users</span>
                           <span className="pricing-row__desc">(unlimited end of '26)</span>
@@ -127,8 +147,6 @@ export function PricingContent() {
                         ))}
                       </div>
 
-                      <div className="pricing-divider"></div>
-
                       {/* Price Row */}
                       <div className="pricing-row">
                         <div className="pricing-row__label">
@@ -137,7 +155,7 @@ export function PricingContent() {
                         </div>
                         {subscriptionPlans.map((plan, index) => (
                           <div key={index} className="pricing-row__value">
-                            <span className="pricing-price">£{plan.pricePerMonth}</span>
+                            <span className="pricing-badge pricing-badge--primary">£{plan.pricePerMonth}</span>
                           </div>
                         ))}
                       </div>
@@ -173,7 +191,7 @@ export function PricingContent() {
                         </div>
                         {subscriptionPlans.map((plan, index) => (
                           <div key={index} className="pricing-row__value">
-                            <Button variant="sub">Choose {plan.license}</Button>
+                            <Button variant="sub" color="green">Choose {plan.license}</Button>
                           </div>
                         ))}
                       </div>
@@ -236,7 +254,7 @@ export function PricingContent() {
                       ))}
 
                       {/* Users Row */}
-                      <div className="pricing-row pricing-row--trial">
+                      <div className="pricing-row pricing-row--trial pricing-row--thick-border">
                         <div className="pricing-row__label">
                           <span className="pricing-row__name">Users</span>
                           <span className="pricing-row__desc">(unlimited end of '26)</span>
@@ -247,8 +265,6 @@ export function PricingContent() {
                           </div>
                         ))}
                       </div>
-
-                      <div className="pricing-divider"></div>
 
                       {/* Fee Row */}
                       <div className="pricing-row pricing-row--trial">
@@ -276,7 +292,7 @@ export function PricingContent() {
                         </div>
                         {trialPlans.map((plan, index) => (
                           <div key={index} className="pricing-row__value">
-                            <Button variant="sub">{plan.buttonLabel}</Button>
+                            <Button variant="sub" color="green">{plan.buttonLabel}</Button>
                           </div>
                         ))}
                       </div>
@@ -300,6 +316,7 @@ export function PricingContent() {
                   </div>
                 </div>
               )}
+              </div>
             </div>
           </div>
         </div>

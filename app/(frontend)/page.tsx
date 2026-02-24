@@ -7,7 +7,7 @@ import { HeroSection } from '@/components/HeroSection';
 import { StatsSection } from '@/components/StatsSection';
 import { TimelineTabsSection } from '@/components/TimelineTabsSection';
 import { AdvantagesSection } from '@/components/AdvantagesSection';
-import { ScrollReveal } from '@/components/ScrollReveal';
+import { StickyCardEffect } from '@/components/StickyCardEffect';
 
 const STATS_MARKER = '<!-- STATS_SECTION -->';
 const HOW_IT_WORKS_MARKER = '<!-- HOW_IT_WORKS_SECTION -->';
@@ -30,23 +30,14 @@ export default function Home() {
       <HeroSection />
       {beforeStats && <div dangerouslySetInnerHTML={{ __html: beforeStats }} />}
       {betweenStatsAndHIW && <div dangerouslySetInnerHTML={{ __html: betweenStatsAndHIW }} />}
-      <ScrollReveal>
-        <TimelineTabsSection />
-      </ScrollReveal>
-      <ScrollReveal>
-        <AdvantagesSection />
-      </ScrollReveal>
+      <StickyCardEffect />
+      <TimelineTabsSection />
+      <AdvantagesSection />
       {/* <HowItWorksSectionServer /> */}
       {middleContent && <div dangerouslySetInnerHTML={{ __html: middleContent }} />}
-      {afterTestimonials !== undefined && (
-        <ScrollReveal>
-          <TestimonialsSection />
-        </ScrollReveal>
-      )}
+      {afterTestimonials !== undefined && <TestimonialsSection />}
       {afterTestimonials && <div dangerouslySetInnerHTML={{ __html: afterTestimonials }} />}
-      <ScrollReveal>
-        <StatsSection variant="light" />
-      </ScrollReveal>
+      <StatsSection variant="light" />
     </>
   );
 }

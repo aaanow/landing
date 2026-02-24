@@ -263,7 +263,7 @@ figcaption {
 }
 
 .section.sticky {
-  position: relative;
+  position: sticky;
   top: 0;
 }
 

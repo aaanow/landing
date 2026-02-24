@@ -23,9 +23,9 @@ export async function TestimonialsSection() {
   } = data
 
   return (
-    <section data-background="dark" className="relative top-0">
+    <section data-background="dark" className="section sticky">
       <div className="w-[95%] max-w-[1440px] mx-auto py-8">
-        <div className="flex flex-col gap-8 bg-gradient-to-b from-[#004452] to-[#002B33] text-button rounded-[4rem] w-full py-16 px-12 max-md:rounded-[2rem] max-md:px-6">
+        <div data-sticky-card className="flex flex-col gap-8 bg-gradient-to-b from-[#004452] to-[#002B33] text-button rounded-[4rem] w-full py-16 px-12 max-md:rounded-[2rem] max-md:px-6">
           <div className="text-center w-full mx-auto">
             <TestimonialsIcon className="w-16 h-16 mb-4 block mx-auto" />
             <h2>{heading}</h2>
