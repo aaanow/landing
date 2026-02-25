@@ -11,7 +11,7 @@ import { formatDate } from '@/lib/format';
 import { getMediaUrl } from '@/types/cms';
 import type { Post, DynamicPageProps } from '@/types/cms';
 
-// Revalidate every hour for standard content
+// Fallback revalidation; on-demand revalidation handles immediate updates
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: DynamicPageProps): Promise<Metadata> {
@@ -144,16 +144,16 @@ export default async function PostPage({ params }: DynamicPageProps) {
           <img
             src={backgroundImage}
             loading="lazy"
-            alt=""
+            alt={post.title}
             className="blog-article__banner-img"
           />
           <div className="blog-article__gradient"></div>
           <div className="blog__banner-wrapper">
-            <div className="bog__data">
+            <div className="blog__data">
               {post.category && <span>{post.category}</span>}
               {post.category && post.publishedAt && <span>/</span>}
               {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
-              <span>/</span>
+              {(post.category || post.publishedAt) && <span>/</span>}
               <span>{formatReadingTime(calculateReadingTime(post.content))}</span>
             </div>
             <h1>{post.title}</h1>

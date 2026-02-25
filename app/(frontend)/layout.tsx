@@ -14,11 +14,13 @@ import '@/styles/reference-materials.css';
 import '@/styles/stats.css';
 import '@/styles/marquee.css';
 import '@/styles/modal.css';
+import '@/styles/contact-modal.css';
 import '@/styles/scorecard.css';
 import '@/styles/how-it-works.css';
 import { Footer, Navigation } from '@/components/layout';
 import { AnimationProvider } from '@/components/AnimationProvider';
 import { GetStartedModal } from '@/components/GetStartedModal';
+import { ContactModal } from '@/components/ContactModal';
 import { CalFloatingButton } from '@/components/CalFloatingButton';
 import { SITE_CONFIG, EXTERNAL_URLS } from '@/lib/constants';
 
@@ -54,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="page__wrapper">{children}</div>
           <Footer />
           <GetStartedModal />
+          <ContactModal />
           <CalFloatingButton />
         </AnimationProvider>
       </body>

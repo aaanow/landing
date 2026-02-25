@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "payload": "payload",
     "generate:types": "payload generate:types",
     "seed:faqs": "payload run src/scripts/seed-faqs.ts",

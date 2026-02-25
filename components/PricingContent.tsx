@@ -55,7 +55,7 @@ export function PricingContent() {
             <h1>Pricing</h1>
             <div className="subheading__wrapper">
               <p className="body__xlarge">
-                Transparent pricing designed for agencies of all sizes. Start with a trial or commit to ongoing value.
+                Understand &ldquo;right now&rdquo; where value can be added. Talk to present or lapsed clients using findings generated minutes after adding their website to your private client Scorecard.
               </p>
             </div>
           </div>
@@ -95,11 +95,11 @@ export function PricingContent() {
 
               <div className={`hero-animate hero-animate-delay-3 tab__pane${transitioning ? ' tab__pane--exit' : ' tab__pane--enter'}`}>
               {/* Description */}
-              <p className="pricing-intro">
-                {activeTab === 'subscription'
-                  ? 'Understand "right now" where value can be added. Talk to present or lapsed clients using findings generated minutes after adding their website to your private client Scorecard. Choose a level, pay an initial 5% by card with the balance by invoice, upload your list, and we handle the rest.'
-                  : 'After trying /CONFIRM, agencies get unlimited usage for 45 days, creating sector, corporate, and client Scorecards for present or lapsed accounts. A PoC option supports internal validation on a single client and sector Scorecard. Trial spend is credited against subscription.'}
-              </p>
+              {activeTab === 'trial' && (
+                <p className="pricing-intro">
+                  After trying /CONFIRM, agencies get unlimited usage for 45 days, creating sector, corporate, and client Scorecards for present or lapsed accounts. A PoC option supports internal validation on a single client and sector Scorecard. Trial spend is credited against subscription.
+                </p>
+              )}
 
               {activeTab === 'subscription' && (
                 <div id="panel-subscription" role="tabpanel" aria-labelledby="tab-subscription" className="pricing-content">
@@ -191,7 +191,15 @@ export function PricingContent() {
                         </div>
                         {subscriptionPlans.map((plan, index) => (
                           <div key={index} className="pricing-row__value">
-                            <Button variant="sub" color="green">Choose {plan.license}</Button>
+                            <Button
+                              variant="sub"
+                              color="green"
+                              data-cal-namespace="aisc-prove"
+                              data-cal-link="aaanow-ljs/aisc-prove"
+                              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                            >
+                              Choose {plan.license}
+                            </Button>
                           </div>
                         ))}
                       </div>
@@ -292,7 +300,15 @@ export function PricingContent() {
                         </div>
                         {trialPlans.map((plan, index) => (
                           <div key={index} className="pricing-row__value">
-                            <Button variant="sub" color="green">{plan.buttonLabel}</Button>
+                            <Button
+                              variant="sub"
+                              color="green"
+                              data-cal-namespace="aisc-prove"
+                              data-cal-link="aaanow-ljs/aisc-prove"
+                              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                            >
+                              {plan.buttonLabel}
+                            </Button>
                           </div>
                         ))}
                       </div>
@@ -336,10 +352,12 @@ export function PricingContent() {
                 </p>
                 <Button
                   variant="main"
-                  data-modal-open="get-started"
+                  data-cal-namespace="aisc-prove"
+                  data-cal-link="aaanow-ljs/aisc-prove"
+                  data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
                   icon={<ArrowIcon className="icon-16 green" />}
                 >
-                  Arrange a Call
+                  Get Started
                 </Button>
               </div>
             </div>

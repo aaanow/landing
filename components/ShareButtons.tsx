@@ -28,19 +28,11 @@ export function ShareButtons({ title, description }: ShareButtonsProps) {
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(getUrl());
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
-      const input = document.createElement('input');
-      input.value = getUrl();
-      document.body.appendChild(input);
-      input.select();
-      document.execCommand('copy');
-      document.body.removeChild(input);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      // clipboard API can fail in insecure contexts — ignore silently
     }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (

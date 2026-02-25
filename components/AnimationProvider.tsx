@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import Lenis from 'lenis';
 import { ModalProvider, useModal } from './ModalContext';
+import { ContactModalProvider, useContactModal } from './ContactModalContext';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -24,15 +25,16 @@ export function useLenis() {
 
 function LenisModalBridge({ children }: { children: React.ReactNode }) {
   const { isOpen } = useModal();
+  const { isOpen: isContactOpen } = useContactModal();
   const lenis = useLenis();
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen || isContactOpen) {
       lenis?.stop();
     } else {
       lenis?.start();
     }
-  }, [isOpen, lenis]);
+  }, [isOpen, isContactOpen, lenis]);
 
   return <>{children}</>;
 }
@@ -100,9 +102,11 @@ export function AnimationProvider({ children }: { children: React.ReactNode }) {
   return (
     <LenisContext.Provider value={{ stop, start, scrollTo }}>
       <ModalProvider>
-        <LenisModalBridge>
-          {children}
-        </LenisModalBridge>
+        <ContactModalProvider>
+          <LenisModalBridge>
+            {children}
+          </LenisModalBridge>
+        </ContactModalProvider>
       </ModalProvider>
     </LenisContext.Provider>
   );

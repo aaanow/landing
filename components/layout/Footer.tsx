@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { getPayloadClient } from '@/src/payload';
-import type { FooterGlobal, FooterLink as FooterLinkType } from '@/types/cms';
+import type { FooterGlobal, FooterLink as FooterLinkType, LegalPage } from '@/types/cms';
 
 const collectionPrefixes: Record<string, string> = {
   pages: '',
@@ -62,12 +62,23 @@ function FooterLink({ href, children, external, indent, className = '' }: { href
 
 export async function Footer() {
   let footer: FooterGlobal = {};
+  let legalPages: LegalPage[] = [];
 
   try {
     const payload = await getPayloadClient();
-    footer = await payload.findGlobal({ slug: 'footer' }) as FooterGlobal;
+    const [footerGlobal, legalsResult] = await Promise.all([
+      payload.findGlobal({ slug: 'footer' }),
+      payload.find({
+        collection: 'legals',
+        where: { _status: { equals: 'published' } },
+        sort: 'name',
+        limit: 50,
+      }),
+    ]);
+    footer = footerGlobal as FooterGlobal;
+    legalPages = legalsResult.docs as LegalPage[];
   } catch (error) {
-    console.error('Footer: Failed to fetch footer global:', error);
+    console.error('Footer: Failed to fetch footer data:', error);
   }
 
   const {
@@ -102,7 +113,7 @@ export async function Footer() {
         <div className="border-t border-white/10 pt-8 w-full max-md:flex max-md:flex-col max-md:gap-2" style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', gap: '2rem', alignItems: 'center' }}>
           <div className="flex flex-col gap-6">
             {disclaimerText && (
-              <p className="text-white/60 flex-1 text-base max-w-[900px]" style={{ color: 'rgba(255,255,255,0.6)' }}>
+              <p className="text-white/60 flex-1 text-sm max-w-[900px]" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', lineHeight: '1.25rem' }}>
                 {disclaimerText}
               </p>
             )}
@@ -119,8 +130,17 @@ export async function Footer() {
                 alt="AAAnow Logo"
                 width={120}
                 height={30}
-                className="w-full max-w-[200px] h-auto"
+                className="w-full h-auto" style={{ maxWidth: '13.75rem' }}
               />
+            )}
+            {legalPages.length > 0 && (
+              <div className="flex flex-wrap gap-x-4 gap-y-1">
+                {legalPages.map((legal) => (
+                  <FooterLink key={legal.id} href={`/${legal.slug}`}>
+                    {legal.name}
+                  </FooterLink>
+                ))}
+              </div>
             )}
             {attributionText && attributionLink && (
               <div className="flex flex-col items-start w-full">

@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateOnChange'
 
 const slugify = (text: string) =>
   text
@@ -28,6 +29,20 @@ export const Popups: CollectionConfig = {
         }
         return data
       },
+    ],
+    afterChange: [
+      revalidateAfterChange((doc) => {
+        const paths = [`/${doc.slug}`]
+        if (doc.aboutPage) paths.push(`/${doc.aboutPage}`)
+        return paths
+      }),
+    ],
+    afterDelete: [
+      revalidateAfterDelete((doc) => {
+        const paths = [`/${doc.slug}`]
+        if (doc.aboutPage) paths.push(`/${doc.aboutPage}`)
+        return paths
+      }),
     ],
   },
   fields: [

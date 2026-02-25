@@ -1,9 +1,6 @@
 import { getStaticPageContent } from '@/lib/static-content';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
-
 import { HeroSection } from '@/components/HeroSection';
-
-// import { HowItWorksSectionServer } from '@/components/HowItWorksSectionServer';
 import { StatsSection } from '@/components/StatsSection';
 import { TimelineTabsSection } from '@/components/TimelineTabsSection';
 import { AdvantagesSection } from '@/components/AdvantagesSection';
@@ -33,7 +30,6 @@ export default function Home() {
       <StickyCardEffect />
       <TimelineTabsSection />
       <AdvantagesSection />
-      {/* <HowItWorksSectionServer /> */}
       {middleContent && <div dangerouslySetInnerHTML={{ __html: middleContent }} />}
       {afterTestimonials !== undefined && <TestimonialsSection />}
       {afterTestimonials && <div dangerouslySetInnerHTML={{ __html: afterTestimonials }} />}

@@ -3,18 +3,15 @@ import { getPayloadClient } from '@/src/payload';
 import { Button } from '@/components/Button';
 import { ArrowIcon } from '@/components/icons';
 import { ReferenceContent } from '@/components/ReferenceContent';
-import { getIconPath, getResourceLink, formatResourceType } from '@/lib/resources';
-import type { Resource, ResourceChapter } from '@/types/cms';
+import type { Resource } from '@/types/cms';
 
-// Revalidate every hour for standard content
+// Fallback revalidation; on-demand revalidation handles immediate updates
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Reference Material - AAAnow',
   description: 'Browse reference materials, resources, and guides to help you get the most out of AAAnow and AiSC.',
 };
-
-const FEATURED_COUNT = 4;
 
 export default async function ReferenceMaterialPage() {
   const payload = await getPayloadClient();
@@ -27,26 +24,7 @@ export default async function ReferenceMaterialPage() {
     depth: 1,
   });
 
-  // Fetch all chapters
-  const chaptersResult = await payload.find({
-    collection: 'resource-chapters',
-    sort: 'order',
-    limit: 100,
-  });
-
   const resources = resourcesResult.docs as Resource[];
-  const chapters = chaptersResult.docs as ResourceChapter[];
-
-  // Get "I Want To" chapter and featured resources
-  const iWantToChapter = chapters.find(c => c.slug === 'i-want-to');
-  const iWantToResources = iWantToChapter
-    ? resources
-        .filter(r => {
-          const chapterId = typeof r.chapter === 'object' ? r.chapter?.id : r.chapter;
-          return chapterId === iWantToChapter.id;
-        })
-        .slice(0, FEATURED_COUNT)
-    : [];
 
   return (
     <>
@@ -62,40 +40,6 @@ export default async function ReferenceMaterialPage() {
           </div>
         </div>
       </section>
-
-      {/* I Want To Section */}
-      {iWantToChapter && iWantToResources.length > 0 && (
-        <section className="section reference-section">
-          <div className="container top-bottom-padding">
-            <div className="section-header__wrapper">
-              <h2>{iWantToChapter.name}</h2>
-              <div className="subheading__wrapper">
-                <p className="body__xlarge">Agencies use AiSC to support measurable outcomes across Marketing, Sales, and Client Services.</p>
-              </div>
-            </div>
-            <div className="section__content-wrapper">
-              <div className="resource-table">
-                <div className="resource-table-header">
-                  <span>Resource Name</span>
-                  <span>Format</span>
-                  <span>Description</span>
-                </div>
-                {iWantToResources.map((resource) => (
-                  <div key={resource.id} className="resource-table-row">
-                    <span className="resource-name">
-                      <img src={getIconPath(resource.icon)} alt="" className="resource-icon" />
-                      {resource.name}
-                    </span>
-                    <span className="resource-type">{formatResourceType(resource)}</span>
-                    <span className="resource-snippet">{resource.snippet || '—'}</span>
-                    <a href={getResourceLink(resource)} className="card__link inline-block"></a>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* CTA Section */}
       <section className="section last">

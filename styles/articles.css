@@ -141,11 +141,12 @@
   inset: 0;
   filter: grayscale(1);
   mix-blend-mode: luminosity;
+  display: none;
 }
 
 .articles-grid__gradient {
   z-index: 1;
-  background: linear-gradient(180deg, var(--card-bg) 0%, var(--card-bg) 35%, color-mix(in srgb, var(--card-bg) 60%, transparent) 65%, transparent 100%);
+  background: linear-gradient(0deg, var(--card-bg) 0%, color-mix(in srgb, var(--card-bg) 60%, transparent) 40%, transparent 100%);
   width: 100%;
   height: 100%;
   position: absolute;
@@ -239,6 +240,7 @@
   width: 160px;
   height: 120px;
   overflow: hidden;
+  display: none;
 }
 
 .articles-list__img {

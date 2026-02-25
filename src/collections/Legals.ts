@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateOnChange'
 
 const slugify = (text: string) =>
   text
@@ -29,6 +30,12 @@ export const Legals: CollectionConfig = {
         }
         return data
       },
+    ],
+    afterChange: [
+      revalidateAfterChange((doc) => [`/${doc.slug}`]),
+    ],
+    afterDelete: [
+      revalidateAfterDelete((doc) => [`/${doc.slug}`]),
     ],
   },
   fields: [

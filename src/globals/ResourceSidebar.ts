@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { revalidateGlobalAfterChange } from '../hooks/revalidateOnChange'
 
 export const ResourceSidebar: GlobalConfig = {
   slug: 'resource-sidebar',
@@ -7,6 +8,11 @@ export const ResourceSidebar: GlobalConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      revalidateGlobalAfterChange(['/(frontend)/[slug]']),
+    ],
   },
   fields: [
     {

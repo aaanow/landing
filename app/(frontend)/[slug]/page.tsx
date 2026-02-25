@@ -25,6 +25,7 @@ const DEFAULT_RESOURCES: ResourceSidebarItem[] = [
   { name: 'Try /CONFIRM', icon: 'document' },
 ];
 
+// Fallback revalidation; on-demand revalidation handles immediate updates
 export const revalidate = 3600;
 
 type ResolvedContent =
@@ -197,7 +198,7 @@ function PageContent({ page, relatedPopups, resources }: { page: Page; relatedPo
             </div>
             <div className="abouts-bar" style={{ gridColumn: '16 / 25' }}>
               {sidebarImage && (
-                <img src={sidebarImage} loading="lazy" alt="" style={{ width: '100%', borderRadius: '1rem' }} />
+                <img src={sidebarImage} loading="lazy" alt={page.title} style={{ width: '100%', borderRadius: '1rem' }} />
               )}
               {page.sidebarQuote && (
                 <blockquote className="block-quote__sm" style={{ marginTop: '1.5rem' }}>

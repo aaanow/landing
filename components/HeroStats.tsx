@@ -1,35 +1,34 @@
+import { getPayloadClient } from '@/src/payload'
+import type { ResearchStatsGlobal } from '@/types/cms'
 import { Button } from './Button'
 import { ArrowIcon } from './icons'
 
-interface Stat {
-  value: string
-  description: string
-}
-
 interface HeroStatsProps {
   variant?: 'light' | 'dark'
-  heading?: string
-  subheading?: string
-  stats?: Stat[]
-  ctaText?: string
-  ctaLink?: string
 }
 
-const DEFAULT_HEADING = 'AiSC \u2018Ai for good\u2019 provides new ways to work. Without AiSC are at a disadvantage.'
-const DEFAULT_STATS: Stat[] = [
-  { value: '58%', description: 'Email openings, better lead generation \u2013 stand out from the noise, be heard.' },
-  { value: '21%', description: 'Improvement in client retention when agencies provide continuous, evidence-based oversight.' },
-  { value: '17%', description: 'Revenue uplift across client base and remove those undermining value.' },
-]
-
-export function HeroStats({
+export async function HeroStats({
   variant = 'light',
-  heading = DEFAULT_HEADING,
-  subheading,
-  stats = DEFAULT_STATS,
-  ctaText = 'Download the research report',
-  ctaLink = '#',
 }: HeroStatsProps) {
+  let data: ResearchStatsGlobal = {}
+
+  try {
+    const payload = await getPayloadClient()
+    data = (await payload.findGlobal({ slug: 'research-stats' })) as ResearchStatsGlobal
+  } catch (error) {
+    console.error('HeroStats: Failed to fetch Research Stats global:', error)
+  }
+
+  const {
+    heading = 'AiSC \u2018Ai for good\u2019 provides new ways to work. Without AiSC are at a disadvantage.',
+    stats = [
+      { value: '58%', description: 'Email openings, better lead generation \u2013 stand out from the noise, be heard.' },
+      { value: '21%', description: 'Improvement in client retention when agencies provide continuous, evidence-based oversight.' },
+      { value: '17%', description: 'Revenue uplift across client base and remove those undermining value.' },
+    ],
+    ctaText = 'Download the research report',
+    ctaLink = '#',
+  } = data
   const isDark = variant === 'dark'
 
   const wrapperClasses = isDark
@@ -49,9 +48,6 @@ export function HeroStats({
       <div className="flex items-start gap-12 max-lg:flex-col">
         <div className="flex-[0_0_40%] flex flex-col items-start gap-4 pt-4 max-lg:flex-none max-lg:w-full">
           <h3 className={headingClasses}>{heading}</h3>
-          {subheading && (
-            <p className="font-body text-lg leading-snug text-primary-900/70 m-0">{subheading}</p>
-          )}
           <Button variant="text" href={ctaLink} icon={<ArrowIcon className="icon-16" />}>
             {ctaText}
           </Button>
