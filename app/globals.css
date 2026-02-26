@@ -93,6 +93,7 @@
   --line-height-tight: 1.2em;
   --line-height-snug: 1.3em;
   --line-height-normal: 1.4em;
+  --line-height-relaxed: 1.8em;
 
   /* Letter spacing */
   --letter-spacing-tighter: -0.05em;

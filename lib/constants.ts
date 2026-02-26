@@ -16,6 +16,7 @@ export const EXTERNAL_URLS = {
 } as const;
 
 export const NAV_LINKS = [
+  { href: '/about-aisc', label: 'About' },
   { href: '/articles', label: 'Articles' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/lifecycle-alignment', label: 'Client Lifecycle' },

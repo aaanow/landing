@@ -9,6 +9,7 @@ import { useLenis } from '@/components/AnimationProvider';
 import type { NavLink } from '@/types/cms';
 
 const DEFAULT_LINKS: NavLink[] = [
+  { href: '/about-aisc', label: 'About' },
   { href: '/articles', label: 'Articles' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/lifecycle-alignment', label: 'Client Lifecycle' },
