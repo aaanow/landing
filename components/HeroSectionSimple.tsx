@@ -28,7 +28,7 @@ export async function HeroSectionSimple() {
   } = data
 
   return (
-    <section data-sticky-card className="section sticky relative overflow-hidden pt-32 pb-32 min-h-[100vh] flex flex-col items-center gap-16 text-primary-900 max-md:pt-20 max-md:px-4 max-md:pb-10">
+    <section data-sticky-card className="section sticky relative overflow-hidden bg-gradient-to-b from-[#e1ede0] to-transparent pt-32 pb-32 min-h-[100vh] flex flex-col items-center gap-16 text-primary-900 max-md:pt-20 max-md:px-4 max-md:pb-10">
       {/* Background image – contained size, positioned behind content */}
       <div className="hero-animate hero-animate-delay-3 absolute top-[47%] -right-[10vw] -translate-y-1/2 w-[85vw] aspect-[16/10] pointer-events-none max-md:w-[90%] max-md:right-1/2 max-md:translate-x-1/2">
         <Image
