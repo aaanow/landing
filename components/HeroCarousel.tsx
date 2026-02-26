@@ -1,6 +1,5 @@
 'use client'
 
-import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
@@ -22,28 +21,38 @@ export function HeroCarousel({ slides = [], autoplayDuration = 5000 }: HeroCarou
   const hasImages = slides.length > 0
   const slideCount = hasImages ? slides.length : FALLBACK_SLIDES.length
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [progress, setProgress] = useState(0)
   const rafRef = useRef<number>(0)
   const startRef = useRef(Date.now())
 
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return
-    setSelectedIndex(emblaApi.selectedScrollSnap())
-  }, [emblaApi])
+  const scrollTo = useCallback((index: number) => {
+    setSelectedIndex(index)
+  }, [])
 
-  useEffect(() => {
-    if (!emblaApi) return
-    onSelect()
-    emblaApi.on('select', onSelect)
-    return () => { emblaApi.off('select', onSelect) }
-  }, [emblaApi, onSelect])
+  const scrollNext = useCallback(() => {
+    setSelectedIndex((prev) => (prev + 1) % slideCount)
+  }, [slideCount])
 
-  const scrollTo = useCallback(
-    (index: number) => emblaApi?.scrollTo(index),
-    [emblaApi],
-  )
+  const scrollPrev = useCallback(() => {
+    setSelectedIndex((prev) => (prev - 1 + slideCount) % slideCount)
+  }, [slideCount])
+
+  // Swipe support
+  const touchStartRef = useRef<number | null>(null)
+
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartRef.current = e.touches[0].clientX
+  }, [])
+
+  const onTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (touchStartRef.current === null) return
+    const delta = e.changedTouches[0].clientX - touchStartRef.current
+    touchStartRef.current = null
+    if (Math.abs(delta) < 50) return
+    if (delta < 0) scrollNext()
+    else scrollPrev()
+  }, [scrollNext, scrollPrev])
 
   // Reset timer whenever the selected slide changes
   useEffect(() => {
@@ -53,15 +62,13 @@ export function HeroCarousel({ slides = [], autoplayDuration = 5000 }: HeroCarou
 
   // Autoplay + progress tick
   useEffect(() => {
-    if (!emblaApi) return
-
     const tick = () => {
       const elapsed = Date.now() - startRef.current
       const pct = Math.min(elapsed / autoplayDuration, 1)
       setProgress(pct)
 
       if (pct >= 1) {
-        emblaApi.scrollNext()
+        scrollNext()
       } else {
         rafRef.current = requestAnimationFrame(tick)
       }
@@ -70,38 +77,52 @@ export function HeroCarousel({ slides = [], autoplayDuration = 5000 }: HeroCarou
     rafRef.current = requestAnimationFrame(tick)
 
     return () => cancelAnimationFrame(rafRef.current)
-  }, [emblaApi, selectedIndex, autoplayDuration])
+  }, [selectedIndex, autoplayDuration, scrollNext])
 
   return (
     <div className="flex-[7] min-w-0 flex flex-col gap-4">
-      <div className="overflow-hidden rounded-xl" ref={emblaRef}>
-        <div className="flex">
-          {hasImages
-            ? slides.map((slide, i) => {
-                const url = getMediaUrl(slide.image)
-                return (
-                  <div key={slide.id ?? i} className="relative flex-[0_0_100%] min-w-0 aspect-[16/10] bg-primary-900 border border-border flex items-center justify-center overflow-hidden">
-                    {url ? (
-                      <Image
-                        src={url}
-                        alt={slide.alt || `Slide ${i + 1}`}
-                        fill
-                        style={{ objectFit: 'cover' }}
-                        priority={i === 0}
-                      />
-                    ) : (
-                      <span className="text-primary-200 font-body text-sm">Slide {i + 1}</span>
-                    )}
-                  </div>
-                )
-              })
-            : FALLBACK_SLIDES.map((s, i) => (
-                <div key={i} className="relative flex-[0_0_100%] min-w-0 aspect-[16/10] bg-primary-900 border border-border flex items-center justify-center overflow-hidden">
-                  <span className="text-primary-200 font-body text-sm">{s.label}</span>
+      <div className="relative overflow-hidden aspect-[16/10]" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+        {hasImages
+          ? slides.map((slide, i) => {
+              const url = getMediaUrl(slide.image)
+              return (
+                <div
+                  key={slide.id ?? i}
+                  className="absolute inset-0 flex items-center justify-center rounded-xl border-2 border-border/20 overflow-hidden transition-all duration-500 ease-out"
+                  style={{
+                    opacity: i === selectedIndex ? 1 : 0,
+                    transform: i === selectedIndex ? 'scale(1)' : 'scale(0.92)',
+                    pointerEvents: i === selectedIndex ? 'auto' : 'none',
+                  }}
+                >
+                  {url ? (
+                    <Image
+                      src={url}
+                      alt={slide.alt || `Slide ${i + 1}`}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      priority={i === 0}
+                    />
+                  ) : (
+                    <span className="text-primary-200 font-body text-sm">Slide {i + 1}</span>
+                  )}
                 </div>
-              ))
-          }
-        </div>
+              )
+            })
+          : FALLBACK_SLIDES.map((s, i) => (
+              <div
+                key={i}
+                className="absolute inset-0 flex items-center justify-center rounded-xl border-2 border-border/20 overflow-hidden transition-all duration-500 ease-out"
+                style={{
+                  opacity: i === selectedIndex ? 1 : 0,
+                  transform: i === selectedIndex ? 'scale(1)' : 'scale(0.92)',
+                  pointerEvents: i === selectedIndex ? 'auto' : 'none',
+                }}
+              >
+                <span className="text-primary-200 font-body text-sm">{s.label}</span>
+              </div>
+            ))
+        }
       </div>
       <div className="flex justify-center gap-2">
         {Array.from({ length: slideCount }, (_, i) => (
