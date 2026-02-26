@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { revalidateGlobalAfterChange } from '../hooks/revalidateOnChange'
 
 export const ResearchStats: GlobalConfig = {
   slug: 'research-stats',
@@ -8,6 +9,11 @@ export const ResearchStats: GlobalConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      revalidateGlobalAfterChange(['/']),
+    ],
   },
   fields: [
     {

@@ -38,11 +38,15 @@ export function revalidateAfterDelete(
 
 /**
  * Creates a global afterChange hook that revalidates the given paths.
+ * Use type 'layout' to revalidate all pages under a path.
  */
-export function revalidateGlobalAfterChange(paths: string[]): GlobalAfterChangeHook {
+export function revalidateGlobalAfterChange(
+  paths: string[],
+  type?: 'layout' | 'page',
+): GlobalAfterChangeHook {
   return ({ doc }) => {
     for (const path of paths) {
-      revalidatePath(path)
+      revalidatePath(path, type)
     }
 
     return doc

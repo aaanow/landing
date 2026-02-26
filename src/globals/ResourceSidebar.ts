@@ -11,7 +11,7 @@ export const ResourceSidebar: GlobalConfig = {
   },
   hooks: {
     afterChange: [
-      revalidateGlobalAfterChange(['/(frontend)/[slug]']),
+      revalidateGlobalAfterChange(['/'], 'layout'),
     ],
   },
   fields: [

@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { revalidateGlobalAfterChange } from '../hooks/revalidateOnChange'
 
 export const CTA: GlobalConfig = {
   slug: 'cta',
@@ -8,6 +9,11 @@ export const CTA: GlobalConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      revalidateGlobalAfterChange(['/']),
+    ],
   },
   fields: [
     {

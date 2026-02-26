@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { revalidateGlobalAfterChange } from '../hooks/revalidateOnChange'
 
 export const LogoMarquee: GlobalConfig = {
   slug: 'logo-marquee',
@@ -8,6 +9,11 @@ export const LogoMarquee: GlobalConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      revalidateGlobalAfterChange(['/']),
+    ],
   },
   fields: [
     {
