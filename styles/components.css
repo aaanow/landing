@@ -2955,7 +2955,7 @@ figcaption {
   grid-column-gap: .5rem;
   grid-row-gap: .5rem;
   flex-flow: column;
-  max-width: 500px;
+  max-width: 46ch;
   display: flex;
 }
 

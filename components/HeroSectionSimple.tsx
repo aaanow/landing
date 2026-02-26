@@ -30,7 +30,7 @@ export async function HeroSectionSimple() {
   return (
     <section data-sticky-card className="section sticky relative overflow-hidden pt-32 pb-32 min-h-[100vh] flex flex-col items-center gap-16 text-primary-900 max-md:pt-20 max-md:px-4 max-md:pb-10">
       {/* Background image – contained size, positioned behind content */}
-      <div className="hero-animate hero-animate-delay-3 absolute top-[47%] right-0 -translate-y-1/2 w-[65vw] aspect-[16/10] pointer-events-none max-md:w-[90%] max-md:right-1/2 max-md:translate-x-1/2">
+      <div className="hero-animate hero-animate-delay-3 absolute top-[47%] -right-[10vw] -translate-y-1/2 w-[85vw] aspect-[16/10] pointer-events-none max-md:w-[90%] max-md:right-1/2 max-md:translate-x-1/2">
         <Image
           src="/images/aaanow_background.png"
           alt=""
@@ -42,7 +42,8 @@ export async function HeroSectionSimple() {
         />
       </div>
 
-      <div className="relative z-10 flex flex-col items-start justify-center flex-1 w-[95%] max-w-[1440px] mx-auto gap-5 max-md:items-center max-md:text-center">
+      <div className="relative z-10 flex-1 w-[95%] max-w-[1440px] mx-auto flex items-center">
+      <div className="flex flex-col items-start justify-center max-w-[46ch] gap-5 max-md:items-center max-md:text-center">
         <div className="flex flex-col items-start gap-2 max-md:items-center">
           <span className="hero-animate hero-animate-delay-1 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border bg-[rgba(0,50,60,0.05)] backdrop-blur-sm text-primary-900 text-sm font-medium font-body">
             {getMediaUrl(pillIcon) && (
@@ -65,6 +66,7 @@ export async function HeroSectionSimple() {
             ))}
           </div>
         )}
+      </div>
       </div>
       <div className="hero-animate hero-animate-delay-5 relative z-10 w-full flex justify-center">
         <HeroStats />

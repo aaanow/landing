@@ -1,6 +1,5 @@
 import { getPayloadClient } from '@/src/payload'
 import type { ResearchStatsGlobal } from '@/types/cms'
-import { Button } from './Button'
 import { ArrowIcon } from './icons'
 
 interface HeroStatsProps {
@@ -46,11 +45,12 @@ export async function HeroStats({
   return (
     <div className={wrapperClasses}>
       <div className="flex items-start gap-12 max-lg:flex-col">
-        <div className="flex-[0_0_40%] flex flex-col items-start gap-4 pt-4 max-lg:flex-none max-lg:w-full">
+        <div className="flex-[0_0_40%] flex flex-col items-start gap-1 pt-4 max-lg:flex-none max-lg:w-full">
           <h3 className={headingClasses}>{heading}</h3>
-          <Button variant="text" href={ctaLink} icon={<ArrowIcon className="icon-16" />}>
+          <a href={ctaLink} className="inline-flex items-center gap-1.5 py-1.5 font-body text-base font-normal text-[rgba(0,50,60,0.85)]">
             {ctaText}
-          </Button>
+            <ArrowIcon className="icon-16 shrink-0" />
+          </a>
         </div>
         <div className="flex-1 flex gap-4 max-md:flex-col">
           {stats.map((stat, i) => (
