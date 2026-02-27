@@ -57,7 +57,7 @@ export function HeroCarousel({ slides = [], autoplayDuration = 5000 }: HeroCarou
   // Reset timer whenever the selected slide changes
   useEffect(() => {
     startRef.current = Date.now()
-    setProgress(0)
+    requestAnimationFrame(() => setProgress(0))
   }, [selectedIndex])
 
   // Autoplay + progress tick

@@ -121,10 +121,8 @@ function useBarGraphAnimation(canvasRef: React.RefObject<HTMLCanvasElement | nul
     let blueGrowthLevel: number | { base: number; offset: number } = 0
     let bluePulseStartAt = 0
     let blueLastGrowthAt = 0
-    let _blueStartAtMs = 0
     let blueRingAppearedAt: number[] = []
     let paleMode = false
-    let _paleStartAtMs = 0
     let revenueBoxHidden = false
 
     function countCells(col: number) {
@@ -492,7 +490,6 @@ function useBarGraphAnimation(canvasRef: React.RefObject<HTMLCanvasElement | nul
           showCenterBlue = true
           blueGrowthLevel = 0
           blueLastGrowthAt = now - now0
-          _blueStartAtMs = now - now0
           blueRingAppearedAt = []
         }
       } else {
@@ -515,7 +512,6 @@ function useBarGraphAnimation(canvasRef: React.RefObject<HTMLCanvasElement | nul
         }
         if (!paleMode && lvl / maxRadius >= 0.5) {
           paleMode = true
-          _paleStartAtMs = now - now0
         }
       }
 
