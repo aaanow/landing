@@ -142,9 +142,9 @@ export default async function PostPage({ params }: DynamicPageProps) {
           className="blog-article__img-wrapper"
         >
           <img
-            src={backgroundImage}
+            src="/images/aisc_blog_bg-01.svg"
             loading="lazy"
-            alt={post.title}
+            alt=""
             className="blog-article__banner-img"
           />
           <div className="blog-article__gradient"></div>

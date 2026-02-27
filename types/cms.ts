@@ -243,6 +243,7 @@ export interface HeroGlobal {
   tags?: HeroTag[];
   slides?: HeroSlide[];
   autoplayDuration?: number;
+  videoUrl?: string;
 }
 
 // How It Works global

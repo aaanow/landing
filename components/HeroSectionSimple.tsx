@@ -4,6 +4,7 @@ import { getPayloadClient } from '@/src/payload'
 import type { HeroGlobal } from '@/types/cms'
 import { getMediaUrl } from '@/types/cms'
 
+import { HeroPlayButton } from './HeroPlayButton'
 import { HeroStats } from './HeroStats'
 
 export async function HeroSectionSimple() {
@@ -25,12 +26,13 @@ export async function HeroSectionSimple() {
       { label: 'ROI in 19 Days' },
       { label: '£217M Opportunities Tracked' },
     ],
+    videoUrl,
   } = data
 
   return (
     <section data-sticky-card className="section sticky relative overflow-hidden bg-gradient-to-b from-[#e1ede0] to-transparent pt-32 pb-32 min-h-[100vh] flex flex-col items-center gap-16 text-primary-900 max-md:pt-20 max-md:px-4 max-md:pb-10">
       {/* Background image – contained size, positioned behind content */}
-      <div className="hero-animate hero-animate-delay-3 absolute top-[47%] -right-[10vw] -translate-y-1/2 w-[85vw] aspect-[16/10] pointer-events-none max-md:w-[90%] max-md:right-1/2 max-md:translate-x-1/2">
+      <div className={`hero-animate hero-animate-delay-3 absolute top-[47%] -right-[10vw] -translate-y-1/2 w-[85vw] aspect-[16/10] max-md:w-[90%] max-md:right-1/2 max-md:translate-x-1/2${videoUrl ? '' : ' pointer-events-none'}`}>
         <Image
           src="/images/aaanow_background.png"
           alt=""
@@ -40,6 +42,7 @@ export async function HeroSectionSimple() {
           }}
           priority
         />
+        {videoUrl && <HeroPlayButton videoUrl={videoUrl} />}
       </div>
 
       <div className="relative z-10 flex-1 w-[95%] max-w-[1440px] mx-auto flex items-center">

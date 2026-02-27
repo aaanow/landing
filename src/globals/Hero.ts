@@ -107,5 +107,13 @@ export const Hero: GlobalConfig = {
         description: 'How long each slide is shown before auto-advancing',
       },
     },
+    {
+      name: 'videoUrl',
+      type: 'text',
+      label: 'Video URL',
+      admin: {
+        description: 'YouTube or Vimeo embed URL for the hero play button (e.g. https://www.youtube.com/embed/VIDEO_ID)',
+      },
+    },
   ],
 }

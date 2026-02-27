@@ -134,14 +134,12 @@
 
 .articles-grid__bg-img {
   z-index: 0;
+  aspect-ratio: 1;
   object-fit: cover;
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  margin: auto;
   position: absolute;
-  inset: 0;
-  filter: grayscale(1);
-  mix-blend-mode: luminosity;
-  display: none;
+  inset: 0% auto;
 }
 
 .articles-grid__gradient {
@@ -173,6 +171,8 @@
   align-items: center;
   width: 48px;
   height: 48px;
+  background-color: var(--card-text);
+  color: var(--card-btn);
   position: absolute;
   right: 1rem;
   bottom: 1rem;

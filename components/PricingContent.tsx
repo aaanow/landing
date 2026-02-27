@@ -63,7 +63,7 @@ export function PricingContent() {
           <div className="section__content-wrapper dark-green">
             {/* Tab Toggle */}
             <div className="pricing-wrapper">
-              <div className="pricing-tabs hero-animate hero-animate-delay-2" role="tablist" aria-label="Pricing options">
+              <div className="pricing-tabs hero-animate hero-animate-delay-2" role="tablist" aria-label="Pricing options" style={{ display: 'none' }}>
                 <div
                   className="pricing-tabs__slider"
                   style={{
@@ -178,7 +178,7 @@ export function PricingContent() {
                       </p>
 
                       {/* CTA Row */}
-                      <div className="pricing-row">
+                      <div className="pricing-row" style={{ display: 'none' }}>
                         <div className="pricing-row__label">
                           <a href="/legal" className="pricing-legal-link">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

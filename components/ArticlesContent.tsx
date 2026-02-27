@@ -101,7 +101,7 @@ export function ArticlesContent({ posts }: ArticlesContentProps) {
                 className={`articles-grid__card articles-card-animate${index % 12 === 0 ? ' articles-grid__card--2x2' : index % 12 === 7 ? ' articles-grid__card--2x1' : ''}`}
                 style={{ animationDelay: `${0.45 + index * 0.07}s` }}
               >
-                <img loading="lazy" src={backgroundImage} alt="" className="articles-grid__bg-img" />
+                <img loading="lazy" src="/images/aisc_blog_bg-01.svg" alt="" className="articles-grid__bg-img" />
                 <div className="articles-grid__gradient"></div>
                 <div className="articles-grid__content">
                   <div className="articles-card__meta">

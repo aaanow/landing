@@ -13,9 +13,13 @@
 }
 
 .article-card,
-.card-article__item,
-.articles-grid__card {
+.card-article__item {
   background-color: var(--card-bg);
+  color: var(--card-text);
+}
+
+.articles-grid__card {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--card-bg), #fff 20%) 0%, var(--card-bg) 100%);
   color: var(--card-text);
 }
 
@@ -29,7 +33,7 @@
 .card-article__item .article-card-gradient,
 .card-article__item .card-article__img-gradient,
 .articles-grid__card .articles-grid__gradient {
-  background: linear-gradient(180deg, var(--card-bg) 50%, transparent 100%);
+  background: linear-gradient(0deg, var(--card-bg) 0%, color-mix(in srgb, var(--card-bg) 60%, transparent) 40%, transparent 100%);
 }
 
 .article-card .article-card-btn,
