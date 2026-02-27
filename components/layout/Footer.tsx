@@ -78,8 +78,8 @@ export async function Footer() {
   } = footer;
 
   return (
-    <section className="bg-linear-to-b from-[#004452] to-[#002B33] text-neutral-0 rounded-t-[4rem] md:rounded-t-[4rem] rounded-t-[2rem] flex flex-col w-full pt-12 md:pt-16 pb-12 relative">
-      <div className="container px-6 md:px-0">
+    <section className="flex justify-center w-full px-6 md:px-0">
+      <div className="bg-linear-to-b from-[#004452] to-[#002B33] text-neutral-0 rounded-t-[2rem] md:rounded-t-[4rem] flex flex-col w-full max-w-[1440px] pt-12 md:pt-16 pb-12 relative px-6 md:px-12 lg:px-16">
         {/* Link groups: row on desktop, accordion stack on mobile */}
         <div className="flex flex-col md:flex-row md:gap-6 gap-0 w-full">
           {linkGroups.map((group) => (
