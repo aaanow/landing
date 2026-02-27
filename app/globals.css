@@ -223,7 +223,9 @@
     left: 0 !important;
     right: 0 !important;
     width: 100vw !important;
-    top: 28% !important;
+    top: 45% !important;
+    aspect-ratio: 4 / 3 !important;
+    height: auto !important;
     transform: none !important;
   }
 }

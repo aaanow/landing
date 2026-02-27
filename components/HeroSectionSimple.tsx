@@ -58,7 +58,7 @@ export async function HeroSectionSimple() {
         {tags.length > 0 && (
           <div className="hero-animate hero-animate-delay-4 flex gap-6 items-center flex-wrap max-md:justify-center max-md:w-full max-md:gap-0 max-md:-mt-2">
             {tags.map((tag, i) => (
-              <span key={tag.id ?? i} className="inline-flex items-center gap-1.5 py-1.5 font-body text-base font-normal text-[rgba(0,50,60,0.85)]">
+              <span key={tag.id ?? i} className="inline-flex items-center gap-1.5 py-1.5 font-body text-base font-normal text-[rgba(0,50,60,0.85)] max-md:py-0.5">
                 {getMediaUrl(tag.icon) && (
                   <Image src={getMediaUrl(tag.icon)!} alt="" width={18} height={18} className="shrink-0" />
                 )}
