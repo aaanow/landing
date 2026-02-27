@@ -72,7 +72,7 @@ export async function GET(request: Request) {
               aboutUsPopup
                 ? internalLink('About us', 'popups', aboutUsPopup.id as string)
                 : externalLink('About us', '/about-us'),
-              ...aboutPopups.map((p) => { const d = p as SeedDoc; return internalLink(d.name, 'popups', d.id, true) }),
+              ...aboutPopups.map((p) => { const d = p as SeedDoc; return internalLink(d.name || '', 'popups', d.id, true) }),
               externalLink('Our capability', '/our-capability'),
               externalLink('LinkedIn', 'https://www.linkedin.com/company/aaanow'),
             ],
@@ -83,14 +83,14 @@ export async function GET(request: Request) {
               aiscPopup
                 ? internalLink('AiSC Introduction', 'popups', aiscPopup.id as string)
                 : externalLink('AiSC Introduction', '/aisc'),
-              ...aiscPopups.map((p) => { const d = p as SeedDoc; return internalLink(d.name, 'popups', d.id, true) }),
+              ...aiscPopups.map((p) => { const d = p as SeedDoc; return internalLink(d.name || '', 'popups', d.id, true) }),
             ],
           },
           {
             title: 'Public scorecards',
             links: [
               externalLink('Introduction', '/scorecards'),
-              ...scorecards.map((s) => { const d = s as SeedDoc; return internalLink(d.name, 'scorecards', d.id, true) }),
+              ...scorecards.map((s) => { const d = s as SeedDoc; return internalLink(d.name || '', 'scorecards', d.id, true) }),
             ],
           },
           {
@@ -99,14 +99,14 @@ export async function GET(request: Request) {
               externalLink('All Reference Materials', '/reference-material'),
               ...footerResources.map((r) => {
                 const d = r as SeedDoc
-                return externalLink(d.name, d.externalLink || d.blogArticle || `/resources/${d.slug}`, true)
+                return externalLink(d.name || '', d.externalLink || d.blogArticle || `/resources/${d.slug}`, true)
               }),
               externalLink('I want to...', '/reference-material#i-want-to'),
             ],
           },
           {
             title: 'Legal',
-            links: legals.map((l) => { const d = l as SeedDoc; return internalLink(d.name, 'legals', d.id) }),
+            links: legals.map((l) => { const d = l as SeedDoc; return internalLink(d.name || '', 'legals', d.id) }),
           },
         ],
         disclaimerText:
