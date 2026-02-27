@@ -4382,7 +4382,7 @@ figcaption {
     background-color: #fffffffa;
     border-radius: 1rem;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
     height: auto;
     margin-top: 0;
@@ -4492,8 +4492,11 @@ figcaption {
 
   .nav__link {
     text-align: center;
+    width: 100%;
     font-size: var(--font-size-2xl);
     line-height: var(--line-height-normal);
+    border-bottom: none;
+    padding: 12px 0;
   }
 
   .swiper-slide__timeline-point {
@@ -4520,8 +4523,9 @@ figcaption {
     color: var(--color-neutral-0);
     border: 1px #000;
     flex-flow: column;
+    align-items: center;
     height: auto;
-    margin-top: 4rem;
+    margin-top: 2rem;
     margin-left: 0;
     font-size: var(--font-size-2xl);
   }

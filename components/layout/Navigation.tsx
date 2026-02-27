@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import gsap from 'gsap';
 import { Logo, ArrowIcon } from '@/components/icons';
 import { Button } from '@/components/Button';
 import { useLenis } from '@/components/AnimationProvider';
@@ -25,12 +26,62 @@ export function NavigationClient({ variant = 'light', links, ctaLabel = 'Get Sta
   const [isVisible, setIsVisible] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLElement>(null);
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
   const lastScrollYRef = useRef(0);
   const pathname = usePathname();
   const lenis = useLenis();
 
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
   const toggleMenu = useCallback(() => setIsMenuOpen(prev => !prev), []);
+
+  // GSAP animation for mobile menu
+  useEffect(() => {
+    const menu = menuRef.current;
+    if (!menu) return;
+
+    const items = menu.querySelectorAll('.nav__link, .nav__cta');
+
+    if (isMenuOpen) {
+      // Kill any running timeline
+      tlRef.current?.kill();
+
+      // Set initial state
+      gsap.set(menu, { display: 'flex', opacity: 0, y: -12 });
+      gsap.set(items, { opacity: 0, y: 20 });
+
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      tl.to(menu, { opacity: 1, y: 0, duration: 0.4 })
+        .to(items, {
+          opacity: 1,
+          y: 0,
+          duration: 0.45,
+          stagger: 0.06,
+        }, '-=0.2');
+
+      tlRef.current = tl;
+    } else {
+      if (tlRef.current) {
+        const tl = gsap.timeline({
+          defaults: { ease: 'power2.in' },
+          onComplete: () => {
+            gsap.set(menu, { display: 'none' });
+          },
+        });
+
+        tl.to(items, {
+          opacity: 0,
+          y: -10,
+          duration: 0.25,
+          stagger: 0.03,
+        })
+          .to(menu, { opacity: 0, y: -8, duration: 0.25 }, '-=0.15');
+
+        tlRef.current = tl;
+      }
+    }
+  }, [isMenuOpen]);
 
   // Close menu on route change
   useEffect(() => {
@@ -111,6 +162,7 @@ export function NavigationClient({ variant = 'light', links, ctaLabel = 'Get Sta
 
         <nav
           id="nav-menu"
+          ref={menuRef}
           className={`nav__menu ${isMenuOpen ? 'nav__menu--open' : ''}`}
           aria-hidden={!isMenuOpen}
         >

@@ -33,7 +33,7 @@ export async function StatsSection({ variant = 'dark' }: StatsSectionProps) {
   const buttonColor = variant === 'light' ? 'dark' : 'green'
 
   return (
-    <section id="stats" className="section sticky">
+    <section id="stats" className="section sticky max-md:mt-24">
       <div className="container top-bottom-padding landing">
         <div className={cardClass}>
           <div className="stats-icon">

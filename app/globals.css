@@ -217,3 +217,13 @@
 .hero-animate-delay-3 { animation-delay: 0.35s; }
 .hero-animate-delay-4 { animation-delay: 0.5s; }
 .hero-animate-delay-5 { animation-delay: 0.65s; }
+
+@media (max-width: 767px) {
+  .hero-bg-mobile {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    top: 28% !important;
+    transform: none !important;
+  }
+}
