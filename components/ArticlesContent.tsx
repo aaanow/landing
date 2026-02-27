@@ -5,8 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { formatDate } from '@/lib/format';
-import { GridIcon, ListIcon, SearchIcon, PlusIcon } from '@/components/icons';
-import { getMediaUrl } from '@/types/cms';
+import { SearchIcon, PlusIcon } from '@/components/icons';
 import type { Post } from '@/types/cms';
 
 interface ArticlesContentProps {
@@ -15,7 +14,6 @@ interface ArticlesContentProps {
 
 export function ArticlesContent({ posts }: ArticlesContentProps) {
   const [search, setSearch] = useState('');
-  const [view, setView] = useState<'grid' | 'list'>('grid');
 
   const filtered = useMemo(() => {
     if (!search.trim()) return posts;
@@ -40,66 +38,16 @@ export function ArticlesContent({ posts }: ArticlesContentProps) {
             className="articles-search__input"
           />
         </div>
-        <div className="articles-view-toggle">
-          <button
-            aria-label="Grid view"
-            className={`articles-view-btn${view === 'grid' ? ' articles-view-btn--active' : ''}`}
-            onClick={() => setView('grid')}
-          >
-            <GridIcon />
-          </button>
-          <button
-            aria-label="List view"
-            className={`articles-view-btn${view === 'list' ? ' articles-view-btn--active' : ''}`}
-            onClick={() => setView('list')}
-          >
-            <ListIcon />
-          </button>
-        </div>
       </div>
 
       {filtered.length > 0 ? (
         <div
           role="list"
-          className={view === 'grid' ? 'articles-grid' : 'articles-list'}
+          className="articles-grid"
         >
           {filtered.map((post, index) => {
             const postLink = post.externalLink || `/posts/${post.slug}`;
-            const backgroundImage =
-              getMediaUrl(post.featuredImage) || '/images/aisc_blog_bg-01.svg';
-
             const isExternal = !!post.externalLink;
-            const ListCardTag = isExternal ? 'a' : Link;
-            const listCardProps = isExternal
-              ? { href: postLink, target: '_blank' as const, rel: 'noopener noreferrer' }
-              : { href: postLink };
-
-            if (view === 'list') {
-              return (
-                <ListCardTag
-                  key={post.id}
-                  {...listCardProps}
-                  data-category={post.category || ''}
-                  role="listitem"
-                  className="articles-list__card articles-card-animate"
-                  style={{ animationDelay: `${0.45 + index * 0.07}s` }}
-                >
-                  <div className="articles-list__img-wrapper" style={{ position: 'relative' }}>
-                    <Image src={backgroundImage} alt="" fill style={{ objectFit: 'cover' }} className="articles-list__img" />
-                  </div>
-                  <div className="articles-list__body">
-                    <div className="articles-card__meta">
-                      <p className="articles-card__date">{formatDate(post.publishedAt)}</p>
-                      <span className="articles-card__reading-time">
-                        {formatReadingTime(calculateReadingTime(post.content))}
-                      </span>
-                    </div>
-                    <h3>{post.title}</h3>
-                    {post.excerpt && <p className="articles-card__excerpt">{post.excerpt}</p>}
-                  </div>
-                </ListCardTag>
-              );
-            }
 
             return (
               <div

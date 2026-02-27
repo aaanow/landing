@@ -49,14 +49,17 @@ export async function GET(request: Request) {
     const resources = resourcesResult.docs
     const legals = legalsResult.docs
 
-    const aboutUsPopup = popups.find((p: SeedDoc) => p.slug === 'about-us')
-    const aboutPopups = popups.filter((p: SeedDoc) => p.aboutPage === 'about-us')
-    const aiscPopup = popups.find((p: SeedDoc) => p.slug === 'aisc')
-    const aiscPopups = popups.filter((p: SeedDoc) =>
-      ['aisc', 'aod---ai-for-agency-growth', 'lifecycle-alignment'].includes(p.aboutPage || '')
+    const aboutUsPopup = popups.find((p) => (p as SeedDoc).slug === 'about-us')
+    const aboutPopups = popups.filter((p) => (p as SeedDoc).aboutPage === 'about-us')
+    const aiscPopup = popups.find((p) => (p as SeedDoc).slug === 'aisc')
+    const aiscPopups = popups.filter((p) =>
+      ['aisc', 'aod---ai-for-agency-growth', 'lifecycle-alignment'].includes((p as SeedDoc).aboutPage || '')
     )
     const footerResources = resources
-      .filter((r: SeedDoc) => r.type === 'external-link' || r.type === 'blog-post' || r.externalLink || r.blogArticle)
+      .filter((r) => {
+        const doc = r as SeedDoc
+        return doc.type === 'external-link' || doc.type === 'blog-post' || doc.externalLink || doc.blogArticle
+      })
       .slice(0, 8)
 
     await payload.updateGlobal({
@@ -69,7 +72,7 @@ export async function GET(request: Request) {
               aboutUsPopup
                 ? internalLink('About us', 'popups', aboutUsPopup.id as string)
                 : externalLink('About us', '/about-us'),
-              ...aboutPopups.map((p: SeedDoc) => internalLink(p.name, 'popups', p.id, true)),
+              ...aboutPopups.map((p) => { const d = p as SeedDoc; return internalLink(d.name, 'popups', d.id, true) }),
               externalLink('Our capability', '/our-capability'),
               externalLink('LinkedIn', 'https://www.linkedin.com/company/aaanow'),
             ],
@@ -80,29 +83,30 @@ export async function GET(request: Request) {
               aiscPopup
                 ? internalLink('AiSC Introduction', 'popups', aiscPopup.id as string)
                 : externalLink('AiSC Introduction', '/aisc'),
-              ...aiscPopups.map((p: SeedDoc) => internalLink(p.name, 'popups', p.id, true)),
+              ...aiscPopups.map((p) => { const d = p as SeedDoc; return internalLink(d.name, 'popups', d.id, true) }),
             ],
           },
           {
             title: 'Public scorecards',
             links: [
               externalLink('Introduction', '/scorecards'),
-              ...scorecards.map((s: SeedDoc) => internalLink(s.name, 'scorecards', s.id, true)),
+              ...scorecards.map((s) => { const d = s as SeedDoc; return internalLink(d.name, 'scorecards', d.id, true) }),
             ],
           },
           {
             title: 'Resources',
             links: [
               externalLink('All Reference Materials', '/reference-material'),
-              ...footerResources.map((r: SeedDoc) =>
-                externalLink(r.name, r.externalLink || r.blogArticle || `/resources/${r.slug}`, true),
-              ),
+              ...footerResources.map((r) => {
+                const d = r as SeedDoc
+                return externalLink(d.name, d.externalLink || d.blogArticle || `/resources/${d.slug}`, true)
+              }),
               externalLink('I want to...', '/reference-material#i-want-to'),
             ],
           },
           {
             title: 'Legal',
-            links: legals.map((l: SeedDoc) => internalLink(l.name, 'legals', l.id)),
+            links: legals.map((l) => { const d = l as SeedDoc; return internalLink(d.name, 'legals', d.id) }),
           },
         ],
         disclaimerText:
