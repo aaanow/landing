@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef, Suspense } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -20,7 +20,17 @@ function updateUrlParam(slug: string | null) {
   window.history.pushState({}, '', url.toString());
 }
 
-export function PopupCards({ popups, pageTitle, initialPopupSlug, parentPageSlug }: { popups: Popup[]; pageTitle?: string; initialPopupSlug?: string; parentPageSlug?: string }) {
+interface PopupCardsProps { popups: Popup[]; pageTitle?: string; initialPopupSlug?: string; parentPageSlug?: string }
+
+export function PopupCards(props: PopupCardsProps) {
+  return (
+    <Suspense>
+      <PopupCardsInner {...props} />
+    </Suspense>
+  );
+}
+
+function PopupCardsInner({ popups, pageTitle, initialPopupSlug, parentPageSlug }: PopupCardsProps) {
   const searchParams = useSearchParams();
   const [activePopup, setActivePopup] = useState<Popup | null>(null);
   const [closing, setClosing] = useState(false);
