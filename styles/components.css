@@ -990,7 +990,7 @@ figcaption {
   border-left: 3px solid var(--color-primary-600);
   margin: 2.5rem 0;
   padding: 1rem 0 1rem 2rem;
-  font-size: var(--font-size-body-large);
+  font-size: var(--font-size-title-3);
   font-style: italic;
   font-weight: var(--font-weight-normal);
   line-height: 1.6;
@@ -1091,6 +1091,14 @@ figcaption {
 
 .blog__content-text tr:last-child td {
   border-bottom: none;
+}
+
+.blog__content-text td p,
+.blog__content-text td a,
+.blog__content-text th p,
+.blog__content-text th a {
+  font-size: inherit;
+  margin-bottom: 0;
 }
 
 .blog__content-text > *:first-child {

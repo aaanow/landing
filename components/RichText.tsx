@@ -86,7 +86,7 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
     case 'table':
       return (
         <div key={index} className="rich-text-table-wrapper">
-          <table>{renderChildren()}</table>
+          <table><tbody>{renderChildren()}</tbody></table>
         </div>
       );
 
