@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createElement, Fragment } from 'react';
+import Image from 'next/image';
 import type { LexicalNode, LexicalContent } from '@/types/cms';
 
 interface RichTextProps {
@@ -71,7 +72,8 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
 
     case 'link':
     case 'autolink': {
-      const href = fields?.url || url || '#';
+      const rawHref = fields?.url || url || '#';
+      const href = /^(https?:\/\/|mailto:|tel:|\/|#)/.test(rawHref) ? rawHref : '#';
       const linkProps = fields?.newTab ? { target: '_blank', rel: 'noopener noreferrer' } : {};
       return (
         <a key={index} href={href} {...linkProps}>
@@ -106,7 +108,7 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
       if (value?.url) {
         return (
           <figure key={index}>
-            <img src={value.url} alt={value.alt || ''} loading="lazy" />
+            <Image src={value.url} alt={value.alt || ''} width={800} height={450} style={{ width: '100%', height: 'auto' }} />
           </figure>
         );
       }

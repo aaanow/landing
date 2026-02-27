@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { ArrowIcon } from './icons'
 
 const TABS = [
@@ -119,16 +119,23 @@ export function TimelineTabsSection() {
   const [selectedTab, setSelectedTab] = useState(TABS[0].id)
   const [transitioning, setTransitioning] = useState(false)
   const selectedIndex = TABS.findIndex((t) => t.id === selectedTab)
-  const tab = TABS.find((t) => t.id === activeTab)!
+  const tab = TABS.find((t) => t.id === activeTab) ?? TABS[0]
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([])
+
+  useEffect(() => {
+    return () => timersRef.current.forEach(clearTimeout)
+  }, [])
 
   const goToTab = useCallback((id: string) => {
     if (id === selectedTab) return
+    timersRef.current.forEach(clearTimeout)
+    timersRef.current = []
     setSelectedTab(id)
     setTransitioning(true)
-    setTimeout(() => {
+    timersRef.current.push(setTimeout(() => {
       setActiveTab(id)
-      setTimeout(() => setTransitioning(false), 20)
-    }, 300)
+      timersRef.current.push(setTimeout(() => setTransitioning(false), 20))
+    }, 300))
   }, [selectedTab])
 
   return (

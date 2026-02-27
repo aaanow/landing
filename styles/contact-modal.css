@@ -317,7 +317,7 @@
    RESPONSIVE
    ================================================================= */
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .contact-modal__body {
     grid-template-columns: 1fr;
   }

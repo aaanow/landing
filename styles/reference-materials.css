@@ -134,7 +134,7 @@
   z-index: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .resources-table-header,
   .resources-row,
   .resource-table-header,

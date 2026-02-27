@@ -2,6 +2,22 @@
 
 /* =================================================================
    DESIGN SYSTEM TOKENS
+
+   Naming conventions:
+     Colors:     --color-{scale}-{shade}    e.g. --color-primary-600
+     Font sizes: --font-size-{name}         e.g. --font-size-sm
+     Weights:    --font-weight-{name}       e.g. --font-weight-bold
+     Spacing:    --radius-{size}            e.g. --radius-md
+     Lines:      --line-height-{name}       e.g. --line-height-tight
+     Letters:    --letter-spacing-{name}    e.g. --letter-spacing-snug
+
+   Breakpoints (standardised):
+     Mobile:  max-width: 479px
+     Tablet:  max-width: 767px
+     Desktop: max-width: 991px
+
+   Legacy aliases (in :root below) map old short names to these
+   tokens. Do NOT add new usages of legacy names.
    ================================================================= */
 @theme {
   /* Brand Colors */
@@ -227,5 +243,19 @@
     aspect-ratio: 4 / 3 !important;
     height: auto !important;
     transform: none !important;
+  }
+}
+
+/* =================================================================
+   ACCESSIBILITY: Reduced Motion
+   ================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

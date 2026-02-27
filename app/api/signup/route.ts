@@ -1,11 +1,20 @@
 import { NextResponse } from 'next/server'
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null)
 
   if (!body?.email) {
     return NextResponse.json(
       { error: 'Email is required' },
+      { status: 400 },
+    )
+  }
+
+  if (typeof body.email !== 'string' || !EMAIL_RE.test(body.email)) {
+    return NextResponse.json(
+      { error: 'Please provide a valid email address' },
       { status: 400 },
     )
   }

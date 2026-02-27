@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import Link from 'next/link';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
@@ -10,7 +10,7 @@ export function ContactForm() {
   const [wantsDemo, setWantsDemo] = useState(false);
   const [wantsProposal, setWantsProposal] = useState(false);
 
-  const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('submitting');
 
@@ -38,7 +38,7 @@ export function ContactForm() {
     } catch {
       setStatus('error');
     }
-  }, [wantsDemo, wantsProposal]);
+  };
 
   const isSubmitting = status === 'submitting';
 

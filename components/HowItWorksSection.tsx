@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react'
+import { useState, useRef, useSyncExternalStore, useEffect, useLayoutEffect, useCallback } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import type { HowItWorksTab } from '@/data/how-it-works-data'
@@ -41,19 +41,20 @@ function ScorecardPreview({ stepIndex }: { stepIndex: number }) {
 /*  useMediaQuery hook                                                 */
 /* ------------------------------------------------------------------ */
 function useMediaQuery(query: string): { matches: boolean; mounted: boolean } {
-  const [matches, setMatches] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    const mql = window.matchMedia(query)
-    setMatches(mql.matches)
-    setMounted(true)
-    const handler = (e: MediaQueryListEvent) => setMatches(e.matches)
-    mql.addEventListener('change', handler)
-    return () => mql.removeEventListener('change', handler)
-  }, [query])
-
-  return { matches, mounted }
+  const subscribe = useCallback(
+    (cb: () => void) => {
+      const mql = window.matchMedia(query)
+      mql.addEventListener('change', cb)
+      return () => mql.removeEventListener('change', cb)
+    },
+    [query],
+  )
+  const matches = useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(query).matches,
+    () => false,
+  )
+  return { matches, mounted: true }
 }
 
 /* ------------------------------------------------------------------ */
@@ -75,8 +76,8 @@ function HowItWorksMobile({ tabs }: { tabs: HowItWorksTab[] }) {
     [activeTab, transitioning],
   )
 
-  const tab = tabs.find((t) => t.id === activeTab)!
   const tabIndex = tabs.findIndex((t) => t.id === activeTab)
+  const tab = tabs[tabIndex] ?? tabs[0]
 
   return (
     <div className="hiw__layout">
@@ -283,10 +284,15 @@ function HowItWorksDesktop({ tabs }: { tabs: HowItWorksTab[] }) {
 /*  Main export                                                        */
 /* ------------------------------------------------------------------ */
 export function HowItWorksSection({ heading, tabs }: HowItWorksSectionProps) {
-  const { matches: isMobile, mounted } = useMediaQuery('(max-width: 767px)')
+  const { matches: isMobile } = useMediaQuery('(max-width: 767px)')
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    sectionRef.current?.style.setProperty('opacity', '1')
+  }, [])
 
   return (
-    <section id="how-it-works" className="hiw__section" style={{ opacity: mounted ? 1 : 0, transition: 'opacity 0.15s ease' }}>
+    <section ref={sectionRef} id="how-it-works" className="hiw__section" style={{ opacity: 0, transition: 'opacity 0.15s ease' }}>
       <div className="hiw__container">
         <h2 className="hiw__heading">{heading}</h2>
         {isMobile ? <HowItWorksMobile tabs={tabs} /> : <HowItWorksDesktop tabs={tabs} />}
