@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export function AboutUsBanner() {
   return (
     <div className="jfeopjfe" style={{ marginTop: '2rem', marginBottom: '4rem' }}>
@@ -13,7 +15,7 @@ export function AboutUsBanner() {
       </div>
       <div className="div-block-159" style={{ gridColumn: '13 / 25', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div className="div-block-85">
-          <img src="/images/25anniversary.svg" loading="lazy" alt="25 year anniversary" />
+          <Image src="/images/25anniversary.svg" alt="25 year anniversary" width={200} height={200} />
         </div>
       </div>
     </div>

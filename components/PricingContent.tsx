@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import Link from 'next/link';
 import { Button } from '@/components/Button';
 import { ArrowIcon, CheckIcon, CTAIcon } from '@/components/icons';
 
@@ -138,7 +139,7 @@ export function PricingContent() {
                       <div className="pricing-row pricing-row--thick-border">
                         <div className="pricing-row__label">
                           <span className="pricing-row__name">Users</span>
-                          <span className="pricing-row__desc">(unlimited end of '26)</span>
+                          <span className="pricing-row__desc">(unlimited end of &apos;26)</span>
                         </div>
                         {subscriptionPlans.map((plan, index) => (
                           <div key={index} className="pricing-row__value">
@@ -180,14 +181,14 @@ export function PricingContent() {
                       {/* CTA Row */}
                       <div className="pricing-row" style={{ display: 'none' }}>
                         <div className="pricing-row__label">
-                          <a href="/legal" className="pricing-legal-link">
+                          <Link href="/legal" className="pricing-legal-link">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                               <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                             <span>Full details</span>
                             <span className="pricing-legal-note">(Legal pages)</span>
-                          </a>
+                          </Link>
                         </div>
                         {subscriptionPlans.map((plan, index) => (
                           <div key={index} className="pricing-row__value">
@@ -208,13 +209,13 @@ export function PricingContent() {
 
                   {/* Skeptic Section */}
                   <div className="pricing-card pricing-card--skeptic">
-                    <h2 className="pricing-card__title">I don't believe you....</h2>
+                    <h2 className="pricing-card__title">I don&apos;t believe you....</h2>
                     <div className="pricing-card__body">
                       <p>
                         You would not be the first to be skeptical of our numbers, and perhaps even more so when you compare the potential value we describe against what we charge. <em>If it is real, why does it feel like we should already have this?</em>
                       </p>
                       <p>
-                        Those selling diagnostic, TQM, quality assurance and similar services are multi-million £ businesses. They are built on taking money agencies "leave on the table" and then positioning themselves as the authority over work delivered. No fancy accountancy. Fact.
+                        Those selling diagnostic, TQM, quality assurance and similar services are multi-million £ businesses. They are built on taking money agencies &ldquo;leave on the table&rdquo; and then positioning themselves as the authority over work delivered. No fancy accountancy. Fact.
                       </p>
                       <p>
                         Discount, even ignore, the value we reference around improved pitch wins or being heard above the noise. Offer clients services they are already taking from third parties, make 50%+ margin, and use that as a reason to stay in conversation. Ongoing value? Client confidence, agency revenue.
@@ -265,7 +266,7 @@ export function PricingContent() {
                       <div className="pricing-row pricing-row--trial pricing-row--thick-border">
                         <div className="pricing-row__label">
                           <span className="pricing-row__name">Users</span>
-                          <span className="pricing-row__desc">(unlimited end of '26)</span>
+                          <span className="pricing-row__desc">(unlimited end of &apos;26)</span>
                         </div>
                         {trialPlans.map((plan, index) => (
                           <div key={index} className="pricing-row__value">
@@ -289,14 +290,14 @@ export function PricingContent() {
                       {/* CTA Row */}
                       <div className="pricing-row pricing-row--trial">
                         <div className="pricing-row__label">
-                          <a href="/legal" className="pricing-legal-link">
+                          <Link href="/legal" className="pricing-legal-link">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                               <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                             <span>Full details</span>
                             <span className="pricing-legal-note">(Legal pages)</span>
-                          </a>
+                          </Link>
                         </div>
                         {trialPlans.map((plan, index) => (
                           <div key={index} className="pricing-row__value">
@@ -317,13 +318,13 @@ export function PricingContent() {
 
                   {/* Skeptic Section */}
                   <div className="pricing-card pricing-card--skeptic">
-                    <h2 className="pricing-card__title">I don't believe you....</h2>
+                    <h2 className="pricing-card__title">I don&apos;t believe you....</h2>
                     <div className="pricing-card__body">
                       <p>
                         You would not be the first to be skeptical of our numbers, and perhaps even more so when you compare the potential value we describe against what we charge. <em>If it is real, why does it feel like we should already have this?</em>
                       </p>
                       <p>
-                        Those selling diagnostic, TQM, quality assurance and similar services are multi-million £ businesses. They are built on taking money agencies "leave on the table" and then positioning themselves as the authority over work delivered. No fancy accountancy. Fact.
+                        Those selling diagnostic, TQM, quality assurance and similar services are multi-million £ businesses. They are built on taking money agencies &ldquo;leave on the table&rdquo; and then positioning themselves as the authority over work delivered. No fancy accountancy. Fact.
                       </p>
                       <p>
                         Discount, even ignore, the value we reference around improved pitch wins or being heard above the noise. Offer clients services they are already taking from third parties, make 50%+ margin, and use that as a reason to stay in conversation. Ongoing value? Client confidence, agency revenue.
@@ -348,7 +349,7 @@ export function PricingContent() {
               <div className="subheading__wrapper">
                 <p className="body__xlarge">
                   Have questions? Want to see a demo?<br />
-                  Let's talk about how AiSC can transform your client relationships.
+                  Let&apos;s talk about how AiSC can transform your client relationships.
                 </p>
                 <Button
                   variant="main"

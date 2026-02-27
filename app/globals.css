@@ -164,41 +164,6 @@
   --_sizing---gap-m: 24px;
 }
 
-/* =================================================================
-   LOADING SKELETON
-   ================================================================= */
-.loading-skeleton {
-  min-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.skeleton-title {
-  height: 2.5rem;
-  width: 40%;
-  background: var(--color-bg-subtle);
-  border-radius: var(--radius-md);
-}
-
-.skeleton-text {
-  height: 1.25rem;
-  width: 60%;
-  background: var(--color-bg-subtle);
-  border-radius: var(--radius-md);
-}
-
-.skeleton-card {
-  height: 200px;
-  background: var(--color-bg-subtle);
-  border-radius: var(--radius-lg);
-  animation: skeleton-pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes skeleton-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
 
 @keyframes hero-fade-up {
   from {
@@ -209,6 +174,10 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.page-transition {
+  animation: hero-fade-up 0.4s ease-out both;
 }
 
 .hero-animate {

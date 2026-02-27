@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 interface ResolvedLogo {
   id?: string
   image: string
@@ -33,17 +35,23 @@ export function LogoMarqueeClient({
           rel="noopener noreferrer"
           className="logo-marquee__link"
         >
-          <img
+          <Image
             src={logo.image}
             alt={logo.alt || ''}
+            width={150}
+            height={50}
             className="logo-marquee__img"
+            style={{ width: 'auto', height: 'auto' }}
           />
         </a>
       ) : (
-        <img
+        <Image
           src={logo.image}
           alt={logo.alt || ''}
+          width={150}
+          height={50}
           className="logo-marquee__img"
+          style={{ width: 'auto', height: 'auto' }}
         />
       )}
     </div>

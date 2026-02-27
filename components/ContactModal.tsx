@@ -1,20 +1,16 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useContactModal } from './ContactModalContext';
 import { ContactForm } from './ContactForm';
 import { Logo } from './icons/Logo';
 
 export function ContactModal() {
   const { isOpen, close } = useContactModal();
-  const [mounted, setMounted] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (isOpen && dialogRef.current) {
@@ -29,7 +25,7 @@ export function ContactModal() {
     [close],
   );
 
-  if (!mounted || !isOpen) return null;
+  if (!isOpen) return null;
 
   return createPortal(
     <div
@@ -118,7 +114,7 @@ export function ContactModal() {
 
             <div className="contact-modal__info-privacy">
               Details held and used in line with{' '}
-              <a href="/privacy-policy">privacy policy</a>
+              <Link href="/privacy-policy">privacy policy</Link>
             </div>
           </div>
 

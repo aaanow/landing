@@ -31,6 +31,13 @@ export function NavigationClient({ variant = 'light', links, ctaLabel = 'Get Sta
   const lastScrollYRef = useRef(0);
   const pathname = usePathname();
   const lenis = useLenis();
+  const [prevPathname, setPrevPathname] = useState(pathname);
+
+  // Close menu on route change (derived state pattern, no effect needed)
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setIsMenuOpen(false);
+  }
 
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
   const toggleMenu = useCallback(() => setIsMenuOpen(prev => !prev), []);
@@ -82,11 +89,6 @@ export function NavigationClient({ variant = 'light', links, ctaLabel = 'Get Sta
       }
     }
   }, [isMenuOpen]);
-
-  // Close menu on route change
-  useEffect(() => {
-    closeMenu();
-  }, [pathname, closeMenu]);
 
   // Handle scroll behavior
   useEffect(() => {

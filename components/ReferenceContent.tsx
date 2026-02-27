@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Image from 'next/image';
 import { SearchIcon } from '@/components/icons';
 import { getIconPath, getResourceLink, formatResourceType } from '@/lib/resources';
 import type { Resource } from '@/types/cms';
@@ -55,7 +56,7 @@ export function ReferenceContent({ resources }: ReferenceContentProps) {
               style={{ animationDelay: `${0.45 + index * 0.07}s` }}
             >
               <span className="resource-name">
-                <img src={getIconPath(resource.icon)} alt="" className="resource-icon" />
+                <Image src={getIconPath(resource.icon)} alt="" width={24} height={24} className="resource-icon" />
                 {resource.name}
               </span>
               <span className="resource-type">{formatResourceType(resource)}</span>

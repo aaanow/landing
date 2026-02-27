@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
@@ -173,10 +174,10 @@ function PageContent({ page, relatedPopups, resources, initialPopupSlug }: { pag
   return (
     <section className="section sticky">
       <div className="container top-padding">
-        <div className="section-header__wrapper" style={{ marginBottom: '2rem' }}>
+        <div className="section-header__wrapper hero-animate hero-animate-delay-1" style={{ marginBottom: '2rem' }}>
           <h1>{page.title}</h1>
         </div>
-        <div className="section__content-wrapper abouts">
+        <div className="section__content-wrapper abouts hero-animate hero-animate-delay-2">
           <div className="about__content-wrapper" style={{ gridTemplateColumns: 'repeat(24, 1fr)' }}>
             <div className="div-block-150" style={{ gridColumn: '1 / 16' }}>
               {page.subheading && (
@@ -198,7 +199,7 @@ function PageContent({ page, relatedPopups, resources, initialPopupSlug }: { pag
             </div>
             <div className="abouts-bar" style={{ gridColumn: '16 / 25' }}>
               {sidebarImage && (
-                <img src={sidebarImage} loading="lazy" alt={page.title} style={{ width: '100%', borderRadius: '1rem' }} />
+                <Image src={sidebarImage} alt={page.title} width={400} height={300} style={{ width: '100%', height: 'auto', borderRadius: '1rem' }} />
               )}
               {page.sidebarQuote && (
                 <blockquote className="block-quote__sm" style={{ marginTop: '1.5rem' }}>
@@ -211,7 +212,7 @@ function PageContent({ page, relatedPopups, resources, initialPopupSlug }: { pag
                   <div className="resource__list-wrapper">
                     {resources.map((resource) => (
                       <a key={resource.id || resource.name} href={resource.url || '#'} className="resource__item w-inline-block">
-                        <img src={ICON_MAP[resource.icon || 'document']} loading="lazy" alt="" className="image-18" />
+                        <Image src={ICON_MAP[resource.icon || 'document']} alt="" width={24} height={24} className="image-18" />
                         <div>{resource.name}</div>
                       </a>
                     ))}
@@ -235,13 +236,13 @@ function PopupContent({ popup, siblingPopups, parentTitle }: { popup: Popup; sib
   return (
     <section className="section sticky">
       <div className="container top-padding">
-        <div className="section-header__wrapper" style={{ marginBottom: '2rem' }}>
+        <div className="section-header__wrapper hero-animate hero-animate-delay-1" style={{ marginBottom: '2rem' }}>
           {popupIcon && (
-            <img src={popupIcon} loading="lazy" alt="" style={{ width: 48, height: 48, marginBottom: '0.5rem' }} />
+            <Image src={popupIcon} alt="" width={48} height={48} style={{ marginBottom: '0.5rem' }} />
           )}
           <h1>{popup.name}</h1>
         </div>
-        <div className="section__content-wrapper abouts">
+        <div className="section__content-wrapper abouts hero-animate hero-animate-delay-2">
           <div className="about__content-wrapper" style={popupImage ? { gridTemplateColumns: 'repeat(24, 1fr)' } : undefined}>
             <div className="div-block-150" style={{ gridColumn: popupImage ? '1 / 16' : '1 / -1' }}>
               {popup.shortDescription && (
@@ -257,7 +258,7 @@ function PopupContent({ popup, siblingPopups, parentTitle }: { popup: Popup; sib
             </div>
             {popupImage && (
               <div className="abouts-bar" style={{ gridColumn: '16 / 25' }}>
-                <img src={popupImage} loading="lazy" alt={popup.name} style={{ width: '100%', borderRadius: '1rem' }} />
+                <Image src={popupImage} alt={popup.name} width={400} height={300} style={{ width: '100%', height: 'auto', borderRadius: '1rem' }} />
               </div>
             )}
           </div>
@@ -273,8 +274,8 @@ function LegalContent({ legal }: { legal: LegalPage }) {
   return (
     <section className="section sticky">
       <div className="container top-bottom-padding narrow">
-        <h1 style={{ textAlign: 'center' }}>{legal.name}</h1>
-        <div className="blog__content-text">
+        <h1 className="hero-animate hero-animate-delay-1" style={{ textAlign: 'center' }}>{legal.name}</h1>
+        <div className="blog__content-text hero-animate hero-animate-delay-2">
           {legal.content ? (
             <RichText content={legal.content} />
           ) : (

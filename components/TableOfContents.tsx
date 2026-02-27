@@ -78,8 +78,11 @@ export function TableOfContents({ content }: TableOfContentsProps) {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    const raf = requestAnimationFrame(handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(raf);
+    };
   }, [handleScroll]);
 
   if (headings.length < 2) return null;

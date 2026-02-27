@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { getPayloadClient } from '@/src/payload'
 import type { TestimonialsGlobal } from '@/types/cms'
 import { getMediaUrl } from '@/types/cms'
@@ -54,11 +55,13 @@ export async function TestimonialsSection() {
                           <div className="flex justify-between items-end w-full">
                             {logoUrl && (
                               <div className="flex flex-col gap-2">
-                                <img
+                                <Image
                                   src={logoUrl}
-                                  loading="lazy"
                                   alt={study.logo && typeof study.logo === 'object' ? study.logo.alt || 'Client logo' : 'Client logo'}
+                                  width={150}
+                                  height={50}
                                   className="w-[150px]"
+                                  style={{ height: 'auto' }}
                                 />
                               </div>
                             )}
@@ -75,12 +78,12 @@ export async function TestimonialsSection() {
                           </div>
                         </div>
                         {imageUrl && (
-                          <div className="flex-[7] min-w-0 rounded-[1rem_5rem_1rem_1rem] w-full h-full flex overflow-hidden max-md:order-first">
-                            <img
+                          <div className="flex-[7] min-w-0 rounded-[1rem_5rem_1rem_1rem] w-full h-full flex overflow-hidden max-md:order-first" style={{ position: 'relative', minHeight: '300px' }}>
+                            <Image
                               src={imageUrl}
-                              loading="lazy"
                               alt={imageAlt}
-                              className="object-cover w-full h-full"
+                              fill
+                              style={{ objectFit: 'cover' }}
                             />
                           </div>
                         )}
@@ -105,19 +108,23 @@ export async function TestimonialsSection() {
                       <div key={logo.id} className="flex-1 flex justify-center items-center h-20">
                         {logo.link ? (
                           <a href={logo.link} target="_blank" rel="noopener noreferrer">
-                            <img
+                            <Image
                               alt={alt}
-                              loading="lazy"
                               src={logoUrl}
+                              width={120}
+                              height={80}
                               className="w-auto h-full block"
+                              style={{ width: 'auto', height: '100%' }}
                             />
                           </a>
                         ) : (
-                          <img
+                          <Image
                             alt={alt}
-                            loading="lazy"
                             src={logoUrl}
+                            width={120}
+                            height={80}
                             className="w-auto h-full block"
+                            style={{ width: 'auto', height: '100%' }}
                           />
                         )}
                       </div>

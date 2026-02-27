@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import Image from 'next/image'
 
@@ -11,12 +11,7 @@ interface VideoModalProps {
 }
 
 export function VideoModal({ videoUrl, isOpen, onClose }: VideoModalProps) {
-  const [mounted, setMounted] = useState(false)
   const dialogRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   useEffect(() => {
     if (isOpen && dialogRef.current) {
@@ -42,7 +37,7 @@ export function VideoModal({ videoUrl, isOpen, onClose }: VideoModalProps) {
     [onClose],
   )
 
-  if (!mounted || !isOpen) return null
+  if (!isOpen) return null
 
   return createPortal(
     <div

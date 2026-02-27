@@ -25,7 +25,6 @@ export function PopupCards({ popups, pageTitle, initialPopupSlug, parentPageSlug
   const [activePopup, setActivePopup] = useState<Popup | null>(null);
   const [closing, setClosing] = useState(false);
   const lenis = useLenis();
-  const [mounted, setMounted] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -35,16 +34,12 @@ export function PopupCards({ popups, pageTitle, initialPopupSlug, parentPageSlug
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   // Open popup from initialPopupSlug (direct popup URL rendered as parent page)
   useEffect(() => {
     if (initialPopupSlug && parentPageSlug && popups.length > 0) {
       const match = popups.find((p) => p.slug === initialPopupSlug);
       if (match) {
-        setActivePopup(match);
+        requestAnimationFrame(() => setActivePopup(match));
         // Replace the popup's direct URL with the parent page URL + query param
         window.history.replaceState({}, '', `/${parentPageSlug}?popup=${initialPopupSlug}`);
       }
@@ -57,7 +52,7 @@ export function PopupCards({ popups, pageTitle, initialPopupSlug, parentPageSlug
     const slug = searchParams.get('popup');
     if (slug && popups.length > 0) {
       const match = popups.find((p) => p.slug === slug);
-      if (match) setActivePopup(match);
+      if (match) requestAnimationFrame(() => setActivePopup(match));
     }
   }, [searchParams, popups, initialPopupSlug]);
 
@@ -98,7 +93,7 @@ export function PopupCards({ popups, pageTitle, initialPopupSlug, parentPageSlug
       el.removeEventListener('wheel', stop, true);
       el.removeEventListener('touchmove', stop, true);
     };
-  }, [activePopup, mounted]);
+  }, [activePopup]);
 
   const closeModal = useCallback(() => {
     if (closing) return;
@@ -168,7 +163,7 @@ export function PopupCards({ popups, pageTitle, initialPopupSlug, parentPageSlug
             onClick={() => emblaApi?.scrollPrev()}
             style={{ opacity: canPrev ? 1 : 0.3 }}
           >
-            <img src="/images/icon-arrow-right-2.svg" alt="" width={20} height={20} />
+            <Image src="/images/icon-arrow-right-2.svg" alt="" width={20} height={20} />
           </button>
           <button
             type="button"
@@ -178,7 +173,7 @@ export function PopupCards({ popups, pageTitle, initialPopupSlug, parentPageSlug
             onClick={() => emblaApi?.scrollNext()}
             style={{ opacity: canNext ? 1 : 0.3 }}
           >
-            <img src="/images/icon-arrow-right-2.svg" alt="" width={20} height={20} />
+            <Image src="/images/icon-arrow-right-2.svg" alt="" width={20} height={20} />
           </button>
         </div>
 
@@ -196,11 +191,12 @@ export function PopupCards({ popups, pageTitle, initialPopupSlug, parentPageSlug
                 >
                   {iconUrl && (
                     <div className="icon__48" style={{ marginBottom: '0.75rem' }}>
-                      <img
+                      <Image
                         className="icon__48-img"
                         src={iconUrl}
-                        loading="lazy"
                         alt=""
+                        width={48}
+                        height={48}
                       />
                     </div>
                   )}
@@ -217,7 +213,7 @@ export function PopupCards({ popups, pageTitle, initialPopupSlug, parentPageSlug
         </div>
       </div>
 
-      {mounted && activePopup && createPortal(
+      {activePopup && createPortal(
         <div
           ref={overlayRef}
           className={`modal-overlay popup-modal-overlay${closing ? ' closing' : ''}`}

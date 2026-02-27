@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useRef, useEffect } from 'react'
+import Image from 'next/image'
 import { ArrowIcon } from './icons'
 
 interface VideoLink {
@@ -175,12 +176,12 @@ export function AdvantagesSection() {
                     {/* Image with video overlay links */}
                     <div className="tab__pane-video-wrapper" style={{ gridColumn: 'span 7' }}>
                       <div className="div-block-158">
-                        <img
+                        <Image
                           src={tab.image.src}
-                          loading="lazy"
                           alt={tab.image.alt}
                           sizes={tab.image.sizes}
-                          srcSet={tab.image.srcSet}
+                          width={783}
+                          height={500}
                           className="image-19"
                         />
                         <div className="tab__pane-btn-wrapper-copy">

@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { formatDate } from '@/lib/format';
 import { GridIcon, ListIcon, SearchIcon, PlusIcon } from '@/components/icons';
@@ -66,18 +68,24 @@ export function ArticlesContent({ posts }: ArticlesContentProps) {
             const backgroundImage =
               getMediaUrl(post.featuredImage) || '/images/aisc_blog_bg-01.svg';
 
+            const isExternal = !!post.externalLink;
+            const ListCardTag = isExternal ? 'a' : Link;
+            const listCardProps = isExternal
+              ? { href: postLink, target: '_blank' as const, rel: 'noopener noreferrer' }
+              : { href: postLink };
+
             if (view === 'list') {
               return (
-                <a
+                <ListCardTag
                   key={post.id}
-                  href={postLink}
+                  {...listCardProps}
                   data-category={post.category || ''}
                   role="listitem"
                   className="articles-list__card articles-card-animate"
                   style={{ animationDelay: `${0.45 + index * 0.07}s` }}
                 >
-                  <div className="articles-list__img-wrapper">
-                    <img loading="lazy" src={backgroundImage} alt="" className="articles-list__img" />
+                  <div className="articles-list__img-wrapper" style={{ position: 'relative' }}>
+                    <Image src={backgroundImage} alt="" fill style={{ objectFit: 'cover' }} className="articles-list__img" />
                   </div>
                   <div className="articles-list__body">
                     <div className="articles-card__meta">
@@ -89,7 +97,7 @@ export function ArticlesContent({ posts }: ArticlesContentProps) {
                     <h3>{post.title}</h3>
                     {post.excerpt && <p className="articles-card__excerpt">{post.excerpt}</p>}
                   </div>
-                </a>
+                </ListCardTag>
               );
             }
 
@@ -101,7 +109,7 @@ export function ArticlesContent({ posts }: ArticlesContentProps) {
                 className="articles-grid__card articles-card-animate"
                 style={{ animationDelay: `${0.45 + index * 0.07}s` }}
               >
-                <img loading="lazy" src="/images/aisc_blog_bg-01.svg" alt="" className="articles-grid__bg-img" />
+                <Image src="/images/aisc_blog_bg-01.svg" alt="" fill style={{ objectFit: 'cover' }} className="articles-grid__bg-img" />
                 <div className="articles-grid__gradient"></div>
                 <div className="articles-grid__content">
                   <div className="articles-card__meta">
@@ -115,7 +123,11 @@ export function ArticlesContent({ posts }: ArticlesContentProps) {
                     <PlusIcon />
                   </div>
                 </div>
-                <a href={postLink} className="articles-grid__link"></a>
+                {isExternal ? (
+                  <a href={postLink} target="_blank" rel="noopener noreferrer" className="articles-grid__link"></a>
+                ) : (
+                  <Link href={postLink} className="articles-grid__link"></Link>
+                )}
               </div>
             );
           })}

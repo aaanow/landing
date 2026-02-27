@@ -121,10 +121,10 @@ function useBarGraphAnimation(canvasRef: React.RefObject<HTMLCanvasElement | nul
     let blueGrowthLevel: number | { base: number; offset: number } = 0
     let bluePulseStartAt = 0
     let blueLastGrowthAt = 0
-    let blueStartAtMs = 0
+    let _blueStartAtMs = 0
     let blueRingAppearedAt: number[] = []
     let paleMode = false
-    let paleStartAtMs = 0
+    let _paleStartAtMs = 0
     let revenueBoxHidden = false
 
     function countCells(col: number) {
@@ -218,7 +218,7 @@ function useBarGraphAnimation(canvasRef: React.RefObject<HTMLCanvasElement | nul
     function initializeBarBlocks() {
       for (let c = 0; c < CONFIG.numCols; c++) {
         const w = BARS[c].width
-        let total = w === 1 ? 1 + Math.floor(rng() * 10) : INITIAL[c]
+        const total = w === 1 ? 1 + Math.floor(rng() * 10) : INITIAL[c]
         const rows = Math.min(Math.ceil(total / w), geom.maxRows)
         const colRows: boolean[][] = []
         const colPlacedAt: number[][] = []
@@ -275,7 +275,7 @@ function useBarGraphAnimation(canvasRef: React.RefObject<HTMLCanvasElement | nul
               continue
             }
           }
-          let nearTarget = col === 4
+          const nearTarget = col === 4
             ? currentActual <= baseTarget * 1.1 && currentActual >= baseTarget * 0.9
             : currentActual >= baseTarget * 0.9
           if (nearTarget) {
@@ -323,7 +323,7 @@ function useBarGraphAnimation(canvasRef: React.RefObject<HTMLCanvasElement | nul
       ctx.restore()
     }
 
-    function drawCenterBlueBlock(now: number) {
+    function drawCenterBlueBlock(_now: number) {
       if (!showCenterBlue) return
       const cells = CONFIG.gridCells
       const cx = 9
@@ -492,7 +492,7 @@ function useBarGraphAnimation(canvasRef: React.RefObject<HTMLCanvasElement | nul
           showCenterBlue = true
           blueGrowthLevel = 0
           blueLastGrowthAt = now - now0
-          blueStartAtMs = now - now0
+          _blueStartAtMs = now - now0
           blueRingAppearedAt = []
         }
       } else {
@@ -515,7 +515,7 @@ function useBarGraphAnimation(canvasRef: React.RefObject<HTMLCanvasElement | nul
         }
         if (!paleMode && lvl / maxRadius >= 0.5) {
           paleMode = true
-          paleStartAtMs = now - now0
+          _paleStartAtMs = now - now0
         }
       }
 

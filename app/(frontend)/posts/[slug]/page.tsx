@@ -1,4 +1,6 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
@@ -96,8 +98,6 @@ export default async function PostPage({ params }: DynamicPageProps) {
     notFound();
   }
 
-  const backgroundImage = getMediaUrl(post.featuredImage) || '/images/aisc_blog_bg-01.svg';
-
   // Fetch related articles (same category first, then recent)
   let relatedPosts: Post[] = [];
   try {
@@ -141,10 +141,11 @@ export default async function PostPage({ params }: DynamicPageProps) {
           data-category={post.category || ''}
           className="blog-article__img-wrapper"
         >
-          <img
+          <Image
             src="/images/aisc_blog_bg-01.svg"
-            loading="lazy"
             alt=""
+            fill
+            style={{ objectFit: 'cover' }}
             className="blog-article__banner-img"
           />
           <div className="blog-article__gradient"></div>
@@ -195,7 +196,7 @@ export default async function PostPage({ params }: DynamicPageProps) {
                     data-category={related.category || ''}
                     className="articles-grid__card"
                   >
-                    <img loading="lazy" src={relatedImage} alt="" className="articles-grid__bg-img" />
+                    <Image src={relatedImage} alt="" fill style={{ objectFit: 'cover' }} className="articles-grid__bg-img" />
                     <div className="articles-grid__gradient"></div>
                     <div className="articles-grid__content">
                       <div className="articles-card__meta">
@@ -211,7 +212,7 @@ export default async function PostPage({ params }: DynamicPageProps) {
                         <PlusIcon />
                       </div>
                     </div>
-                    <a href={`/posts/${related.slug}`} className="articles-grid__link"></a>
+                    <Link href={`/posts/${related.slug}`} className="articles-grid__link"></Link>
                   </div>
                 );
               })}

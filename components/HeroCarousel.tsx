@@ -24,7 +24,7 @@ export function HeroCarousel({ slides = [], autoplayDuration = 5000 }: HeroCarou
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [progress, setProgress] = useState(0)
   const rafRef = useRef<number>(0)
-  const startRef = useRef(Date.now())
+  const startRef = useRef(0)
 
   const scrollTo = useCallback((index: number) => {
     setSelectedIndex(index)
