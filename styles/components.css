@@ -5163,3 +5163,27 @@ figcaption {
     grid-area: 1 / 1 / 2 / 25;
   }
 }
+
+/* Video Showcase Section */
+.video-showcase {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.video-showcase__player {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.video-showcase__player iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}

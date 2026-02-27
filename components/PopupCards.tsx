@@ -20,7 +20,7 @@ function updateUrlParam(slug: string | null) {
   window.history.pushState({}, '', url.toString());
 }
 
-export function PopupCards({ popups, pageTitle }: { popups: Popup[]; pageTitle?: string }) {
+export function PopupCards({ popups, pageTitle, initialPopupSlug, parentPageSlug }: { popups: Popup[]; pageTitle?: string; initialPopupSlug?: string; parentPageSlug?: string }) {
   const searchParams = useSearchParams();
   const [activePopup, setActivePopup] = useState<Popup | null>(null);
   const [closing, setClosing] = useState(false);
@@ -39,14 +39,27 @@ export function PopupCards({ popups, pageTitle }: { popups: Popup[]; pageTitle?:
     setMounted(true);
   }, []);
 
+  // Open popup from initialPopupSlug (direct popup URL rendered as parent page)
+  useEffect(() => {
+    if (initialPopupSlug && parentPageSlug && popups.length > 0) {
+      const match = popups.find((p) => p.slug === initialPopupSlug);
+      if (match) {
+        setActivePopup(match);
+        // Replace the popup's direct URL with the parent page URL + query param
+        window.history.replaceState({}, '', `/${parentPageSlug}?popup=${initialPopupSlug}`);
+      }
+    }
+  }, [initialPopupSlug, parentPageSlug, popups]);
+
   // Open popup from URL ?popup=slug on mount
   useEffect(() => {
+    if (initialPopupSlug) return; // Already handled above
     const slug = searchParams.get('popup');
     if (slug && popups.length > 0) {
       const match = popups.find((p) => p.slug === slug);
       if (match) setActivePopup(match);
     }
-  }, [searchParams, popups]);
+  }, [searchParams, popups, initialPopupSlug]);
 
   // Update prev/next button state
   useEffect(() => {

@@ -167,7 +167,7 @@ export async function generateStaticParams() {
   }
 }
 
-function PageContent({ page, relatedPopups, resources }: { page: Page; relatedPopups: Popup[]; resources: ResourceSidebarItem[] }) {
+function PageContent({ page, relatedPopups, resources, initialPopupSlug }: { page: Page; relatedPopups: Popup[]; resources: ResourceSidebarItem[]; initialPopupSlug?: string }) {
   const sidebarImage = getMediaUrl(page.sidebarImage);
 
   return (
@@ -221,7 +221,7 @@ function PageContent({ page, relatedPopups, resources }: { page: Page; relatedPo
             </div>
           </div>
         </div>
-        <PopupCards popups={relatedPopups} pageTitle={page.title} />
+        <PopupCards popups={relatedPopups} pageTitle={page.title} initialPopupSlug={initialPopupSlug} parentPageSlug={page.slug} />
         <AboutUsBanner />
       </div>
     </section>
@@ -303,7 +303,7 @@ export default async function SlugPage({ params }: DynamicPageProps) {
 
   // Fetch resource sidebar global for page content, fall back to defaults
   let sidebarItems: ResourceSidebarItem[] = DEFAULT_RESOURCES;
-  if (resolved.type === 'page') {
+  if (resolved.type === 'page' || (resolved.type === 'popup' && resolved.doc.aboutPage)) {
     try {
       const payload = await getPayloadClient();
       const sidebar = await payload.findGlobal({ slug: 'resource-sidebar' }) as ResourceSidebarGlobal;
@@ -312,6 +312,19 @@ export default async function SlugPage({ params }: DynamicPageProps) {
       }
     } catch {
       // Use default resources
+    }
+  }
+
+  // If this is a popup with a parent page, render the parent page with the modal pre-opened
+  if (resolved.type === 'popup' && resolved.doc.aboutPage) {
+    const payload = await getPayloadClient();
+    const [parentPages, allPopups] = await Promise.all([
+      payload.find({ collection: 'pages', where: { slug: { equals: resolved.doc.aboutPage } }, limit: 1, depth: 2 }),
+      payload.find({ collection: 'popups', where: { aboutPage: { equals: resolved.doc.aboutPage }, _status: { equals: 'published' } }, limit: 50, depth: 1 }),
+    ]);
+    const parentPage = parentPages.docs[0] as Page | undefined;
+    if (parentPage) {
+      return <PageContent page={parentPage} relatedPopups={allPopups.docs as Popup[]} resources={sidebarItems} initialPopupSlug={slug} />;
     }
   }
 
