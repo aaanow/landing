@@ -25,6 +25,7 @@ import { CTA } from './globals/CTA'
 import { HowItWorks } from './globals/HowItWorks'
 import { ResearchStats } from './globals/ResearchStats'
 import { ResourceSidebar } from './globals/ResourceSidebar'
+import { VideoShowcase } from './globals/VideoShowcase'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -37,7 +38,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Posts, Pages, FAQs, ResourceChapters, Resources, Popups, Legals, Scorecards],
-  globals: [Footer, NavigationGlobal, Testimonials, LogoMarquee, Hero, CTA, HowItWorks, ResearchStats, ResourceSidebar],
+  globals: [Footer, NavigationGlobal, Testimonials, LogoMarquee, Hero, CTA, HowItWorks, ResearchStats, ResourceSidebar, VideoShowcase],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, EXPERIMENTAL_TableFeature()],
   }),
