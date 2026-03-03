@@ -332,7 +332,7 @@ function ProductContent({ product }: { product: Product }) {
               className={`section__content-wrapper abouts${colorClass} hero-animate`}
               style={{ animationDelay: `${0.2 + index * 0.15}s`, marginTop: index > 0 ? '2rem' : undefined }}
             >
-              <div className="about__content-wrapper" style={{ gridTemplateColumns: 'repeat(24, 1fr)' }}>
+              <div className="about__content-wrapper" style={{ gridTemplateColumns: 'repeat(24, 1fr)', marginTop: 0 }}>
                 <div className="div-block-150" style={{ gridColumn: '1 / 14' }}>
                   <h2>{panel.heading}</h2>
                   {panel.content && (

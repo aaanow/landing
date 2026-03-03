@@ -2106,8 +2106,8 @@ figcaption {
 }
 
 .jfeopjfe {
-  grid-column-gap: 24px;
-  grid-row-gap: 24px;
+  grid-column-gap: 2rem;
+  grid-row-gap: 2rem;
   background-color: var(--button);
   border-radius: 4rem;
   flex-flow: row;
@@ -2116,8 +2116,7 @@ figcaption {
   grid-auto-columns: 1fr;
   place-items: center stretch;
   width: 100%;
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+  padding: 4rem 3rem;
   display: grid;
 }
 
@@ -3024,19 +3023,47 @@ figcaption {
 }
 
 .section__content-wrapper.dark-green {
-  background: linear-gradient(180deg, var(--color-primary-600) 0%, var(--color-primary-900) 100%);
-  color: var(--button);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-cat1-bg), #fff 20%) 0%, var(--color-cat1-bg) 100%);
+  color: var(--color-cat1-text);
   padding-left: 3rem;
   padding-right: 3rem;
 }
 
 .section__content-wrapper.light-green {
-  background: linear-gradient(180deg, #d2f9c5 0%, #a8e89a 100%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-cat7-bg), #fff 20%) 0%, var(--color-cat7-bg) 100%);
+  color: var(--color-cat7-text);
 }
 
 .section__content-wrapper.purple {
-  background: linear-gradient(180deg, #6b0060 0%, #520047 100%);
-  color: var(--button);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-cat4-bg), #fff 20%) 0%, var(--color-cat4-bg) 100%);
+  color: var(--color-cat4-text);
+}
+
+.section__content-wrapper.dark-green h1,
+.section__content-wrapper.dark-green h2,
+.section__content-wrapper.dark-green h3,
+.section__content-wrapper.dark-green h4,
+.section__content-wrapper.dark-green p,
+.section__content-wrapper.dark-green li,
+.section__content-wrapper.dark-green .blog__content-text,
+.section__content-wrapper.dark-green .blog__content-text > p:first-child,
+.section__content-wrapper.light-green h1,
+.section__content-wrapper.light-green h2,
+.section__content-wrapper.light-green h3,
+.section__content-wrapper.light-green h4,
+.section__content-wrapper.light-green p,
+.section__content-wrapper.light-green li,
+.section__content-wrapper.light-green .blog__content-text,
+.section__content-wrapper.light-green .blog__content-text > p:first-child,
+.section__content-wrapper.purple h1,
+.section__content-wrapper.purple h2,
+.section__content-wrapper.purple h3,
+.section__content-wrapper.purple h4,
+.section__content-wrapper.purple p,
+.section__content-wrapper.purple li,
+.section__content-wrapper.purple .blog__content-text,
+.section__content-wrapper.purple .blog__content-text > p:first-child {
+  color: inherit;
 }
 
 .section__content-wrapper.abouts {

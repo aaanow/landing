@@ -79,8 +79,8 @@ export async function Footer() {
   } = footer;
 
   return (
-    <section className="flex justify-center w-full px-6 md:px-0">
-      <div className="bg-linear-to-b from-[#004452] to-[#002B33] text-neutral-0 rounded-t-[2rem] md:rounded-t-[4rem] flex flex-col w-full max-w-[1440px] pt-12 md:pt-16 pb-12 relative px-6 md:px-12 lg:px-16">
+    <section className="flex justify-center w-full px-6 md:px-0 pb-6">
+      <div className="bg-linear-to-b from-[#004452] to-[#002B33] text-neutral-0 rounded-[2rem] md:rounded-[4rem] flex flex-col w-full max-w-[1440px] pt-12 md:pt-16 pb-12 md:pb-16 relative px-6 md:px-12 lg:px-16">
         {/* Link groups: row on desktop, accordion stack on mobile */}
         <div className="flex flex-col md:flex-row md:gap-6 gap-0 w-full">
           {linkGroups.map((group) => (
@@ -99,30 +99,12 @@ export async function Footer() {
 
         {/* Bottom section */}
         <div className="border-t border-white/10 mt-12 md:mt-16 pt-8 w-full flex flex-col md:flex-row md:gap-8 gap-6 md:items-start">
-          {/* Left: disclaimer + copyright */}
+          {/* Left: disclaimer + legal links + copyright */}
           <div className="flex flex-col gap-6 md:flex-[3] order-2 md:order-1">
             {disclaimerText && (
               <p className="!text-white/60 !text-[11px] md:!text-sm !leading-[16px] md:!leading-5">
                 {disclaimerText}
               </p>
-            )}
-            {copyrightText && (
-              <div className="!text-white/60 !text-sm !leading-5 md:mt-8">
-                {copyrightText}
-              </div>
-            )}
-          </div>
-
-          {/* Right: logo, legal links, attribution */}
-          <div className="flex flex-col gap-3 items-start md:flex-[1] order-1 md:order-2">
-            {logo && (
-              <Image
-                src={logo}
-                alt="AAAnow Logo"
-                width={220}
-                height={55}
-                className="h-auto max-w-[13.75rem]"
-              />
             )}
             {legalPages.length > 0 && (
               <div className="flex flex-wrap gap-x-4 gap-y-1">
@@ -133,10 +115,28 @@ export async function Footer() {
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Right: logo, attribution, copyright */}
+          <div className="flex flex-col gap-3 items-start md:flex-[1] order-1 md:order-2">
+            {logo && (
+              <Image
+                src={logo}
+                alt="AAAnow Logo"
+                width={220}
+                height={55}
+                className="h-auto max-w-[13.75rem]"
+              />
+            )}
             {attributionText && attributionLink && (
               <FooterLink href={attributionLink} external small>
                 {attributionText}
               </FooterLink>
+            )}
+            {copyrightText && (
+              <div className="!text-white/60 !text-[11px] md:!text-sm !leading-[16px] md:!leading-5">
+                {copyrightText}
+              </div>
             )}
           </div>
         </div>

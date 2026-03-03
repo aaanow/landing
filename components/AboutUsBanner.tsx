@@ -3,7 +3,7 @@ import Image from 'next/image';
 export function AboutUsBanner() {
   return (
     <div className="jfeopjfe" style={{ marginTop: '2rem', marginBottom: '4rem' }}>
-      <div className="div-block-60" style={{ gridColumn: '2 / 13' }}>
+      <div className="div-block-60" style={{ gridColumn: '1 / 13' }}>
         <div className="audience__sidebar">
           <h2>About us</h2>
           <p className="body__large">
@@ -14,8 +14,8 @@ export function AboutUsBanner() {
         </div>
       </div>
       <div className="div-block-159" style={{ gridColumn: '13 / 25', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div className="div-block-85">
-          <Image src="/images/25anniversary.svg" alt="25 year anniversary" width={200} height={200} />
+        <div className="div-block-85" style={{ width: '100%', height: '100%' }}>
+          <Image src="/images/25anniversary.svg" alt="25 year anniversary" width={400} height={400} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
         </div>
       </div>
     </div>
