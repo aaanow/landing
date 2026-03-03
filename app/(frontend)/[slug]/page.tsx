@@ -314,7 +314,7 @@ function ProductContent({ product }: { product: Product }) {
   return (
     <section className="section sticky">
       <div className="container top-padding">
-        <div className="section-header__wrapper hero-animate hero-animate-delay-1">
+        <div className="section-header__wrapper hero-animate hero-animate-delay-1" style={{ marginBottom: '2.5rem' }}>
           <h1>{product.title}</h1>
           {product.subheading && (
             <div className="subheading__wrapper">
@@ -328,7 +328,7 @@ function ProductContent({ product }: { product: Product }) {
           return (
             <div
               key={panel.id || index}
-              className="section__content-wrapper hero-animate"
+              className="section__content-wrapper abouts hero-animate"
               style={{ animationDelay: `${0.2 + index * 0.15}s` }}
             >
               <div className="about__content-wrapper" style={{ gridTemplateColumns: 'repeat(24, 1fr)' }}>
@@ -344,6 +344,7 @@ function ProductContent({ product }: { product: Product }) {
                       variant="main"
                       href={panel.buttonLink}
                       icon={<ArrowIcon className="icon-16" />}
+                      style={{ alignSelf: 'flex-start' }}
                     >
                       {panel.buttonLabel}
                     </Button>
