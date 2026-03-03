@@ -10,6 +10,7 @@ const collectionPrefixes: Record<string, string> = {
   legals: '',
   scorecards: '/scorecards',
   posts: '/posts',
+  products: '',
 };
 
 function resolveFooterLinkHref(link: FooterLinkType): { href: string; external: boolean } {

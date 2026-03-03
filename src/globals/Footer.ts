@@ -49,7 +49,7 @@ export const Footer: GlobalConfig = {
             {
               name: 'reference',
               type: 'relationship',
-              relationTo: ['pages', 'popups', 'legals', 'scorecards', 'posts'],
+              relationTo: ['pages', 'popups', 'legals', 'scorecards', 'posts', 'products'],
               admin: {
                 condition: (_, siblingData) => siblingData?.linkType !== 'external',
                 description: 'Select a page to link to',
