@@ -40,7 +40,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }))
 
-    return [...staticRoutes, ...postRoutes, ...pageRoutes]
+    // Dynamic product pages
+    const products = await payload.find({ collection: 'products', limit: 1000, select: { slug: true, updatedAt: true } })
+
+    const productRoutes: MetadataRoute.Sitemap = products.docs.map((product) => ({
+      url: `${baseUrl}/${product.slug}`,
+      lastModified: new Date((product.updatedAt as string) ?? Date.now()),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    }))
+
+    return [...staticRoutes, ...postRoutes, ...pageRoutes, ...productRoutes]
   } catch {
     return staticRoutes
   }

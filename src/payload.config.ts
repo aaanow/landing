@@ -16,6 +16,7 @@ import { Resources } from './collections/Resources'
 import { Popups } from './collections/Popups'
 import { Legals } from './collections/Legals'
 import { Scorecards } from './collections/Scorecards'
+import { Products } from './collections/Products'
 import { Footer } from './globals/Footer'
 import { Navigation as NavigationGlobal } from './globals/Navigation'
 import { Testimonials } from './globals/Testimonials'
@@ -37,7 +38,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Posts, Pages, FAQs, ResourceChapters, Resources, Popups, Legals, Scorecards],
+  collections: [Users, Media, Posts, Pages, FAQs, ResourceChapters, Resources, Popups, Legals, Scorecards, Products],
   globals: [Footer, NavigationGlobal, Testimonials, LogoMarquee, Hero, CTA, HowItWorks, ResearchStats, ResourceSidebar, VideoShowcase],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, EXPERIMENTAL_TableFeature()],

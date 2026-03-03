@@ -142,6 +142,32 @@ export interface Scorecard extends BaseItem {
   link?: string;
 }
 
+// Product panels
+export interface ProductPanel {
+  heading: string;
+  content?: LexicalContent;
+  buttonLabel?: string;
+  buttonLink?: string;
+  mediaType?: 'image' | 'video';
+  image?: Media | string;
+  videoUrl?: string;
+  id?: string;
+}
+
+// Products collection
+export interface Product {
+  id: string;
+  title: string;
+  slug: string;
+  subheading?: string;
+  panels?: ProductPanel[];
+  meta?: {
+    title?: string;
+    description?: string;
+  };
+  _status?: 'draft' | 'published';
+}
+
 // Navigation global
 export interface NavLink {
   label: string;

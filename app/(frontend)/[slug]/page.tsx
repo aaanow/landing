@@ -5,8 +5,10 @@ import { getPayloadClient } from '@/src/payload';
 import { RichText } from '@/components/RichText';
 import { AboutUsBanner } from '@/components/AboutUsBanner';
 import { PopupCards } from '@/components/PopupCards';
-import type { Page, Popup, LegalPage, DynamicPageProps, ResourceSidebarItem, ResourceSidebarGlobal } from '@/types/cms';
+import type { Page, Popup, LegalPage, Product, DynamicPageProps, ResourceSidebarItem, ResourceSidebarGlobal } from '@/types/cms';
 import { getMediaUrl } from '@/types/cms';
+import { Button } from '@/components/Button';
+import { ArrowIcon } from '@/components/icons';
 
 const ICON_MAP: Record<string, string> = {
   pdf: '/images/icon-pdf.svg',
@@ -32,7 +34,8 @@ export const revalidate = 3600;
 type ResolvedContent =
   | { type: 'page'; doc: Page; relatedPopups: Popup[] }
   | { type: 'popup'; doc: Popup; siblingPopups: Popup[]; parentTitle?: string }
-  | { type: 'legal'; doc: LegalPage };
+  | { type: 'legal'; doc: LegalPage }
+  | { type: 'product'; doc: Product };
 
 async function resolveSlug(slug: string): Promise<ResolvedContent | null> {
   const payload = await getPayloadClient();
@@ -101,6 +104,17 @@ async function resolveSlug(slug: string): Promise<ResolvedContent | null> {
     return { type: 'popup', doc: popup, siblingPopups, parentTitle };
   }
 
+  // Try products collection
+  const products = await payload.find({
+    collection: 'products',
+    where: { slug: { equals: slug } },
+    limit: 1,
+    depth: 2,
+  });
+  if (products.docs[0]) {
+    return { type: 'product', doc: products.docs[0] as Product };
+  }
+
   // Try legals collection
   const legals = await payload.find({
     collection: 'legals',
@@ -136,6 +150,13 @@ export async function generateMetadata({ params }: DynamicPageProps): Promise<Me
           description: popup.shortDescription,
         };
       }
+      case 'product': {
+        const product = resolved.doc;
+        return {
+          title: product.meta?.title || product.title ? `${product.meta?.title || product.title} - AAAnow` : 'AAAnow',
+          description: product.meta?.description || product.subheading,
+        };
+      }
       case 'legal': {
         const legal = resolved.doc;
         return {
@@ -152,15 +173,17 @@ export async function generateStaticParams() {
   try {
     const payload = await getPayloadClient();
 
-    const [pages, popups, legals] = await Promise.all([
+    const [pages, popups, products, legals] = await Promise.all([
       payload.find({ collection: 'pages', where: { _status: { equals: 'published' } }, limit: 100 }),
       payload.find({ collection: 'popups', where: { _status: { equals: 'published' } }, limit: 100 }),
+      payload.find({ collection: 'products', where: { _status: { equals: 'published' } }, limit: 100 }),
       payload.find({ collection: 'legals', where: { _status: { equals: 'published' } }, limit: 100 }),
     ]);
 
     return [
       ...pages.docs.map((doc) => ({ slug: (doc as Page).slug })),
       ...popups.docs.map((doc) => ({ slug: (doc as Popup).slug })),
+      ...products.docs.map((doc) => ({ slug: (doc as Product).slug })),
       ...legals.docs.map((doc) => ({ slug: (doc as LegalPage).slug })),
     ];
   } catch {
@@ -287,6 +310,77 @@ function LegalContent({ legal }: { legal: LegalPage }) {
   );
 }
 
+function ProductContent({ product }: { product: Product }) {
+  return (
+    <section className="section sticky">
+      <div className="container top-padding">
+        <div className="section-header__wrapper hero-animate hero-animate-delay-1">
+          <h1>{product.title}</h1>
+          {product.subheading && (
+            <div className="subheading__wrapper">
+              <p className="body__xlarge">{product.subheading}</p>
+            </div>
+          )}
+        </div>
+
+        {product.panels?.map((panel, index) => {
+          const panelImage = getMediaUrl(panel.image);
+          return (
+            <div
+              key={panel.id || index}
+              className="section__content-wrapper hero-animate"
+              style={{ animationDelay: `${0.2 + index * 0.15}s` }}
+            >
+              <div className="about__content-wrapper" style={{ gridTemplateColumns: 'repeat(24, 1fr)' }}>
+                <div className="div-block-150" style={{ gridColumn: '1 / 14' }}>
+                  <h2>{panel.heading}</h2>
+                  {panel.content && (
+                    <div className="blog__content-text" style={{ maxWidth: 'none', marginLeft: 0, marginRight: 0 }}>
+                      <RichText content={panel.content} />
+                    </div>
+                  )}
+                  {panel.buttonLabel && panel.buttonLink && (
+                    <Button
+                      variant="main"
+                      href={panel.buttonLink}
+                      icon={<ArrowIcon className="icon-16" />}
+                    >
+                      {panel.buttonLabel}
+                    </Button>
+                  )}
+                </div>
+                <div style={{ gridColumn: '15 / 25' }}>
+                  {panel.mediaType === 'video' && panel.videoUrl ? (
+                    <div style={{ position: 'relative', paddingBottom: '56.25%', borderRadius: '1rem', overflow: 'hidden' }}>
+                      <iframe
+                        src={panel.videoUrl}
+                        title={panel.heading}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                      />
+                    </div>
+                  ) : panelImage ? (
+                    <Image
+                      src={panelImage}
+                      alt={panel.heading}
+                      width={600}
+                      height={400}
+                      style={{ width: '100%', height: 'auto', borderRadius: '1rem' }}
+                    />
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        <AboutUsBanner />
+      </div>
+    </section>
+  );
+}
+
 export default async function SlugPage({ params }: DynamicPageProps) {
   const { slug } = await params;
 
@@ -334,6 +428,8 @@ export default async function SlugPage({ params }: DynamicPageProps) {
       return <PageContent page={resolved.doc} relatedPopups={resolved.relatedPopups} resources={sidebarItems} />;
     case 'popup':
       return <PopupContent popup={resolved.doc} siblingPopups={resolved.siblingPopups} parentTitle={resolved.parentTitle} />;
+    case 'product':
+      return <ProductContent product={resolved.doc} />;
     case 'legal':
       return <LegalContent legal={resolved.doc} />;
   }
