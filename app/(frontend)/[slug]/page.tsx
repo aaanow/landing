@@ -325,11 +325,12 @@ function ProductContent({ product }: { product: Product }) {
 
         {product.panels?.map((panel, index) => {
           const panelImage = getMediaUrl(panel.image);
+          const colorClass = panel.panelColor && panel.panelColor !== 'default' ? ` ${panel.panelColor}` : '';
           return (
             <div
               key={panel.id || index}
-              className="section__content-wrapper abouts hero-animate"
-              style={{ animationDelay: `${0.2 + index * 0.15}s` }}
+              className={`section__content-wrapper abouts${colorClass} hero-animate`}
+              style={{ animationDelay: `${0.2 + index * 0.15}s`, marginTop: index > 0 ? '2rem' : undefined }}
             >
               <div className="about__content-wrapper" style={{ gridTemplateColumns: 'repeat(24, 1fr)' }}>
                 <div className="div-block-150" style={{ gridColumn: '1 / 14' }}>

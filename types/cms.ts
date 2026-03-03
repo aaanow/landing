@@ -148,6 +148,7 @@ export interface ProductPanel {
   content?: LexicalContent;
   buttonLabel?: string;
   buttonLink?: string;
+  panelColor?: 'default' | 'dark-green' | 'light-green' | 'purple';
   mediaType?: 'image' | 'video';
   image?: Media | string;
   videoUrl?: string;

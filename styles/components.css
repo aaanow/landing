@@ -3031,7 +3031,12 @@ figcaption {
 }
 
 .section__content-wrapper.light-green {
-  background-color: var(--button);
+  background: linear-gradient(180deg, #d2f9c5 0%, #a8e89a 100%);
+}
+
+.section__content-wrapper.purple {
+  background: linear-gradient(180deg, #6b0060 0%, #520047 100%);
+  color: var(--button);
 }
 
 .section__content-wrapper.abouts {

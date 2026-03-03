@@ -89,6 +89,20 @@ export const Products: CollectionConfig = {
           },
         },
         {
+          name: 'panelColor',
+          type: 'select',
+          defaultValue: 'default',
+          options: [
+            { label: 'Cream (default)', value: 'default' },
+            { label: 'Dark green gradient', value: 'dark-green' },
+            { label: 'Light green gradient', value: 'light-green' },
+            { label: 'Purple', value: 'purple' },
+          ],
+          admin: {
+            description: 'Background colour for this panel card',
+          },
+        },
+        {
           name: 'mediaType',
           type: 'select',
           defaultValue: 'image',
