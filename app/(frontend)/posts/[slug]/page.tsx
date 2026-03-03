@@ -151,10 +151,8 @@ export default async function PostPage({ params }: DynamicPageProps) {
           <div className="blog-article__gradient"></div>
           <div className="blog__banner-wrapper">
             <div className="blog__data">
-              {post.category && <span>{post.category}</span>}
-              {post.category && post.publishedAt && <span>/</span>}
               {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
-              {(post.category || post.publishedAt) && <span>/</span>}
+              {post.publishedAt && <span>/</span>}
               <span>{formatReadingTime(calculateReadingTime(post.content))}</span>
             </div>
             <h1>{post.title}</h1>

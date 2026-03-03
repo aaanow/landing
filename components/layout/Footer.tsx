@@ -83,7 +83,7 @@ export async function Footer() {
       <div className="bg-linear-to-b from-[#004452] to-[#002B33] text-neutral-0 rounded-[2rem] md:rounded-[4rem] flex flex-col w-full max-w-[1440px] pt-12 md:pt-16 pb-12 md:pb-16 relative px-6 md:px-12 lg:px-16">
         {/* Link groups: row on desktop, accordion stack on mobile */}
         <div className="flex flex-col md:flex-row md:gap-6 gap-0 w-full">
-          {linkGroups.map((group) => (
+          {linkGroups.map((group, i) => (
             <FooterAccordion key={group.id} title={group.title}>
               {group.links?.map((link) => {
                 const { href, external } = resolveFooterLinkHref(link);
@@ -93,6 +93,16 @@ export async function Footer() {
                   </FooterLink>
                 );
               })}
+              {i === 0 && (
+                <button
+                  type="button"
+                  data-contact-modal-open
+                  className="!text-white/80 !no-underline font-body !font-normal !text-[16px] !leading-[22px] py-[0.15rem] block hover:!text-white transition-colors cursor-pointer bg-transparent text-left"
+                  style={{ border: 'none', borderLeft: '1px solid rgba(255,255,255,0.3)', paddingLeft: '1rem' }}
+                >
+                  Contact us
+                </button>
+              )}
             </FooterAccordion>
           ))}
         </div>
