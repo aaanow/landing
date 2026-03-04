@@ -116,13 +116,13 @@ export async function Footer() {
                 {disclaimerText}
               </p>
             )}
-            {copyrightText && (
-              <div className="!text-white/60 !text-[11px] md:!text-sm !leading-[16px] md:!leading-5">
-                {copyrightText}
-              </div>
-            )}
-            {legalPages.length > 0 && (
+            {(legalPages.length > 0 || copyrightText) && (
               <div className="flex flex-wrap gap-x-4 gap-y-1">
+                {copyrightText && (
+                  <span className="!text-white/60 !text-[11px] md:!text-sm !leading-[16px] md:!leading-5 py-[0.15rem]">
+                    {copyrightText}
+                  </span>
+                )}
                 {legalPages.map((legal) => (
                   <FooterLink key={legal.id} href={`/${legal.slug}`} small>
                     {legal.name}
