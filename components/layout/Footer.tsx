@@ -109,12 +109,17 @@ export async function Footer() {
 
         {/* Bottom section */}
         <div className="border-t border-white/10 mt-12 md:mt-16 pt-8 w-full flex flex-col md:flex-row md:gap-8 gap-6 md:items-start">
-          {/* Left: disclaimer + legal links + copyright */}
+          {/* Left: disclaimer + copyright + legal links */}
           <div className="flex flex-col gap-6 md:flex-[3] order-2 md:order-1">
             {disclaimerText && (
               <p className="!text-white/60 !text-[11px] md:!text-sm !leading-[16px] md:!leading-5">
                 {disclaimerText}
               </p>
+            )}
+            {copyrightText && (
+              <div className="!text-white/60 !text-[11px] md:!text-sm !leading-[16px] md:!leading-5">
+                {copyrightText}
+              </div>
             )}
             {legalPages.length > 0 && (
               <div className="flex flex-wrap gap-x-4 gap-y-1">
@@ -127,7 +132,7 @@ export async function Footer() {
             )}
           </div>
 
-          {/* Right: logo, attribution, copyright */}
+          {/* Right: logo, attribution */}
           <div className="flex flex-col gap-3 items-start md:flex-[1] order-1 md:order-2">
             {logo && (
               <Image
@@ -142,11 +147,6 @@ export async function Footer() {
               <FooterLink href={attributionLink} external small>
                 {attributionText}
               </FooterLink>
-            )}
-            {copyrightText && (
-              <div className="!text-white/60 !text-[11px] md:!text-sm !leading-[16px] md:!leading-5">
-                {copyrightText}
-              </div>
             )}
           </div>
         </div>
