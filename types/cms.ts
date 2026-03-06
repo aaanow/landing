@@ -209,6 +209,14 @@ export interface FooterGlobal {
   attributionLink?: string;
 }
 
+// About Us global
+export interface AboutUsGlobal {
+  heading?: string;
+  body?: string;
+  image?: string;
+  imageAlt?: string;
+}
+
 // Testimonials & Logos global
 export interface CaseStudy {
   quote: string;

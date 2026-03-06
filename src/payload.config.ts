@@ -27,6 +27,7 @@ import { HowItWorks } from './globals/HowItWorks'
 import { ResearchStats } from './globals/ResearchStats'
 import { ResourceSidebar } from './globals/ResourceSidebar'
 import { VideoShowcase } from './globals/VideoShowcase'
+import { AboutUs } from './globals/AboutUs'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -39,7 +40,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Posts, Pages, FAQs, ResourceChapters, Resources, Popups, Legals, Scorecards, Products],
-  globals: [Footer, NavigationGlobal, Testimonials, LogoMarquee, Hero, CTA, HowItWorks, ResearchStats, ResourceSidebar, VideoShowcase],
+  globals: [Footer, NavigationGlobal, Testimonials, LogoMarquee, Hero, CTA, HowItWorks, ResearchStats, ResourceSidebar, VideoShowcase, AboutUs],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, EXPERIMENTAL_TableFeature()],
   }),
