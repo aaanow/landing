@@ -57,7 +57,7 @@ export const ResearchStats: GlobalConfig = {
       name: 'ctaLink',
       type: 'text',
       label: 'CTA Link',
-      defaultValue: '#',
+      defaultValue: '/images/58_21_17-Reveune_R02424_84ATA.pdf',
     },
   ],
 }

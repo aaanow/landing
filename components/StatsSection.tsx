@@ -26,7 +26,7 @@ export async function StatsSection({ variant = 'dark' }: StatsSectionProps) {
       { value: '17%', description: 'Increase in revenue per client by turning site analysis into clear, costed, actionable plans.' },
     ],
     ctaText = 'Read the research',
-    ctaLink = '#',
+    ctaLink = '/images/58_21_17-Reveune_R02424_84ATA.pdf',
   } = data
 
   const cardClass = variant === 'light' ? 'stats-card stats-card--light' : 'stats-card'
@@ -53,7 +53,7 @@ export async function StatsSection({ variant = 'dark' }: StatsSectionProps) {
               </Fragment>
             ))}
           </div>
-          <Button href={ctaLink} variant="sub" color={buttonColor} icon={<ArrowIcon className="icon-16" />}>
+          <Button href={ctaLink} variant="sub" color={buttonColor} icon={<ArrowIcon className="icon-16" />} target="_blank" rel="noopener noreferrer">
             {ctaText}
           </Button>
         </div>
