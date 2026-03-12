@@ -27,8 +27,9 @@ export async function HeroStats({
       { value: '17%', description: 'Revenue uplift across client base and remove those undermining value.' },
     ],
     ctaText = 'Download the research report',
-    ctaLink = '#',
+    ctaLink: rawCtaLink,
   } = data
+  const ctaLink = rawCtaLink && rawCtaLink !== '#' ? rawCtaLink : '/images/58_21_17-Reveune_R02424_84ATA.pdf'
   const isDark = variant === 'dark'
 
   const wrapperClasses = isDark
