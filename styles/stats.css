@@ -67,6 +67,19 @@
   margin-top: 6rem;
 }
 
+.stats-cta-title {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  color: var(--color-button);
+  margin: 0;
+}
+
+.stats-cta-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-button);
+  margin: 0;
+}
+
 .stats-cta {
   display: inline-block;
   padding: 0.75rem 2rem;

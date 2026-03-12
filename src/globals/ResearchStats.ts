@@ -48,6 +48,24 @@ export const ResearchStats: GlobalConfig = {
       ],
     },
     {
+      name: 'ctaTitle',
+      type: 'text',
+      label: 'CTA Title',
+      defaultValue: 'AiSC value;',
+      admin: {
+        description: 'Bold title displayed above the CTA button',
+      },
+    },
+    {
+      name: 'ctaSubtitle',
+      type: 'text',
+      label: 'CTA Subtitle',
+      defaultValue: 'client confidence, agency revenue.',
+      admin: {
+        description: 'Text displayed below the bold title, above the CTA button',
+      },
+    },
+    {
       name: 'ctaText',
       type: 'text',
       label: 'CTA Text',

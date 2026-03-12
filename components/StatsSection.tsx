@@ -25,6 +25,8 @@ export async function StatsSection({ variant = 'dark' }: StatsSectionProps) {
       { value: '23%', description: 'Increase in pitch success when proposals are grounded in clear, evidence-based opportunities.' },
       { value: '17%', description: 'Increase in revenue per client by turning site analysis into clear, costed, actionable plans.' },
     ],
+    ctaTitle = 'AiSC value;',
+    ctaSubtitle = 'client confidence, agency revenue.',
     ctaText = 'Read the research',
     ctaLink: rawCtaLink,
   } = data
@@ -54,6 +56,12 @@ export async function StatsSection({ variant = 'dark' }: StatsSectionProps) {
               </Fragment>
             ))}
           </div>
+          {ctaTitle && (
+            <p className="stats-cta-title">{ctaTitle}</p>
+          )}
+          {ctaSubtitle && (
+            <p className="stats-cta-subtitle">{ctaSubtitle}</p>
+          )}
           <Button href={ctaLink} variant="sub" color={buttonColor} icon={<ArrowIcon className="icon-16" />} target="_blank" rel="noopener noreferrer">
             {ctaText}
           </Button>

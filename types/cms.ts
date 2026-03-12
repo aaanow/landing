@@ -326,6 +326,8 @@ export interface ResearchStat {
 export interface ResearchStatsGlobal {
   heading?: string;
   stats?: ResearchStat[];
+  ctaTitle?: string;
+  ctaSubtitle?: string;
   ctaText?: string;
   ctaLink?: string;
 }

@@ -26,6 +26,8 @@ export async function HeroStats({
       { value: '21%', description: 'Improvement in client retention when agencies provide continuous, evidence-based oversight.' },
       { value: '17%', description: 'Revenue uplift across client base and remove those undermining value.' },
     ],
+    ctaTitle = 'AiSC value;',
+    ctaSubtitle = 'client confidence, agency revenue.',
     ctaText = 'Download the research report',
     ctaLink: rawCtaLink,
   } = data
@@ -48,7 +50,11 @@ export async function HeroStats({
     <div className={wrapperClasses}>
       <div className="flex items-start gap-12 max-lg:flex-col">
         <div className="flex-[0_0_40%] flex flex-col items-start gap-1 pt-4 max-lg:flex-none max-lg:w-full">
-          <h3 className={headingClasses}>{heading}</h3>
+          <h3 className="font-heading text-2xl font-normal leading-tight tracking-tight text-primary-900 m-0 max-lg:text-title-3">
+            {ctaTitle && <strong>{ctaTitle}</strong>}
+            {ctaTitle && ctaSubtitle && <br />}
+            {ctaSubtitle}
+          </h3>
           {ctaLink.startsWith('/') ? (
             <Link href={ctaLink} className="inline-flex items-center gap-1.5 py-1.5 font-body text-base font-normal text-[rgba(0,50,60,0.85)]">
               {ctaText}
