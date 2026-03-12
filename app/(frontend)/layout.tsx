@@ -44,6 +44,9 @@ export const metadata: Metadata = {
     icon: '/images/favicon.png',
     apple: '/images/webclip.png',
   },
+  verification: {
+    google: 'rm4RRCVTDP59HLDpsDn6dC1lAX6WVbAT86qMXw0SUpA',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

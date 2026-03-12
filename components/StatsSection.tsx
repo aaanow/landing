@@ -26,8 +26,9 @@ export async function StatsSection({ variant = 'dark' }: StatsSectionProps) {
       { value: '17%', description: 'Increase in revenue per client by turning site analysis into clear, costed, actionable plans.' },
     ],
     ctaText = 'Read the research',
-    ctaLink = '/images/58_21_17-Reveune_R02424_84ATA.pdf',
+    ctaLink: rawCtaLink,
   } = data
+  const ctaLink = rawCtaLink && rawCtaLink !== '#' ? rawCtaLink : '/images/58_21_17-Reveune_R02424_84ATA.pdf'
 
   const cardClass = variant === 'light' ? 'stats-card stats-card--light' : 'stats-card'
   const buttonColor = variant === 'light' ? 'dark' : 'green'
