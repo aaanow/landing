@@ -34,7 +34,7 @@ export async function HeroSectionSimple() {
       {/* Background image – contained size, positioned behind content */}
       <div className={`hero-animate hero-animate-delay-3 hero-bg-mobile absolute top-[47%] -right-[10vw] -translate-y-1/2 w-[85vw] aspect-[16/10]${videoUrl ? '' : ' pointer-events-none'}`}>
         <Image
-          src="/images/aaanow_background.png"
+          src="/images/aaanow_background-02.png"
           alt=""
           fill
           className="object-contain max-md:!object-cover"
